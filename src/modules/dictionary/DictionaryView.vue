@@ -10,7 +10,7 @@
         </p>
       </div>
       <div class="recordings-section">
-        <DictionaryEntry />
+        <DictionaryList />
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { CdxLookup } from '@wikimedia/codex';
-import DictionaryEntry from '../components/DictionaryEntry.vue'
+import DictionaryList from '../components/DictionaryList.vue'
 
 const { t } = useI18n()
 </script>
