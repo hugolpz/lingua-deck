@@ -22,7 +22,7 @@
     
     <!-- Dictionary entries display -->
     <div v-if="dictionaryEntries.length > 0" class="dictionary-entries-section mt-6 mb-8">
-      <h3 class="text-lg font-semibold mb-4">Dictionary: {{ route.query.list }} ({{ filteredDictionaryEntries.length }} entries)</h3>
+      <h3 class="text-lg font-semibold mb-4">Dictionary: {{ listName }} ({{ filteredDictionaryEntries.length }} entries)</h3>
       <div class="entries-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div name="entries-list" v-for="(entry, index) in filteredDictionaryEntries" :key="entry.word + index" class="entry-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
           <div class="flex items-start justify-between">
@@ -48,7 +48,7 @@
 
     <!-- Raw list content display (collapsible) -->
     <div v-if="listContent && dictionaryEntries.length === 0" class="list-content-section mt-6 mb-8">
-      <h3 class="text-lg font-semibold mb-4">Raw Content: {{ route.query.list }}</h3>
+      <h3 class="text-lg font-semibold mb-4">Raw Content: {{ listName }}</h3>
       <div class="bg-gray-100 p-4 rounded-lg">
         <pre class="whitespace-pre-wrap text-sm">{{ listContent }}</pre>
       </div>
@@ -85,6 +85,36 @@ const listContent = ref('')
 const dictionaryEntries = ref([])
 const searchQuery = ref('')
 
+// Computed property for the list name from route params
+const listName = computed(() => {
+  const listPath = route.params.listPath;
+  return listPath ? listPath.join('/') : '';
+})
+
+// Computed property for language ISO code from route params
+const languageIso = computed(() => {
+  const listPath = route.params.listPath; // ex: [ "List:Kor", "Dictionary" ]
+  if (listPath && listPath.length > 0) {
+    const iso = listPath[0].split(':')[1];
+    return iso ? iso.toLowerCase() : 'cmn'; // Convert to lowercase
+  }
+  return 'cmn';
+})
+
+// Computed property for QID (from query param or derived from language ISO)
+const qid = computed(() => {
+  if (route.query.qid) {
+    return route.query.qid;
+  }
+  const iso = languageIso.value;
+  return (iso && languagesByIso[iso] && languagesByIso[iso].value) ? languagesByIso[iso].value : 'Q9192';
+})
+
+// Computed property for username (from query param)
+const username = computed(() => {
+  return route.query.username || null;
+})
+
 // Computed property to filter dictionary entries
 const filteredDictionaryEntries = computed(() => {
   if (!searchQuery.value.trim()) {
@@ -104,15 +134,16 @@ const filteredDictionaryEntries = computed(() => {
 
 /***************************************************************** */
 /* Toolbox recordings metadata *********************************** */
-var dictionaryURL = function(pageName) {
+var dictionaryWikipageURL = function(pageName) {
     const url = `https://commons.wikimedia.org/w/api.php`;
     const params = {
         action: 'query',
         format: 'json',
-        titles: pageName,
+        titles: 'Commons:Lingua Libre/'+pageName, // to do: move to case insensitive
         prop: 'revisions',
         rvprop: 'content',
         rvslots: 'main',
+        redirects: 'true', // follow redirects
         origin: '*' // For CORS
     };
     
@@ -123,10 +154,10 @@ var dictionaryURL = function(pageName) {
 
 }
 // Function to fetch raw content from Lingualibre MediaWiki page
-var fetchLinguaLibrePageContent = async function(pageName) {
+var fetchWikipageContent = async function(pageName) {
     try {
         console.log(`Fetching page content for: ${pageName}`);
-        const response = await fetch(dictionaryURL(pageName));
+        const response = await fetch(dictionaryWikipageURL(pageName));
         const data = await response.json();
         
         if (data.query && data.query.pages) {
@@ -170,27 +201,27 @@ var textToJSON = function(content) {
 
 var findFileURL = function(word, qid, username) {
     const commonsAPI = 'https://commons.wikimedia.org/w/api.php';
-    var qid = qid || 'Q9192'; // Lingua Libre
-    var username = username || null; // My username on Commons
-// https://www.mediawiki.org/wiki/Special:MyLanguage/API:Search
-// https://en.wikipedia.org/wiki/Help:Searching#Parameters
-    const params = {
-        action: 'query',
-        list: 'search',
-        srnamespace: 6, // File namespace
-        //srwhat: 'title',  <-- API disabled
-        srlimit: 4, // Get 4 matches to filter through
-        srsort: 'relevance', // Sort by relevance
-        srsearch: `${username?'intitle:'+username:''} ${qid?'intitle:'+qid:''} intitle:/(-\|—)${word}\.wav/`,
-        format: 'json',
-        origin: '*' // Needed for CORS
-    };
-    
-    const queryString = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-        .join('&');
-    return `${commonsAPI}?${queryString}`;
-  }
+    qid = qid || 'Q9192'; // Remove 'var' to modify the parameter instead of creating new variable
+    username = username || null;
+    // https://www.mediawiki.org/wiki/Special:MyLanguage/API:Search
+    // https://en.wikipedia.org/wiki/Help:Searching#Parameters
+        const params = {
+            action: 'query',
+            list: 'search',
+            srnamespace: 6, // File namespace
+            //srwhat: 'title',  <-- API disabled
+            srlimit: 4, // Get 4 matches to filter through
+            srsort: 'relevance', // Sort by relevance
+            srsearch: `${username?'intitle:'+username:''} ${qid?'intitle:'+qid:''} intitle:/(-\|—)${word}\.wav/`,
+            format: 'json',
+            origin: '*' // Needed for CORS
+        };
+        
+        const queryString = Object.keys(params)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+            .join('&');
+        return `${commonsAPI}?${queryString}`;
+      }
 var dashCounter = function(fileName) {
     return (fileName.match(/-/g) || []).length;
 }
@@ -200,7 +231,7 @@ var searchCommonsAudio = async function(word, qid = 'Q9192', username = null) {
     var urlSearch = findFileURL(word, qid, username)
     try {
         console.log(`Searching for audio: ${word} (QID: ${qid}, Username: ${username})`);
-        console.log(`Searching query for ${word} : ${urlSearch}`);
+        console.log(`Search query for ${word} : ${urlSearch}`);
         const response = await fetch(urlSearch);
         const data = await response.json();
         
@@ -276,19 +307,15 @@ var enhanceEntriesWithAudio = async function(entries, qid = 'Q9192', username = 
 
 // Function to handle list parameter and fetch page content
 const handleListParameter = async () => {
-  const listParam = route.query.list;
+  const listPath = route.params.listPath;
+  const listParam = listPath ? listPath.join('/') : null;
+  
   if (listParam) {
     console.log(`List parameter found: ${listParam}`);
-    
-    // Get qid and username from URL parameters
-    const lang = listParam.split('/')[0].split(':')[1] || 'cmn'';
-    const qid = route.query.qid || (lang && languagesByIso[lang] ? languagesByIso[lang].qid : 'Q9192'); // Default to Lingua Libre
-    const username = route.query.username || null; // Default to null
-    
-    console.log(`Using QID: ${qid}, Username: ${username}`);
+    console.log(`Using Language ISO: ${languageIso.value}, QID: ${qid.value}, Username: ${username.value}`);
     
     try {
-      const content = await fetchLinguaLibrePageContent(listParam);
+      const content = await fetchWikipageContent(listParam);
       if (content) {
         listContent.value = content;
         console.log('Page content loaded:', content.substring(0, 200) + '...');
@@ -297,9 +324,9 @@ const handleListParameter = async () => {
         const parsedEntries = textToJSON(content);
         console.log(`Parsed ${parsedEntries.length} dictionary entries`);
         
-        // Enhance entries with audio URLs from Commons using URL parameters
+        // Enhance entries with audio URLs from Commons using computed qid and username
         if (parsedEntries.length > 0) {
-          const enhancedEntries = await enhanceEntriesWithAudio(parsedEntries, qid, username);
+          const enhancedEntries = await enhanceEntriesWithAudio(parsedEntries, qid.value, username.value);
           dictionaryEntries.value = enhancedEntries;
           console.log('Dictionary entries enhanced with audio URLs');
         }
