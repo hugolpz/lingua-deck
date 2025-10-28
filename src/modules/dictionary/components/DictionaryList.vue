@@ -72,6 +72,7 @@ import { CdxIcon } from '@wikimedia/codex'
 import { cdxIconPlay, cdxIconLanguage, cdxIconGlobe, cdxIconUserAvatar, cdxIconSearch } from '@wikimedia/codex-icons'
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import languagesByIso from '../data/languages-by-iso.json'
 
 const { t, tm } = useI18n()
 const audioElements = reactive({})
@@ -104,7 +105,7 @@ const filteredDictionaryEntries = computed(() => {
 /***************************************************************** */
 /* Toolbox recordings metadata *********************************** */
 var dictionaryURL = function(pageName) {
-    const url = `https://lingualibre.org/api.php`;
+    const url = `https://commons.wikimedia.org/w/api.php`;
     const params = {
         action: 'query',
         format: 'json',
@@ -280,7 +281,8 @@ const handleListParameter = async () => {
     console.log(`List parameter found: ${listParam}`);
     
     // Get qid and username from URL parameters
-    const qid = route.query.qid || 'Q9192'; // Default to Lingua Libre
+    const lang = listParam.split('/')[0].split(':')[1] || 'cmn'';
+    const qid = route.query.qid || (lang && languagesByIso[lang] ? languagesByIso[lang].qid : 'Q9192'); // Default to Lingua Libre
     const username = route.query.username || null; // Default to null
     
     console.log(`Using QID: ${qid}, Username: ${username}`);
