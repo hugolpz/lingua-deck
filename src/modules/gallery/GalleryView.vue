@@ -8,13 +8,13 @@
           <div class="flex flex-col md:flex-row md:justify-between md:items-center">
             <!-- Page Heading -->
             <h1 id="gallery-title" class="text-4xl md:text-5xl font-medium leading-none mb-2 mt-4 md:mt-6">
-              Languages <span class="count">({{ filteredLanguages.filter(language => Number(language.records) >= 0 ).length }})</span>
+              {{ $t('gallery-heading-languages') }} <span class="count">({{ filteredLanguages.filter(language => Number(language.records) >= 0 ).length }})</span>
             </h1>
             
             <!-- Search Input -->
             <div id="languages-filter" class="flex items-center bg-gray-100 border border-gray-300 rounded-full px-4 py-2 mt-4 md:mt-6 md:ml-8 h-fit">
               <input type="text" 
-                     placeholder="Search by language name" 
+                     :placeholder="$t('gallery-search-placeholder')" 
                      class="bg-transparent border-none outline-none w-full mx-2.5 text-gray-800"
                      v-model="search"
                      @keyup.enter="handleSearch">

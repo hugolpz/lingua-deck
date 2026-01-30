@@ -6,7 +6,7 @@
       <div class="flex flex-wrap">
         <h2 class="flex items-center text-3xl my-4"
             :id="'threshold-'+meaningfulNumber(threshold)">
-          Languages with over {{ meaningfulNumber(threshold) }} recordings 
+          {{ $t('gallery-section-threshold', { threshold: meaningfulNumber(threshold) }) }}
           <span class="count ml-2">({{ sectionLanguages.length }})</span>
         </h2>
       </div>
@@ -14,18 +14,10 @@
       <!-- Description -->
       <div class="mb-4">
         <p v-if="sectionLanguages.length > 0" class="mb-4">
-          <i>For activated languages 
-            <a class="text-link-blue underline hover:text-blue-600"
-               href="https://lingualibre.org/app">log in and start recording vocabulary</a>, 
-            most languages have vocabulary lists ready to record: at Step 3, search 
-            <code class="whitespace-nowrap bg-gray-100 px-1 rounded">"List:{your_ISO}/Unilex"</code>.
-          </i>
+          <i v-html="$t('gallery-section-description-activated')"></i>
         </p>
         <p v-else class="mb-4">
-          <i>No language matching this search and conditions, please try another search or 
-            <a class="text-link-blue underline hover:text-blue-600"
-               href="https://lingualibre.org/app">record a few words</a>.
-          </i>
+          <i v-html="$t('gallery-section-description-empty')"></i>
         </p>
       </div>
 
@@ -100,5 +92,22 @@ const sectionLanguages = computed(() => {
 
 .max-w-desktop {
   max-width: 76rem;
+}
+
+/* Apply styles to links and code in v-html content */
+:deep(a) {
+  color: #195ebf;
+  text-decoration: underline;
+}
+
+:deep(a:hover) {
+  color: #1a4d8f;
+}
+
+:deep(code) {
+  white-space: nowrap;
+  background-color: #f3f4f6;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
 }
 </style>
