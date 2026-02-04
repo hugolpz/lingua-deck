@@ -39,14 +39,12 @@
           <!-- Footer -->
           <div class="mt-16 mb-8">
             <div class="mb-4">
-              <p class="mb-4">
-                Data from LinguaLibre.org,
-                SPARQL2DATA by Hugo Lopez & Elfix,
-                Webpage based on <a class="text-link-blue underline hover:text-blue-600" 
+              <p class="mb-4 text-center mx-auto text-sm text-gray-600">
+                A tool by Yug & Elfix. <br>Data processing <a class="text-link-blue underline hover:text-blue-600"
+                  href="https://github.com/hugolpz/Sparql2Data">Sparql2Data</a>, webpage based upon <a class="text-link-blue underline hover:text-blue-600"
+                  href="https://github.com/hugolpz/LanguagesGallery">LanguagesGallery</a> and <a class="text-link-blue underline hover:text-blue-600" 
                   href="https://commonvoice.mozilla.org/en/languages">Common Voice</a> 
                 (<a class="text-link-blue underline hover:text-blue-600"
-                  href="https://github.com/common-voice/common-voice/blob/main/LICENSE">MPL 2.0</a>) and Hugo Lopez <a class="text-link-blue underline hover:text-blue-600"
-                  href="https://github.com/hugolpz/LanguagesGallery">Vuejs version</a> (<a class="text-link-blue underline hover:text-blue-600"
                   href="https://github.com/common-voice/common-voice/blob/main/LICENSE">MPL 2.0</a>).
                 </p>
             </div>
