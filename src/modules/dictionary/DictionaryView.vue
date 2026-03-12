@@ -1,6 +1,7 @@
 <template>
   <div class="dictionary-view">
     <div class="container mx-auto px-4 py-8">
+      <ExperimentalNotice />
       <div class="hero-section text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">
           {{ $t('dictionary-header') }}
@@ -24,6 +25,7 @@ import { useI18n } from 'vue-i18n'
 import { CdxIcon } from '@wikimedia/codex';
 import { cdxIconInfoFilled } from '@wikimedia/codex-icons';
 import DictionaryList from '../components/DictionaryList.vue'
+import ExperimentalNotice from '../components/ExperimentalNotice.vue'
 
 const { t } = useI18n()
 </script>
