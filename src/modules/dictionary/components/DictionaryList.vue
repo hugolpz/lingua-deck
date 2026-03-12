@@ -1,7 +1,19 @@
 <template>
   <div class="dictionary-list">
     <h2 class="text-xl font-bold">{{ $t('dictionary-header') }}</h2>
-    
+
+    <!-- Category index (no listPath) -->
+    <div v-if="categoryPages.length > 0" class="category-index mt-6">
+      <p class="text-sm text-gray-500 mb-4">{{ categoryPages.length }} dictionaries found</p>
+      <ul class="category-list">
+        <li v-for="title in categoryPages" :key="title" class="category-item">
+          <a :href="pageHref(title)" class="category-link">
+            {{ shortenPageTitle(title) }}
+          </a>
+        </li>
+      </ul>
+    </div>
+
     <!-- Search field -->
     <div v-if="dictionaryEntries.length > 0" class="search-section mt-4 mb-6">
       <div class="relative">
@@ -22,7 +34,7 @@
     
     <!-- Dictionary entries display -->
     <div v-if="dictionaryEntries.length > 0" class="dictionary-entries-section mt-6 mb-8">
-      <h3 class="text-lg font-semibold mb-4">Dictionary: {{ listName }} ({{ filteredDictionaryEntries.length }} entries)</h3>
+      <h3 id="" class="text-lg font-semibold mb-4">Dictionary: {{ listName }} ({{ filteredDictionaryEntries.length }} entries)</h3>
       <div class="entries-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div name="entries-list" v-for="(entry, index) in filteredDictionaryEntries" :key="entry.word + index" class="entry-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
           <div class="flex items-start justify-between">
@@ -60,7 +72,7 @@
     </div>
 
     <!-- No results message -->
-    <div v-if="!isLoading && dictionaryEntries.length === 0 && !listContent" class="no-results mt-6">
+    <div v-if="!isLoading && dictionaryEntries.length === 0 && !listContent && categoryPages.length === 0" class="no-results mt-6">
       <p>No dictionary entries found.</p>
     </div>
   </div>
@@ -84,6 +96,7 @@ const route = useRoute()
 const listContent = ref('')
 const dictionaryEntries = ref([])
 const searchQuery = ref('')
+const categoryPages = ref([])
 
 // Computed property for the list name from route params
 const listName = computed(() => {
@@ -93,10 +106,14 @@ const listName = computed(() => {
 
 // Computed property for language ISO code from route params
 const languageIso = computed(() => {
-  const listPath = route.params.listPath; // ex: [ "List:Kor", "Dictionary" ]
+  const listPath = route.params.listPath; // ex: [ "List", "Cmn", "Swadesh" ] or [ "List:Cmn", "Swadesh" ]
+
   if (listPath && listPath.length > 0) {
-    const iso = listPath[0].split(':')[1];
-    return iso ? iso.toLowerCase() : 'cmn'; // Convert to lowercase
+    // Normalize both "List:Cmn/..." and "List/Cmn/..." to the same format, then split
+    const segments = listPath.join('/').replace('List:', 'List/').split('/');
+    const iso = segments[1] ? segments[1].toLowerCase() : null;
+    console.log(`Extracted language ISO from route: ${iso}`);
+    return iso || 'cmn';
   }
   return 'cmn';
 })
@@ -107,7 +124,7 @@ const qid = computed(() => {
     return route.query.qid;
   }
   const iso = languageIso.value;
-  return (iso && languagesByIso[iso] && languagesByIso[iso].value) ? languagesByIso[iso].value : 'Q9192';
+  return (iso && languagesByIso[iso]) ? languagesByIso[iso].value : 'Q9192';
 })
 
 // Computed property for username (from query param)
@@ -131,6 +148,46 @@ const filteredDictionaryEntries = computed(() => {
     return matchesWord || matchesDefinition || matchesPhon || matchesPartOfSpeech
   })
 })
+
+/***************************************************************** */
+/* Category index (no listPath) ********************************** */
+var fetchCategoryMembers = async function() {
+    const url = 'https://commons.wikimedia.org/w/api.php';
+    const params = {
+        action: 'query',
+        list: 'categorymembers',
+        cmtitle: 'Category:Lingua_Libre_dictionary',
+        cmnamespace: 4, // Commons/Project namespace
+        cmlimit: 500,
+        format: 'json',
+        origin: '*'
+    };
+    const queryString = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+    try {
+        const response = await fetch(`${url}?${queryString}`);
+        const data = await response.json();
+        if (data.query && data.query.categorymembers) {
+            return data.query.categorymembers.map(m => m.title);
+        }
+        return [];
+    } catch (error) {
+        console.error('Error fetching category members:', error);
+        return [];
+    }
+};
+
+// Convert "Commons:Lingua Libre/List/Cmn/Dictionary" -> short "Cmn/Dictionary" and href "./List/Cmn/Dictionary"
+var shortenPageTitle = function(title) {
+    // Strip prefix "Commons:Lingua Libre/List/" (also handle underscore variant)
+    const stripped = title.replace(/^Commons:Lingua[_ ]Libre\/List\//, '');
+    return stripped;
+};
+var pageHref = function(title) {
+    const stripped = title.replace(/^Commons:Lingua[_ ]Libre\//, '');
+    return '/Dictionary/' + stripped;
+};
 
 /***************************************************************** */
 /* Toolbox recordings metadata *********************************** */
@@ -226,7 +283,7 @@ var dashCounter = function(fileName) {
     return (fileName.match(/-/g) || []).length;
 }
 // Function to search for audio file on Commons for a specific word
-var searchCommonsAudio = async function(word, qid = 'Q9192', username = null) {
+var searchCommonsAudio = async function(word, qid, username = null) {
 
     var urlSearch = findFileURL(word, qid, username)
     try {
@@ -340,7 +397,13 @@ const handleListParameter = async () => {
 
 // Call the initialization function when component is mounted
 onMounted(async () => {
-  await handleListParameter();
+  const listPath = route.params.listPath;
+  if (!listPath || listPath.length === 0) {
+    // Index mode: list all dictionary pages from the category
+    categoryPages.value = await fetchCategoryMembers();
+  } else {
+    await handleListParameter();
+  }
   isLoading.value = false;
 });
 
@@ -438,5 +501,39 @@ const playAudio = (word, index) => {
 }
 .search-section input:focus {
   outline: none;
+}
+.category-index {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #ffffff;
+}
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.category-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #f9fafb;
+  transition: background-color 0.15s ease;
+}
+.category-item:hover {
+  background-color: #eff6ff;
+}
+.category-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: block;
+}
+.category-link:hover {
+  text-decoration: underline;
 }
 </style>
