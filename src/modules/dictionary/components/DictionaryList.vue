@@ -82,8 +82,8 @@
 import { useI18n } from 'vue-i18n'
 import { CdxIcon } from '@wikimedia/codex'
 import { cdxIconPlay, cdxIconLanguage, cdxIconGlobe, cdxIconUserAvatar, cdxIconSearch } from '@wikimedia/codex-icons'
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, reactive, onMounted, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import languagesByIso from '../data/languages-by-iso.json'
 
 const { t, tm } = useI18n()
@@ -93,9 +93,10 @@ const isLoading = ref(true)
 const { locale } = useI18n()
 const currentLanguageIso = computed(() => locale.value)
 const route = useRoute()
+const router = useRouter()
 const listContent = ref('')
 const dictionaryEntries = ref([])
-const searchQuery = ref('')
+const searchQuery = ref(route.query.search || '')
 const categoryPages = ref([])
 
 // Computed property for the list name from route params
@@ -130,6 +131,12 @@ const qid = computed(() => {
 // Computed property for username (from query param)
 const username = computed(() => {
   return route.query.username || null;
+})
+
+watch(searchQuery, (newQuery) => {
+  router.replace({
+    query: { ...route.query, search: newQuery || undefined }
+  })
 })
 
 // Computed property to filter dictionary entries
