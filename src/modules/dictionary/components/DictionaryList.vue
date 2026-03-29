@@ -125,6 +125,7 @@ const languageIso = computed(() => {
 })
 
 // Computed property for QID (from query param or derived from language ISO)
+// Note: for languages without ISO, the Qid query param is used.
 const qid = computed(() => {
   if (route.query.qid) {
     return route.query.qid;
@@ -136,6 +137,11 @@ const qid = computed(() => {
 // Computed property for username (from query param)
 const username = computed(() => {
   return route.query.username || null;
+})
+
+// Computed property for locutor (from query param)
+const locutor = computed(() => {
+  return route.query.locutor || null;
 })
 
 watch(searchQuery, (newQuery) => {
@@ -278,10 +284,11 @@ var textToJSON = function(content) {
     return entries;
 };
 
-var findFileURL = function(word, qid, username) {
+var findFileURL = function(word, qid, username, locutor) {
     const commonsAPI = 'https://commons.wikimedia.org/w/api.php';
     qid = qid || 'Q9192'; // Remove 'var' to modify the parameter instead of creating new variable
     username = username || null;
+    locutor = locutor || null;
     // https://www.mediawiki.org/wiki/Special:MyLanguage/API:Search
     // https://en.wikipedia.org/wiki/Help:Searching#Parameters
         const params = {
@@ -291,7 +298,7 @@ var findFileURL = function(word, qid, username) {
             //srwhat: 'title',  <-- API disabled
             srlimit: 4, // Get 4 matches to filter through
             srsort: 'relevance', // Sort by relevance
-            srsearch: `${username?'intitle:'+username:''} ${qid?'intitle:'+qid:''} intitle:/(-\|—)${word}\.wav/`,
+            srsearch: `${username?'intitle:'+username:''} ${locutor?'intitle:'+locutor:''} ${qid?'intitle:'+qid:''} intitle:/(-\|—)${word}\.wav/`,
             format: 'json',
             origin: '*' // Needed for CORS
         };
@@ -305,11 +312,11 @@ var dashCounter = function(fileName) {
     return (fileName.match(/-/g) || []).length;
 }
 // Function to search for audio file on Commons for a specific word
-var searchCommonsAudio = async function(word, qid, username = null) {
+var searchCommonsAudio = async function(word, qid, username = null, locutor = null) {
 
-    var urlSearch = findFileURL(word, qid, username)
+    var urlSearch = findFileURL(word, qid, username, locutor)
     try {
-        console.log(`Searching for audio: ${word} (QID: ${qid}, Username: ${username})`);
+        console.log(`Searching for audio: ${word} (QID: ${qid}, Username: ${username}, Locutor: ${locutor})`);
         console.log(`Search query for ${word} : ${urlSearch}`);
         const response = await fetch(urlSearch);
         const data = await response.json();
@@ -347,8 +354,8 @@ var searchCommonsAudio = async function(word, qid, username = null) {
 };
 
 // Function to enhance entries with audio URLs
-var enhanceEntriesWithAudio = async function(entries, qid = 'Q9192', username = null) {
-    console.log(`Enhancing ${entries.length} entries with audio URLs using QID: ${qid}, Username: ${username}...`);
+var enhanceEntriesWithAudio = async function(entries, qid = 'Q9192', username = null, locutor = null) {
+    console.log(`Enhancing ${entries.length} entries with audio URLs using QID: ${qid}, Username: ${username}, Locutor: ${locutor}...`);
     
     // Process entries in batches to avoid overwhelming the API
     const batchSize = 5;
@@ -357,7 +364,7 @@ var enhanceEntriesWithAudio = async function(entries, qid = 'Q9192', username = 
     for (let i = 0; i < entries.length; i += batchSize) {
         const batch = entries.slice(i, i + batchSize);
         const batchPromises = batch.map(async (entry) => {
-            const audioUrl = await searchCommonsAudio(entry.word, qid, username);
+            const audioUrl = await searchCommonsAudio(entry.word, qid, username, locutor);
             return { ...entry, audioUrl };
         });
         
@@ -405,7 +412,7 @@ const handleListParameter = async () => {
         
         // Enhance entries with audio URLs from Commons using computed qid and username
         if (parsedEntries.length > 0) {
-          const enhancedEntries = await enhanceEntriesWithAudio(parsedEntries, qid.value, username.value);
+          const enhancedEntries = await enhanceEntriesWithAudio(parsedEntries, qid.value, username.value, locutor.value);
           dictionaryEntries.value = enhancedEntries;
           console.log('Dictionary entries enhanced with audio URLs');
         }
