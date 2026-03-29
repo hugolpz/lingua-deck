@@ -34,7 +34,12 @@
     
     <!-- Dictionary entries display -->
     <div v-if="dictionaryEntries.length > 0" class="dictionary-entries-section mt-6 mb-8">
-      <h3 id="" class="text-lg font-semibold mb-4">Dictionary: {{ listName }} ({{ filteredDictionaryEntries.length }} entries)</h3>
+      <div class="flex items-center gap-2 mb-4">
+        <h3 id="" class="text-lg font-semibold m-0">Dictionary: {{ listName }} ({{ filteredDictionaryEntries.length }} entries)</h3>
+        <a :href="`https://commons.wikimedia.org/w/index.php?title=Commons:Lingua_Libre/${listName}&veaction=edit&editintro=Commons:Lingua_Libre/Dictionary/Editintro`" target="_blank" rel="noopener" class="text-gray-400 hover:text-blue-600 flex items-center" title="Edit this list on Wikimedia Commons">
+          <CdxIcon :icon="cdxIconEdit" />
+        </a>
+      </div>
       <div class="entries-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div name="entries-list" v-for="(entry, index) in filteredDictionaryEntries" :key="entry.word + index" class="entry-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
           <div class="flex items-start justify-between">
@@ -50,8 +55,8 @@
             <div class="item-lexicology flex-1 pl-6">
               <span class="text-lg font-semibold text-gray-800">{{ entry.word }}</span>
               <span v-if="entry.phon" class="text-sm text-gray-600 mx-2">[{{ entry.phon }}]</span>
-              <span class="text-xs text-blue-600 mx-2">{{ entry.partOfSpeech }}</span>
-              <span class="text-sm text-gray-700 ml-2">{{ entry.definition }}</span>
+              <span v-if="entry.partOfSpeech" class="text-xs text-blue-600 mx-2">{{ entry.partOfSpeech }}</span>
+              <span class="text-sm text-gray-700 ml-2" :class="{ 'ml-0': !entry.partOfSpeech && !entry.phon }">{{ entry.definition }}</span>
             </div>
           </div>
         </div>
@@ -81,7 +86,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { CdxIcon } from '@wikimedia/codex'
-import { cdxIconPlay, cdxIconLanguage, cdxIconGlobe, cdxIconUserAvatar, cdxIconSearch } from '@wikimedia/codex-icons'
+import { cdxIconPlay, cdxIconLanguage, cdxIconGlobe, cdxIconUserAvatar, cdxIconSearch, cdxIconEdit } from '@wikimedia/codex-icons'
 import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import languagesByIso from '../data/languages-by-iso.json'
@@ -150,7 +155,7 @@ const filteredDictionaryEntries = computed(() => {
     const matchesWord = entry.word.toLowerCase().includes(query)
     const matchesDefinition = entry.definition.toLowerCase().includes(query)
     const matchesPhon = entry.phon && entry.phon.toLowerCase().includes(query)
-    const matchesPartOfSpeech = entry.partOfSpeech.toLowerCase().includes(query)
+    const matchesPartOfSpeech = entry.partOfSpeech && entry.partOfSpeech.toLowerCase().includes(query)
     
     return matchesWord || matchesDefinition || matchesPhon || matchesPartOfSpeech
   })
@@ -249,16 +254,26 @@ var fetchWikipageContent = async function(pageName) {
 
 var textToJSON = function(content) {
     if (!content) return [];
-    const lines = content.split('\n');
+    const lines = content.split('\n')
+        .filter(line => line.startsWith('#'));
+        
+    // Break down the regex for human readability
+    const entryRegex = new RegExp([
+        '^#\\s*',               // Item sign [Required]: Match starting '#' and optional space
+        '(.+?)',                // Group 1 [Required]: Word (lazy match)
+        '\\s*(?:→|->|=>)',      // Separator [Required]: '→', and fallback ASCII '->' or '=>'
+        '(?:\\s+\\[(.+?)\\])?', // Group 2 [Optional]: Phonetics inside leading brackets '[]', before L2 definition
+        '(?:\\s+\\((.+?)\\))?', // Group 3 [Optional]: Part of speech inside leading parenthesis '()', before L2 definition
+        '\\s+(.+)$'             // Group 4 [Required]: L2 definition (rest of the line, can contain anything, including brackets or parentheses)
+    ].join(''));
+
     const entries = [];
     for (const line of lines) {
-        if (line.startsWith('#')) {
-            const match = line.match(/^#\s*(.+?)\s*→\s*(?:\s*\[(.+?)\])?\s+\((.+?)\)\s+(.+)$/);
-            if (match) {
-                const [_, word, phon, partOfSpeech, definition] = match;
-                entries.push({ word, 'phon': phon || null, partOfSpeech, definition, audioUrl: null });
-            }
-        }
+      const match = line.match(entryRegex);
+      if (match) {
+          const [_, word, phon, partOfSpeech, definition] = match;
+          entries.push({ word, 'phon': phon || null, 'partOfSpeech': partOfSpeech || '', definition, audioUrl: null });
+      }
     }
     return entries;
 };
