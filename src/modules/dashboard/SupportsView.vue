@@ -14,13 +14,13 @@
     <header class="dashboard-header">
       <p class="subtitle">Revealing community-supporting edits, contributors, and page activity across Lingua Libre projects.</p>
     </header>
-    <WikiDataFetcher :key="route.fullPath" />
+    <ActivityDataFetcher :key="route.fullPath" />
   </div>
 </template>
 
 <script setup>
 import { useRoute } from 'vue-router';
-import WikiDataFetcher from '../components/dashboards/WikiDataFetcher.vue';
+import ActivityDataFetcher from '../components/dashboards/ActivityDataFetcher.vue';
 
 const route = useRoute();
 </script>

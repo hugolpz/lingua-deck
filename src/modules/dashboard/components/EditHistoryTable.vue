@@ -19,20 +19,23 @@
       <tbody>
         <tr v-for="edit in visibleEdits" :key="edit.timestamp + edit.title + edit.author + (edit.revid || Math.random())">
           <td>
-            {{ edit.timestamp.split('T')[0] }}
+            {{ edit.timestamp.slice(0, 10) }}
             <span v-if="edit.count > 1" class="edit-count-badge">{{ edit.count }} edits</span>
           </td>
           <td><a href="#" @click.prevent="$emit('filter-user', edit.author)">{{ edit.author }}</a></td>
           <td class="page-title-cell">
             <a :href="`${edit.url}`" target="_blank" rel="noopener noreferrer" class="wm-site-link" :title="`View on ${endpoints[edit.source || 'commons'].name}`">
-              <img :src="endpoints[edit.source || 'commons'].logo" class="wm-site-logo" alt="Project logo" />
+              <img :src="endpoints[edit.source || 'commons'].logo" class="wm-site-logo" :alt="` ${endpoints[edit.source || 'commons'].name} logo`" />
             </a>
-            <a href="#" @click.prevent="$emit('filter-page', edit.title)">{{ edit.title }}</a>
+            <span>
+              <a href="#" @click.prevent="$emit('filter-page', edit.title)">{{ edit.title }}</a>
+              {{ edit.comment? ' > '+edit.comment:'' }}
+            </span>
           </td>
           <td>
-            <span :class="{ 'positive': edit.diff > 0, 'negative': edit.diff < 0 }">
-              {{ edit.diff > 0 ? '+' : '' }}{{ edit.diff }}
-            </span>
+            <a :href="`${edit.url}`" target="_blank" rel="noopener noreferrer" class="diff-link" :class="getDiffClass(edit)" :title="`View on ${endpoints[edit.source || 'commons'].name}`">
+              {{ edit.diff > 0 && String(edit.diff).length < 8 ? '+' : '' }}{{ edit.diff }}
+            </a>
           </td>
         </tr>
         <tr>
@@ -46,6 +49,7 @@
 </template>
 
 <script setup>
+import { faJoint } from '@fortawesome/free-solid-svg-icons';
 import { ref, computed } from 'vue';
 
 const props = defineProps({
@@ -100,6 +104,14 @@ const visibleEdits = computed(() => processedEdits.value.slice(0, limit.value));
 
 const loadMore = () => {
   limit.value += 50;
+};
+
+const getDiffClass = (edit) => {
+  if (String(edit.diff).length < 8) {
+    if (parseInt(edit.diff) > 0) return 'positive';
+    if (parseInt(edit.diff) < 0) return 'negative';
+  }
+  return 'commit-diff';
 };
 </script>
 
@@ -168,6 +180,9 @@ th {
 }
 .positive { color: green; }
 .negative { color: red; }
+.commit-diff { color: #666666; }
+.diff-link { text-decoration: none; }
+.diff-link:hover { text-decoration: underline; }
 .text-center { text-align: center; }
 
 .page-title-cell {

@@ -8,9 +8,13 @@
       <h3>Content Contributors</h3>
       <div class="value">{{ uniqueContributors.toLocaleString() }}</div>
     </div>
-    <div class="card">
-      <h3>Pages Tracked</h3>
+    <div class="card" v-if="activeSource !== 'gitlab' && activeSource !== 'github'">
+      <h3>Wikipages</h3>
       <div class="value">{{ uniquePages.toLocaleString() }}</div>
+    </div>
+    <div class="card" v-if="activeSource !== 'commons' && activeSource !== 'meta'">
+      <h3>Repositories</h3>
+      <div class="value">{{ uniqueRepos.toLocaleString() }}</div>
     </div>
     <div class="card" style="display:none;">
       <h3>Net Volume</h3>
@@ -29,6 +33,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  activeSource: {
+    type: String,
+    required: true,
+  }
 });
 
 const uniqueContributors = computed(() => {
@@ -37,8 +45,13 @@ const uniqueContributors = computed(() => {
 });
 
 const uniquePages = computed(() => {
-  const pages = new Set(props.edits.map((e) => e.title));
+  const pages = new Set(props.edits.filter(e => e.source !== 'github' && e.source !== 'gitlab').map(e => e.title));
   return pages.size;
+});
+
+const uniqueRepos = computed(() => {
+  const repos = new Set(props.edits.filter(e => e.source === 'github' || e.source === 'gitlab').map(e => e.title));
+  return repos.size;
 });
 
 const netVolume = computed(() => {

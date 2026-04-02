@@ -44,7 +44,7 @@ const props = defineProps({
 defineEmits(['filter-user']);
 
 const currentPage = ref(1);
-const pageSize = 20;
+const pageSize = 50;
 
 const allUsersSorted = computed(() => {
   const users = {};
@@ -74,22 +74,24 @@ const maxCount = computed(() => {
 const getNsName = (nsStr) => {
   const mapping = {
     '0': 'Main (Meta)',
-    '1': 'Talk',
-    '2': 'User',
-    '3': 'User talk',
+    // '1': 'Talk',
+    // '2': 'User',
+    // '3': 'User talk',
     '4': 'Commons:Lingua Libre',
+    // 'Commons:Lingua Libre/List/',
     '5': 'Commons talk:Lingua Libre',
     '6': 'File',
-    '7': 'File talk',
-    '8': 'MediaWiki',
-    '9': 'MediaWiki talk',
+    // '7': 'File talk',
+    // '8': 'MediaWiki',
+    // '9': 'MediaWiki talk',
     '10': 'Template',
     '11': 'Template talk',
     '12': 'Help:Lingua Libre',
     '13': 'Help talk:Lingua Libre',
     '14': 'Category',
-    '15': 'Category talk',
-    '106': 'Institution',
+    // '15': 'Category talk',
+    // '106': 'Institution',
+    '200': 'Grants (Meta)',
     '1198': 'Translations',
     '-1': 'Gitlab Commits',
     '-2': 'Github Commits',
