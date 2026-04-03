@@ -2,6 +2,7 @@ import commonsLogo from '../../assets/Commons-logo.svg';
 import metaLogo from '../../assets/Wikimedia_Community_Logo.svg';
 import gitlabLogo from '../../assets/GitLab_icon.svg';
 import githubLogo from '../../assets/Github-desktop-logo-symbol.svg';
+import phabricatorLogo from '../../assets/Favicon-Phabricator-WM.svg';
 
 export const API_ENDPOINTS = {
   commons: {
@@ -27,16 +28,14 @@ export const API_ENDPOINTS = {
     link: "https://github.com/USER/REPOSITORY/commits",
     logo: githubLogo,
     name: "Github"
-  },/*
+  },
   phabricator: {
     token: "api-4xolyuqwec2tbo3o5ntq37h4j43k",
-    tag: "https://phabricator.wikimedia.org/tag/lingua-libre/",
-    board: "https://phabricator.wikimedia.org/project/board/6913/",
-    api: "https://phabricator.wikimedia.org/api/differential.revision.search",
-    link: "https://phabricator.wikimedia.org/diffusion/REPOSITORY/",
-    logo: "https://phabricator.wikimedia.org/favicon.ico",
+    api: "https://phabricator.wikimedia.org/api/",
+    link: "https://phabricator.wikimedia.org/tag/lingua-libre/",
+    logo: phabricatorLogo,
     name: "Phabricator"
-  } */
+  }
 };
 
 export const topPages = ['Help:Lingua Libre', 'Commons:Lingua_Libre', "Commons talk:Lingua Libre", "Lingua Libre"];

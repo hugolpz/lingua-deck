@@ -8,7 +8,7 @@ const dbPromise = openDB('lingualibre-dashboard', 1, {
   },
 });
 
-export function useActivityData() {
+export function projectsActivityData() {
   const status = ref('Initializing...');
   const apiLimitReached = ref(false);
   const missingPagesCount = ref(0);
@@ -113,9 +113,9 @@ export function useActivityData() {
       const dateStr = commit.author.date.split('T')[0];
       const repoName = url.split('/')[4];
       const comment = commit.message.split('\n')[0];
-      if (repoName === 'Sparql2Data' && comment.includes('Update _locales')) {
-        continue; // Skip this specific commit as it is a bot update to localization files and creates noise in the data
-      }
+      // Filter out SignIt i18n bot updates.
+      if (comment.includes('Update _locales')) { continue; }
+
       projectEdits.value.push({
         revid: sha.toString(),
         title: repoName,
@@ -137,7 +137,7 @@ export function useActivityData() {
 
     try {
       for (const sourceKey in API_ENDPOINTS) {
-        if (sourceKey === 'github' || sourceKey === 'gitlab') {
+        if (sourceKey === 'github' || sourceKey === 'gitlab' || sourceKey === 'phabricator') {
           continue;
         }
         

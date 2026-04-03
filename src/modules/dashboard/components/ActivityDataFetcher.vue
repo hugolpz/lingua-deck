@@ -58,7 +58,8 @@ import KpiMetricCards from './KpiMetricCards.vue';
 import ChartTopContributors from './ChartTopContributors.vue';
 import EditHistoryTable from './EditHistoryTable.vue';
 import { API_ENDPOINTS } from './projectSatellitePlatforms.js';
-import { useActivityData } from './projectActivityData.js';
+import { projectsActivityData } from './projectActivityData.js';
+import { phabricators, fetchLinguaLibreChanges } from './projectActivityPhabricator.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -76,7 +77,7 @@ const {
   projectEdits, 
   getPages, 
   getEdits 
-} = useActivityData();
+} = projectsActivityData();
 
 const filteredEdits = computed(() => {
   let edits = projectEdits.value;
@@ -113,6 +114,26 @@ const updateUrl = () => {
 onMounted(async () => {
   await getPages(showLists.value);
   await getEdits(title.value);
+
+  if (!title.value) {
+    status.value = 'Fetching Phabricator Activity...';
+    try {
+      const phabEdits = [];
+      for (const project of phabricators) {
+        const changes = await fetchLinguaLibreChanges(project);
+        if (changes) {
+          phabEdits.push(...changes);
+        }
+      }
+      if (phabEdits.length > 0) {
+        projectEdits.value = [...projectEdits.value, ...phabEdits].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      }
+      status.value = 'Data loaded via API.';
+    } catch (e) {
+      console.error(e);
+      status.value = 'Failed to load Phabricator data.';
+    }
+  }
 });
 </script>
 
