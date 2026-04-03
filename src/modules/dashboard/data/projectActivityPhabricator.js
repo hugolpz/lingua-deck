@@ -1,6 +1,5 @@
 // PHABRICATOR API CONFIG
-const API_TOKEN = "api-2mj7ejrixduutredaresz4lzq62w"; // Replace with your actual API token
-const BASE_URL = "https://phabricator.wikimedia.org/api";
+// API token is injected server-side by the vite.config.js proxy rewrite.
 
 // PHABRICATOR PROJECTS
 export const phabricators = [
@@ -23,63 +22,81 @@ export const phabricators = [
  * Revision Queries: https://phabricator.wikimedia.org/conduit/method/differential.revision.search/
 
 */
-const projectApiUrl = function (API_TOKEN,id) { 
-    return `https://phabricator.wikimedia.org/api/project.search?api.token=${API_TOKEN}&queryKey=active&constraints[ids][0]=${id}`; // id = Project ID, ex `6913`.
+const projectApiUrl = function (id) {
+    return `/phabricator-api/project.search?queryKey=active&constraints[ids][0]=${id}`;
 }
 
-const projectTasksListApiUrl = function (API_TOKEN,id) {
-    return `https://phabricator.wikimedia.org/api/maniphest.search?api.token=${API_TOKEN}&constraints[projects][0]=${id}`; // id = Project PHID, ex `PHID-PROJ-ok3eoizytdnc3bgpmdcu`.
+const projectTasksListApiUrl = function (phid, after = null) {
+    let url = `/phabricator-api/maniphest.search?constraints[projects][0]=${phid}`;
+    if (after) url += `&after=${after}`;
+    return url;
 }
-const taskApiUrl = function (API_TOKEN,id) { 
-    return `https://phabricator.wikimedia.org/api/maniphest.search?api.token=${API_TOKEN}&queryKey=active&constraints[ids][0]=${id}`; // id = TASK ID, ex `375653` from `T375653`.
+const taskApiUrl = function (id) {
+    return `/phabricator-api/maniphest.search?queryKey=active&constraints[ids][0]=${id}`;
 }
-const userApiUrl = function (API_TOKEN,id) {
-    return `https://phabricator.wikimedia.org/api/user.search?api.token=${API_TOKEN}&constraints[phids][0]=${id}`; // id = authorPHID, ex `PHID-USER-abc123`.
+const userApiUrl = function (id) {
+    return `/phabricator-api/user.search?constraints[phids][0]=${id}`;
 }
-const userTaskListApiUrl = function (API_TOKEN,id) {
-    return `https://phabricator.wikimedia.org/api/manifest.search?api.token=${API_TOKEN}&constraintss[authorPHIDs][0]=${id}`; // id = authorPHID, ex `PHID-USER-abc123`.    
+const userTaskListApiUrl = function (id, after = null) {
+    let url = `/phabricator-api/maniphest.search?constraints[authorPHIDs][0]=${id}`;
+    if (after) url += `&after=${after}`;
+    return url;
 }
-const logsApiUrl = function (API_TOKEN,phid) {
-    return `https://phabricator.wikimedia.org/api/transaction.search?api.token=${API_TOKEN}&objectIdentifier=${phid}`; // task/project phid, task Tid.
+const logsApiUrl = function (phid, after = null) {
+    let url = `/phabricator-api/transaction.search?objectIdentifier=${phid}`;
+    if (after) url += `&after=${after}`;
+    return url;
 }
 
 
 // PHABRICATOR DATA FETCHING LOGIC
 
 async function getProjectData(projectId) {
-    const res = await fetch(projectApiUrl(API_TOKEN, projectId));
+    const res = await fetch(projectApiUrl(projectId));
     const json = await res.json();
     return json.result.data[0];
 }
 
 async function getProjectTasks(projectPHID) {
-    const res = await fetch(projectTasksListApiUrl(API_TOKEN, projectPHID));
-    const json = await res.json();
-    return json.result.data.map(item => ({
-        id: item.id,
-        phid: item.phid,
-        title: item.fields.name,
-        status: item.fields.status.value,
-        authorPHID: item.fields.authorPHID
-    }));
+    let tasks = [];
+    let after = null;
+    do {
+        const res = await fetch(projectTasksListApiUrl(projectPHID, after));
+        const json = await res.json();
+        tasks = tasks.concat(json.result.data.map(item => ({
+            id: item.id,
+            phid: item.phid,
+            title: item.fields.name,
+            status: item.fields.status.value,
+            authorPHID: item.fields.authorPHID
+        })));
+        after = json.result.cursor.after;
+    } while (after);
+    return tasks;
 }
 
 async function getTaskLogs(taskPHID) {
-    const res = await fetch(logsApiUrl(API_TOKEN, taskPHID));
-    const json = await res.json();
-    return json.result.data
-        .filter(item => item.type === null || item.type === 'comment')
-        .map(item => ({
-            id: item.id,
-            phid: item.phid,
-            type: item.type,
-            authorPHID: item.authorPHID,
-            dateStr: new Date(item.dateCreated * 1000).toISOString().split('T')[0]
-        }));
+    let logs = [];
+    let after = null;
+    do {
+        const res = await fetch(logsApiUrl(taskPHID, after));
+        const json = await res.json();
+        logs = logs.concat(json.result.data
+            .filter(item => item.type === null || item.type === 'comment')
+            .map(item => ({
+                id: item.id,
+                phid: item.phid,
+                type: item.type,
+                authorPHID: item.authorPHID,
+                dateStr: new Date(item.dateCreated * 1000).toISOString().split('T')[0]
+            })));
+        after = json.result.cursor.after;
+    } while (after);
+    return logs;
 }
 
 async function getUserData(authorPHID) {
-    const res = await fetch(userApiUrl(API_TOKEN, authorPHID));
+    const res = await fetch(userApiUrl(authorPHID));
     const json = await res.json();
     const userData = json.result.data[0];
     if (userData) {
@@ -131,7 +148,7 @@ export async function fetchLinguaLibreChanges(project) {
                     timestamp: dateStr,
                     diff: null,
                     diffUrl: `https://phabricator.wikimedia.org/T${task.id}`,
-                    group: `${dateStr}_${author}_${task.id}.replace(/\s+/g, '_')}`
+                    group: `${dateStr}_${author}_${task.id}`.replace(/\s+/g, '_')
                 });
             }
         }
