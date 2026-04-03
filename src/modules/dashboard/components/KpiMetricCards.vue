@@ -8,18 +8,22 @@
       <h3>Content Contributors</h3>
       <div class="value">{{ uniqueContributors.toLocaleString() }}</div>
     </div>
-    <div class="card" v-if="activeSource !== 'gitlab' && activeSource !== 'github'">
+    <div class="card" v-if="activeSource === 'commons' || activeSource === 'meta'">
       <h3>Wikipages</h3>
       <div class="value">{{ uniquePages.toLocaleString() }}</div>
     </div>
-    <div class="card" v-if="activeSource !== 'commons' && activeSource !== 'meta'">
+    <div class="card" v-if="activeSource === 'gitlab' || activeSource === 'github'">
       <h3>Repositories</h3>
       <div class="value">{{ uniqueRepos.toLocaleString() }}</div>
+    </div>
+    <div class="card" v-if="activeSource === 'all' || activeSource === 'phabricator'">
+      <h3>Tasks</h3>
+      <div class="value">{{ uniqueTasks.toLocaleString() }}</div>
     </div>
     <div class="card" style="display:none;">
       <h3>Net Volume</h3>
       <div class="value" :class="{ positive: netVolume > 0, negative: netVolume < 0 }">
-        {{ netVolume > 0 ? '+' : '' }}{{ netVolume.toLocaleString() }} bytes
+        {{ netVolume > 0 ? '+' : '' }}{{ netVolume <10000 ? netVolume+'  bytes':Math.round(netVolume/1000)+' kB' }}
       </div>
     </div>
   </div>
@@ -54,8 +58,15 @@ const uniqueRepos = computed(() => {
   return repos.size;
 });
 
+const uniqueTasks = computed(() => {
+  const tasks = new Set(props.edits.filter(e => e.source === 'phabricator').map(e => e.task || e.title));
+  return tasks.size;
+});
+
 const netVolume = computed(() => {
-  return props.edits.reduce((acc, curr) => acc + (curr.diff || 0), 0);
+  // only calculate net volume for wiki edits where diff data is available
+  const wikiEdits = props.edits.filter(e => (e.source === 'commons' || e.source === 'meta') && e.diff);
+  return wikiEdits.reduce((acc, curr) => acc + (curr.diff || 0), 0);
 });
 </script>
 

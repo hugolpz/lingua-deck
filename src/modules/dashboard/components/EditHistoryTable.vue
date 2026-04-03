@@ -34,7 +34,7 @@
           </td>
           <td>
             <a :href="`${edit.url}`" target="_blank" rel="noopener noreferrer" class="diff-link" :class="getDiffClass(edit)" :title="`View on ${endpoints[edit.source || 'commons'].name}`">
-              {{ edit.diff > 0 && String(edit.diff).length < 8 ? '+' : '' }}{{ edit.diff }}
+              {{ edit.diff > 0 && String(edit.diff).length < 7 ? '+' : '' }}{{ edit.diff }}
             </a>
           </td>
         </tr>
@@ -198,10 +198,10 @@ th {
   flex-shrink: 0;
 }
 .wm-site-logo {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
-  filter: grayscale(100%) opacity(0.5);
+  filter: grayscale(50%) opacity(0.5);
   transition: filter 0.4s ease-in-out;
 }
 .wm-site-link:hover .wm-site-logo {

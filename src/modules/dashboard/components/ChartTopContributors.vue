@@ -93,6 +93,8 @@ const getNsName = (nsStr) => {
     // '106': 'Institution',
     '200': 'Grants (Meta)',
     '1198': 'Translations',
+    '6913': 'Phabricator (lingua-libre)',
+    '3393': 'Phabricator (lingua-libre-legacy)',
     '-1': 'Gitlab Commits',
     '-2': 'Github Commits',
     'unknown': 'Others'
