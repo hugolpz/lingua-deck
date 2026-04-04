@@ -1,4 +1,4 @@
-import { ref, toRaw } from 'vue';
+import { ref, toRaw, computed } from 'vue';
 import { API_ENDPOINTS, topPages, topCategories, topGitRepos } from './projectSatellitePlatforms.js';
 import { openDB } from 'idb';
 
@@ -8,9 +8,22 @@ const dbPromise = openDB('lingualibre-dashboard', 1, {
   },
 });
 
+export const phabricators = [
+  {
+    id: 6913,
+    name: "Lingua Libre",
+    phid: "PHID-PROJ-ok3eoizytdnc3bgpmdcu",
+  },
+  {
+    id: 3393,
+    name: "Lingua-Libre-Legacy",
+    phid: "PHID-PROJ-yatgxw2sglgu2upfwg62",
+  }
+];
+
 export function projectsActivityData() {
   const status = ref('Initializing...');
-  const apiLimitReached = ref(false);
+  const apiLimitReached = ref(Object.keys(API_ENDPOINTS).reduce((acc, key) => { acc[key] = false; return acc; }, {}));
   const missingPagesCount = ref(0);
   const projectEdits = ref([]);
   let projectWikipages = [];
@@ -35,6 +48,10 @@ export function projectsActivityData() {
     }
     return returnResponse ? res : res.json();
   };
+
+  /* ***************************************************** */
+  /* HELPERS ********************************************* */
+  /* ***************************************************** */
 
   const userRenameGits = (sourceKey,username) => {
     const renameMap = {
@@ -72,7 +89,7 @@ export function projectsActivityData() {
         timestamp: dateStr,
         diff: diff,
         url: `https://${sourceKey.toLowerCase()}.wikimedia.org/w/index.php?oldid=${rev.parentid}&diff=${rev.revid}`,
-        group: `${dateStr}_${rev.user}_${title}.replace(' ','_')`
+        group: `${dateStr}_${rev.user}_${title}`.replace(/\s+/g, '_')
       });
     }
   };
@@ -97,7 +114,7 @@ export function projectsActivityData() {
         timestamp: dateStr,
         diff: commit.id.slice(0,8).toString(),
         url: commit.web_url,
-        group: `${dateStr}_${author}_${repoName}.replace(' ','_')`
+        group: `${dateStr}_${author}_${repoName}`.replace(/\s+/g, '_')
       });
     }
   };
@@ -126,71 +143,106 @@ export function projectsActivityData() {
         timestamp: dateStr,
         diff: sha.slice(0, 8).toString(),
         url: url,
-        group: `${dateStr}_${author}_${repoName}.replace(' ','_')`
+        group: `${dateStr}_${author}_${repoName}`.replace(/\s+/g, '_')
       });
     }
   };
 
-  const getPages = async (showListsValue) => {
+  const phabricatorProjectPostsAppendsToProjectEdits = (data, sourceKey) => {
+    if (!Array.isArray(data)) return;
+
+    for (let i = 0; i < data.length; i++) {
+      const { log, task, project, usersDataByPHIDs } = data[i];
+      const user = usersDataByPHIDs[log.authorPHID] || { username: 'Unknown' };
+      const author = user.mwuser || user.username || 'Unknown';
+      const dateStr = log.dateStr;
+
+      projectEdits.value.push({
+        revid: log.id,
+        title: task.title,
+        name: project.name,
+        ns: project.id,
+        source: sourceKey,
+        author: author,
+        timestamp: dateStr,
+        diff: `T${task.id||log.taskPHID}`,
+        url: `https://phabricator.wikimedia.org/T${task.id}${log.id?'#'+log.id:''}`,
+        group: `${dateStr}_${author}_${task.id}`.replace(/\s+/g, '_')
+      });
+    }
+  };
+
+  /* ***************************************************** */
+  /* --- WIKIMEDIA LOGIC ********************************* */
+  /* ***************************************************** */
+
+  const getWikipages = async (showListsValue) => {
     status.value = 'Fetching pages...';
     let pagesMap = new Map();
 
-    try {
-      for (const sourceKey in API_ENDPOINTS) {
-        if (sourceKey === 'github' || sourceKey === 'gitlab' || sourceKey === 'phabricator') {
-          continue;
-        }
-        
-        const endpointApi = API_ENDPOINTS[sourceKey].api;
+    const fetchPromises = [];
 
-        for (const page of topPages) {
-          let continueToken = '';
-          do {
-            const data = await fetchJson({
-              action: 'query',
-              list: 'prefixsearch',
-              pssearch: page,
-              pslimit: 500,
-              ...continueToken,
-            }, endpointApi);
-            if (data.query && data.query.prefixsearch) {
-              data.query.prefixsearch.forEach((p) => {
-                const title = p.title.replace(/_/g, ' ');
-                pagesMap.set(`${sourceKey}:${title}`, { title, source: sourceKey });
-              });
-            }
-            continueToken = data.continue ? data.continue : '';
-          } while (continueToken);
-        }
+    for (const sourceKey in API_ENDPOINTS) {
+      if (sourceKey === 'github' || sourceKey === 'gitlab' || sourceKey === 'phabricator') {
+        continue;
+      }
+      
+      const endpointApi = API_ENDPOINTS[sourceKey].api;
 
-        for (const cat of topCategories) {
-          let continueToken = '';
-          do {
-            const data = await fetchJson({
-              action: 'query',
-              list: 'categorymembers',
-              cmtitle: cat,
-              cmlimit: 500,
-              ...continueToken,
-            }, endpointApi);
-            if (data.query && data.query.categorymembers) {
-              data.query.categorymembers.forEach((p) => {
-                const title = p.title.replace(/_/g, ' ');
-                pagesMap.set(`${sourceKey}:${title}`, { title, source: sourceKey });
-              });
-            }
-            continueToken = data.continue ? data.continue : '';
-          } while (continueToken);
+      fetchPromises.push((async () => {
+        try {
+          for (const page of topPages) {
+            let continueToken = '';
+            do {
+              const data = await fetchJson({
+                action: 'query',
+                list: 'prefixsearch',
+                pssearch: page,
+                pslimit: 500,
+                ...continueToken,
+              }, endpointApi);
+              if (data.query && data.query.prefixsearch) {
+                data.query.prefixsearch.forEach((p) => {
+                  const title = p.title.replace(/_/g, ' ');
+                  pagesMap.set(`${sourceKey}:${title}`, { title, source: sourceKey });
+                });
+              }
+              continueToken = data.continue ? data.continue : '';
+            } while (continueToken);
+          }
+
+          for (const cat of topCategories) {
+            let continueToken = '';
+            do {
+              const data = await fetchJson({
+                action: 'query',
+                list: 'categorymembers',
+                cmtitle: cat,
+                cmlimit: 500,
+                ...continueToken,
+              }, endpointApi);
+              if (data.query && data.query.categorymembers) {
+                data.query.categorymembers.forEach((p) => {
+                  const title = p.title.replace(/_/g, ' ');
+                  pagesMap.set(`${sourceKey}:${title}`, { title, source: sourceKey });
+                });
+              }
+              continueToken = data.continue ? data.continue : '';
+            } while (continueToken);
+          }
+        } catch (error) {
+          if (error.message === 'RateLimit-429') {
+            console.warn(`API Rate limit reached (429) for ${sourceKey} during datamining. Stopping fetch for this source.`);
+            apiLimitReached.value[sourceKey] = true;
+          } else {
+            console.error(error);
+          }
         }
-      }
-    } catch (error) {
-      if (error.message === 'RateLimit-429') {
-        console.warn('API Rate limit reached (429) during getPages. Stopping fetch.');
-        apiLimitReached.value = true;
-      } else {
-        console.error(error);
-      }
+      })());
     }
+
+    await Promise.all(fetchPromises);
+
 
     projectWikipages = Array.from(pagesMap.values());
     
@@ -235,6 +287,11 @@ export function projectsActivityData() {
       return true; // Still continue on other types of errors
     }
   };
+
+
+/* ***************************************************** */
+/* --- GITHUB & GITLAB LOGIC *************************** */
+/* ***************************************************** */
 
   const fetchRepositoryForCommits = async (repository, sourceKey) => {
     const endpointApi = API_ENDPOINTS[sourceKey].api;
@@ -286,6 +343,132 @@ export function projectsActivityData() {
       return true; // Still continue on other types of errors
     }
   };
+
+
+/* ***************************************************** */
+/* --- PHABRICATOR LOGIC ******************************* */
+/* ***************************************************** */
+
+  const projectApiUrl = (id) => `/phabricator-api/project.search?constraints[ids][0]=${id}`;
+  const projectTasksListApiUrl = (phid, after = null) => {
+    let url = `/phabricator-api/maniphest.search?constraints[projects][0]=${phid}`;
+    if (after) url += `&after=${after}`;
+    return url;
+  };
+  const usersApiUrl = (phids) => {
+    let url = `/phabricator-api/user.search?`;
+    phids.forEach((phid, index) => { url += `constraints[phids][${index}]=${phid}&`; });
+    return url.slice(0, -1);
+  };
+  const logsApiUrl = (phid, after = null) => {
+    let url = `/phabricator-api/transaction.search?objectIdentifier=${phid}`;
+    if (after) url += `&after=${after}`;
+    return url;
+  };
+
+  let phabricatorQueue = Promise.resolve();
+  const phabricatorFetch = (url) => {
+    phabricatorQueue = phabricatorQueue.then(() => new Promise(resolve => setTimeout(resolve, 100)));
+    return phabricatorQueue.then(() => fetch(url));
+  };
+
+  async function getProjectData(projectId) {
+    const res = await phabricatorFetch(projectApiUrl(projectId));
+    const json = await res.json();
+    return json.result.data[0];
+  }
+
+  async function getProjectTasks(projectPHID) {
+    let tasks = [];
+    let after = null;
+    do {
+      const res = await phabricatorFetch(projectTasksListApiUrl(projectPHID, after));
+      const json = await res.json();
+      tasks = tasks.concat(json.result.data.map(item => ({
+        id: item.id,
+        phid: item.phid,
+        title: item.fields.name,
+        status: item.fields.status.value,
+        authorPHID: item.fields.authorPHID
+      })));
+      after = json.result.cursor.after;
+    } while (after);
+    return tasks;
+  }
+
+  async function getTaskLogs(taskPHID) {
+    let logs = [];
+    let after = null;
+    do {
+      const res = await phabricatorFetch(logsApiUrl(taskPHID, after));
+      const json = await res.json();
+      logs = logs.concat(json.result.data  // WHY CONCAT ?????? --------------------------------------------------
+        .filter(item => item.type === "create" || item.type === 'comment')
+        .map(item => ({
+          id: item.type === 'comment'?item.id:'',
+          phid: item.phid,
+          taskPHID: item.objectPHID || null,
+          type: item.type,
+          authorPHID: item.authorPHID,
+          dateStr: new Date(item.dateCreated * 1000).toISOString().split('T')[0]
+        })));
+      after = json.result.cursor.after;
+    } while (after);
+    return logs;
+  }
+
+  async function getUsersData(authorPHIDs) {
+    if (authorPHIDs.length === 0) return {};
+    const res = await phabricatorFetch(usersApiUrl(authorPHIDs));
+    const json = await res.json();
+    const usersMap = {};
+    json.result.data.forEach(userData => {
+      usersMap[userData.phid] = {
+        id: userData.id,
+        type: userData.type,
+        username: userData.fields.username,
+        mwuser: userData.fields.mediawikiUsername,
+        authorName: userData.fields.realName
+      };
+    });
+    return usersMap;
+  }
+
+  const fetchPhabricatorProjectAppendsToProjectEdits = async (project) => {
+    try {
+       // Get data for all posts (but with obfuscated author and task ids)
+      const projectData = await getProjectData(project.id);
+      const projectTasks = await getProjectTasks(projectData.phid);
+      const allLogsResults = await Promise.all(projectTasks.map(task => getTaskLogs(task.phid)));
+      
+      // Get data for all authors
+      const authorPHIDsSet = new Set();
+      allLogsResults.flat().forEach(log => authorPHIDsSet.add(log.authorPHID));
+      const usersDataByPHIDs = await getUsersData(Array.from(authorPHIDsSet));
+
+      // Rebuild logs with proper user data
+      const dataToAppend = [];
+      allLogsResults.forEach((projectLogs, index) => {
+        const task = projectTasks[index];
+        for (const log of projectLogs) {
+          dataToAppend.push({ log, task, project, usersDataByPHIDs });
+        }
+      });
+      // Remap logs data then push.projectEdits
+      phabricatorProjectPostsAppendsToProjectEdits(dataToAppend, 'phabricator');
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      // Wait to see if we should throw specific errors
+      return true; 
+    }
+  };
+
+
+/* ***************************************************** */
+/* --- MAIN LOGIC ************************************** */
+/* ***************************************************** */
 
   const getEdits = async (titleValue) => {
     status.value = 'Checking edits...';
@@ -367,35 +550,55 @@ export function projectsActivityData() {
       projectEdits.value = [];
     }
 
-    for (const pageObj of workingList) {
-      if (pageObj.source === 'github' || pageObj.source === 'gitlab') continue;
-      
-      const success = await fetchWikipageForEdits(pageObj.title, pageObj.source);
-      if (!success) {
-         apiLimitReached.value = true;
-         const currentFound = new Set(projectEdits.value.map(e => `${e.source}:${e.title}`));
-         missingPagesCount.value = projectWikipages.filter(p => !currentFound.has(`${p.source}:${p.title}`)).length;
-         break; 
-      }
-    }
+    const mediawikiTasks = async () => {
+      for (const pageObj of workingList) {
+        if (pageObj.source === 'github' || pageObj.source === 'gitlab' || pageObj.source === 'phabricator') continue;
+        
+        if (apiLimitReached.value[pageObj.source]) continue;
 
-    if (!cacheValid) {
-      const gitSources = ['github', 'gitlab'];
-      for (const source of gitSources) {
-        if (API_ENDPOINTS[source]) {
-          const topGit = topGitRepos.filter(r => r.source === source);
-          console.log(`topGit for ${source}:`, topGit);
-          for (const repos of topGit) {
-            const success = await fetchRepositoryForCommits(repos, source);
-            if (!success) {
-              apiLimitReached.value = true;
-              break;
-            }
-          }
-          if (apiLimitReached.value) break;
+        const success = await fetchWikipageForEdits(pageObj.title, pageObj.source);
+        if (!success) {
+           apiLimitReached.value[pageObj.source] = true;
         }
       }
+      
+      const currentFound = new Set(projectEdits.value.map(e => `${e.source}:${e.title}`));
+      missingPagesCount.value = projectWikipages.filter(p => !currentFound.has(`${p.source}:${p.title}`)).length;
+    };
+
+    const gitTasks = async (source) => {
+      if (apiLimitReached.value[source]) return;
+
+      const topGit = topGitRepos.filter(r => r.source === source);
+      console.log(`topGit for ${source}:`, topGit);
+      for (const repos of topGit) {
+        const success = await fetchRepositoryForCommits(repos, source);
+        if (!success) {
+          apiLimitReached.value[source] = true;
+          break;
+        }
+      }
+    };
+
+    const phabTasks = async () => {
+      if (!apiLimitReached.value['phabricator'] && API_ENDPOINTS['phabricator']) {
+        console.log(`fetching Phabricator project logs...`);
+        for (const project of phabricators) {
+          const success = await fetchPhabricatorProjectAppendsToProjectEdits(project);
+          if (!success) {
+            apiLimitReached.value['phabricator'] = true;
+            break; 
+          }
+        }
+      }
+    };
+
+    const promises = [ mediawikiTasks() ];
+    if (!cacheValid) {
+        promises.push(gitTasks('github'), gitTasks('gitlab'), phabTasks());
     }
+    await Promise.all(promises);
+
 
     projectEdits.value.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     try {
@@ -405,7 +608,8 @@ export function projectsActivityData() {
       console.warn('Could not save to IndexedDB, it might be too large.', e);
     }
 
-    if (apiLimitReached.value) {
+    const anyApiLimitReached = Object.values(apiLimitReached.value).some((v) => v);
+    if (anyApiLimitReached) {
       status.value = `Paused due to API limits.`;
     } else {
       status.value = 'Data loaded via API.';
@@ -415,9 +619,10 @@ export function projectsActivityData() {
   return {
     status,
     apiLimitReached,
+    anyApiLimitReached: computed(() => Object.values(apiLimitReached.value).some((v) => v)),
     missingPagesCount,
     projectEdits,
-    getPages,
+    getWikipages,
     getEdits
   };
 }

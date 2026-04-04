@@ -171,11 +171,11 @@ export const topGitRepos =[
     "link": "https://github.com/hugolpz/NamesOfTheLand/",
     "source": "github",
     "name": "names-of-the-land"
-  },
+  }, /* somehow buggy
   {
     "repos": "lingua-libre/LingualibreDownloadToolJS",
     "link": "https://github.com/lingua-libre/LingualibreDownloadToolJS/",
     "source": "github",
     "name": "lingualibre-download-tool-js"
-  },
+  }, */
 ];

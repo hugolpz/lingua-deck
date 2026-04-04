@@ -24,7 +24,7 @@
         <strong>Note:</strong> Lists are not included to avoid API limits, as most of our 6000 lists are bot-created.
       </div>
       
-      <div v-if="apiLimitReached && missingPagesCount > 0" class="info-callout error">
+      <div v-if="anyApiLimitReached && missingPagesCount > 0" class="info-callout error">
         <strong>API rate limit reached:</strong> data from {{ missingPagesCount }} wikipages could not be fetch. Please reload this page in 1 hour to continue processing.
       </div>
     </div>
@@ -59,7 +59,6 @@ import ChartTopContributors from './ChartTopContributors.vue';
 import EditHistoryTable from './EditHistoryTable.vue';
 import { API_ENDPOINTS } from './projectSatellitePlatforms.js';
 import { projectsActivityData } from './projectActivityData.js';
-import { phabricators, fetchLinguaLibreChanges } from './projectActivityPhabricator.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -70,12 +69,13 @@ const showLists = ref(!route.query.list === 'false');
 const hideBots = ref(true);
 const activeSource = ref('all');
 
-const { 
+const {
   status, 
-  apiLimitReached, 
+  apiLimitReached,
+  anyApiLimitReached,
   missingPagesCount, 
   projectEdits, 
-  getPages, 
+  getWikipages, 
   getEdits 
 } = projectsActivityData();
 
@@ -112,28 +112,8 @@ const updateUrl = () => {
 };
 
 onMounted(async () => {
-  await getPages(showLists.value);
+  await getWikipages(showLists.value);
   await getEdits(title.value);
-
-  if (!title.value) {
-    status.value = 'Fetching Phabricator Activity...';
-    try {
-      const phabEdits = [];
-      for (const project of phabricators) {
-        const changes = await fetchLinguaLibreChanges(project);
-        if (changes) {
-          phabEdits.push(...changes);
-        }
-      }
-      if (phabEdits.length > 0) {
-        projectEdits.value = [...projectEdits.value, ...phabEdits].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      }
-      status.value = 'Data loaded via API.';
-    } catch (e) {
-      console.error(e);
-      status.value = 'Failed to load Phabricator data.';
-    }
-  }
 });
 </script>
 
