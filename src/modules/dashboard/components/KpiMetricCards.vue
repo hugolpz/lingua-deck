@@ -8,11 +8,11 @@
       <h3>Content Contributors</h3>
       <div class="value">{{ uniqueContributors.toLocaleString() }}</div>
     </div>
-    <div class="card" v-if="activeSource === 'commons' || activeSource === 'meta'">
+    <div class="card" v-if="activeSource === 'all' || activeSource === 'commons' || activeSource === 'meta'">
       <h3>Wikipages</h3>
       <div class="value">{{ uniquePages.toLocaleString() }}</div>
     </div>
-    <div class="card" v-if="activeSource === 'gitlab' || activeSource === 'github'">
+    <div class="card" v-if="activeSource === 'all' || activeSource === 'gitlab' || activeSource === 'github'">
       <h3>Repositories</h3>
       <div class="value">{{ uniqueRepos.toLocaleString() }}</div>
     </div>
@@ -49,7 +49,7 @@ const uniqueContributors = computed(() => {
 });
 
 const uniquePages = computed(() => {
-  const pages = new Set(props.edits.filter(e => e.source !== 'github' && e.source !== 'gitlab').map(e => e.title));
+  const pages = new Set(props.edits.filter(e => e.source === 'commons' || e.source === 'meta').map(e => e.title));
   return pages.size;
 });
 
