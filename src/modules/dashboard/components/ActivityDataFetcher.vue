@@ -15,9 +15,10 @@
           </button>
         </div>
 
-        <div id="humans-or-bots" class="toggle-group">
+        <div id="types-filters" class="toggle-group">
           <button :class="{ active: hideBots }" @click="hideBots = true">Humans only</button>
           <button :class="{ active: !hideBots }" @click="hideBots = false">Include bots</button>
+          <button :class="{ active: hideTranslations }" @click="hideTranslations = !hideTranslations">Hide translations</button>
         </div>
       </div>
       <div class="info-callout" v-if="!showLists">
@@ -32,21 +33,52 @@
     <!-- Dashboard Content -->
     <div v-if="filteredEdits.length > 0" class="dashboard-content">
       <KpiMetricCards :edits="filteredEdits" :activeSource="activeSource" />
+      <div class="charts-area">
+        <TopList 
+          id="TopContriborsList" 
+          :data="filteredEdits" 
+          :title="`Authorship (${activeSource})`"
+          groupKey="author"
+          subGroupKey="ns"
+          countLabel="edits"
+          linkBaseUrl="https://commons.wikimedia.org/wiki/User:"
+          :subGroupMapping="namespaceMapping"
+          @filter-item="(u) => { username = u; updateUrl() }" 
+        />
 
+        <TopList
+          id="MonthlyNamespaceContributionsList" 
+          :data="filteredEdits.map(edit => {  return {  ...edit, timestamp: edit.timestamp.slice(0,7) }; })"
+          :title="`Monthly contributions by namespace (${activeSource})`"
+          groupKey="timestamp"
+          subGroupKey="ns"
+          countLabel="edits"
+          :subGroupMapping="namespaceMapping"
+          sortBy="key"
+          sortDirection="desc"
+        />
+        <Linegraph
+          :data="filteredEdits"
+          groupKey="author"
+          timeGrouping="quarter"
+          :limit="14"
+          :topicTitle="`Author (${activeSource})`"
+          :dateBrush="true"
+        />
+      </div>
+      <TopChart 
+        :data="filteredEdits" 
+        counting="author" 
+        :title="`Author (${activeSource})`" 
+        mode="piechart"
+        :limit="12"
+      />
       <EditHistoryTable 
         :edits="filteredEdits" 
         :endpoints="API_ENDPOINTS"
         @filter-user="(u) => { username = u; updateUrl() }"
         @filter-page="(p) => { title = p; updateUrl() }"
       />
-      
-      <div class="charts-area">
-        <ChartTopContributors 
-          :edits="filteredEdits" 
-          @filter-user="(u) => { username = u; updateUrl() }" 
-        />
-        <!-- We can add ChartActivityTimeline here later -->
-      </div>
     </div>
   </div>
 </template>
@@ -55,9 +87,11 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import KpiMetricCards from './KpiMetricCards.vue';
-import ChartTopContributors from './ChartTopContributors.vue';
+import TopList from './TopList.vue';
 import EditHistoryTable from './EditHistoryTable.vue';
-import { API_ENDPOINTS } from './projectSatellitePlatforms.js';
+import TopChart from './TopChart.vue';
+import Linegraph from './Linegraph.vue';
+import { API_ENDPOINTS, namespaceMapping } from './projectSatellitePlatforms.js';
 import { projectsActivityData } from './projectActivityData.js';
 
 const route = useRoute();
@@ -67,6 +101,7 @@ const username = ref(route.query.username || '');
 const title = ref(route.query.title || '');
 const showLists = ref(!route.query.list === 'false');
 const hideBots = ref(true);
+const hideTranslations = ref(false);
 const activeSource = ref('all');
 
 const {
@@ -91,6 +126,14 @@ const filteredEdits = computed(() => {
       const lowerAuthor = e.author.toLowerCase();
       // Only keep humans (filter out 'bot' at start or end)
       return !lowerAuthor.startsWith('bot') && !lowerAuthor.endsWith('bot') && !lowerAuthor.startsWith('translatewiki') && !e.title.startsWith('Update output files') ;
+    });
+  }
+
+  if (hideTranslations.value) {
+    edits = edits.filter((e) => {
+      const pageTitle = e.title.toLowerCase();
+      // Use regex test rather than endsWith which doesn't support regex in JS
+      return !/\/[a-z]{2,3}(-[a-z]{2,4})?$/.test(pageTitle);
     });
   }
 

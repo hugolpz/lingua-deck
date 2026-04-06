@@ -128,6 +128,11 @@ export function projectsActivityData() {
       const commit = data[i].commit;
       const author = data[i].author?.login || commit.author?.name || 'Unknown';
       const dateStr = commit.author.date.split('T')[0];
+      // Reject commits prior to May 2016
+      // See https://github.com/wikimedia-france/Lingua-Libre/commits/master/?after=29d074676ff5abd48fe28d13c71f9216574d7d1c+244
+      if (dateStr < '2016-05-01') { continue; }
+      const llskinExcludeList = ['Hutchy68','garrickvanburen','snaterlicious','jthingelstad','paladox','hexmode', 'kghbln', 'tobijat', 'frimelle','thiemowmde', 'JanZerebecki', 'JeroenDeDauw', 'adrianheine','mairushoch', 'Benestar', 'JonasKress' ];
+      if (llskinExcludeList.find((user) => user === author)) { continue; }
       const repoName = url.split('/')[4];
       const comment = commit.message.split('\n')[0];
       // Filter out SignIt i18n bot updates.
