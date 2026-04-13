@@ -1,5 +1,5 @@
 import { ref, toRaw, computed } from 'vue';
-import { API_ENDPOINTS, topPages, topCategories, topGitRepos } from './projectSatellitePlatforms.js';
+import { API_ENDPOINTS, topPagesBySource, topCategories, topGitRepos } from './projectSatellitePlatforms.js';
 import { openDB } from 'idb';
 
 const dbPromise = openDB('lingualibre-dashboard', 1, {
@@ -60,7 +60,8 @@ export function projectsActivityData() {
       'pushkar': 'Pushkar707',    // as per userpage
       'Pushkar': 'Pushkar707',    // as per userpage
       'pushkar707': 'Pushkar707', // as per userpage
-      'Poslovitch':'Florian Cuny' // as per userpage
+      'Poslovitch':'Florian Cuny', // as per userpage
+      'Lyokoi':'Lyokoï'
     }
     return renameMap[username] || username;
   }
@@ -88,7 +89,7 @@ export function projectsActivityData() {
         author: rev.user,
         timestamp: dateStr,
         diff: diff,
-        url: `https://${sourceKey.toLowerCase()}.wikimedia.org/w/index.php?oldid=${rev.parentid}&diff=${rev.revid}`,
+        url: `${API_ENDPOINTS[sourceKey].link}index.php?oldid=${rev.parentid}&diff=${rev.revid}`,
         group: `${dateStr}_${rev.user}_${title}`.replace(/\s+/g, '_')
       });
     }
@@ -128,9 +129,11 @@ export function projectsActivityData() {
       const commit = data[i].commit;
       const author = data[i].author?.login || commit.author?.name || 'Unknown';
       const dateStr = commit.author.date.split('T')[0];
-      // Reject commits prior to May 2016
-      // See https://github.com/wikimedia-france/Lingua-Libre/commits/master/?after=29d074676ff5abd48fe28d13c71f9216574d7d1c+244
-      if (dateStr < '2016-05-01') { continue; }
+      // Reject edits and commits prior to May 2016
+      // Earliest edit : 2015.09
+      // Earliest commit: 2016.05 https://github.com/wikimedia-france/Lingua-Libre/commits/master/?after=29d074676ff5abd48fe28d13c71f9216574d7d1c+244
+      if (dateStr < '2015-06-01') { continue; }
+      // Reject template mediawiki skin contributors
       const llskinExcludeList = ['Hutchy68','garrickvanburen','snaterlicious','jthingelstad','paladox','hexmode', 'kghbln', 'tobijat', 'frimelle','thiemowmde', 'JanZerebecki', 'JeroenDeDauw', 'adrianheine','mairushoch', 'Benestar', 'JonasKress' ];
       if (llskinExcludeList.find((user) => user === author)) { continue; }
       const repoName = url.split('/')[4];
@@ -196,7 +199,8 @@ export function projectsActivityData() {
 
       fetchPromises.push((async () => {
         try {
-          for (const page of topPages) {
+          const pagesToSearch = topPagesBySource[sourceKey] ?? [];
+          for (const page of pagesToSearch) {
             let continueToken = '';
             do {
               const data = await fetchJson({
@@ -265,7 +269,7 @@ export function projectsActivityData() {
   const fetchWikipageForEdits = async (page, sourceKey = 'commons') => {
     const endpointApi = API_ENDPOINTS[sourceKey].api;
     try {
-      if (sourceKey === 'commons' || sourceKey === 'meta') {
+      if (sourceKey === 'commons' || sourceKey === 'meta' || sourceKey === 'wikipedia' || sourceKey === 'wikidata') {
         let continueToken = '';
         do {
           const data = await fetchJson({
@@ -555,7 +559,7 @@ export function projectsActivityData() {
       projectEdits.value = [];
     }
 
-    const mediawikiTasks = async () => {
+    const mediawikiEdits = async () => {
       for (const pageObj of workingList) {
         if (pageObj.source === 'github' || pageObj.source === 'gitlab' || pageObj.source === 'phabricator') continue;
         
@@ -571,7 +575,7 @@ export function projectsActivityData() {
       missingPagesCount.value = projectWikipages.filter(p => !currentFound.has(`${p.source}:${p.title}`)).length;
     };
 
-    const gitTasks = async (source) => {
+    const gitCommits = async (source) => {
       if (apiLimitReached.value[source]) return;
 
       const topGit = topGitRepos.filter(r => r.source === source);
@@ -598,9 +602,9 @@ export function projectsActivityData() {
       }
     };
 
-    const promises = [ mediawikiTasks() ];
+    const promises = [ mediawikiEdits() ];
     if (!cacheValid) {
-        promises.push(gitTasks('github'), gitTasks('gitlab'), phabTasks());
+        promises.push(gitCommits('github'), gitCommits('gitlab'), phabTasks());
     }
     await Promise.all(promises);
 

@@ -119,7 +119,7 @@ const props = defineProps({
   },
   dateStart: {
     type: String,
-    default: '2016-01-01'
+    default: '2015-0-01'
   },
   dateEnd: {
     type: String,

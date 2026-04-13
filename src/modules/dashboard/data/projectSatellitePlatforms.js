@@ -1,5 +1,7 @@
 import commonsLogo from '../../assets/Commons-logo.svg';
 import metaLogo from '../../assets/Wikimedia_Community_Logo.svg';
+import wikipediaLogo from '../../assets/Wikipedia-logo-v2.svg';
+import wikidataLogo from '../../assets/Wikidata_Favicon_color.svg'; // Wikidata-logo.svg
 import gitlabLogo from '../../assets/GitLab_icon.svg';
 import githubLogo from '../../assets/Github-desktop-logo-symbol.svg';
 import phabricatorLogo from '../../assets/Favicon-Phabricator-WM.svg';
@@ -16,6 +18,24 @@ export const API_ENDPOINTS = {
     link: "https://meta.wikimedia.org/wiki/",
     logo: metaLogo,
     name: "Meta-Wiki"
+  },
+  wikipedia: {
+    api: "https://fr.wikipedia.org/w/api.php", 
+    link: "https://fr.wikipedia.org/wiki/",
+    logo: wikipediaLogo,
+    name: "Wikipedia (fr)"
+  },/*
+  wikipediaOc: {
+    api: "https://oc.wikipedia.org/w/api.php", 
+    link: "https://oc.wikipedia.org/wiki/",
+    logo: wikipediaLogo,
+    name: "Wikipedia (oc)"
+  }, */
+  wikidata: {
+    api: "https://www.wikidata.org/w/api.php", 
+    link: "https://www.wikidata.org/wiki/",
+    logo: wikidataLogo,
+    name: "Wikidata"
   },
   gitlab: {
     api: "https://gitlab.wikimedia.org/api/v4/projects/repos%2FREPOSITORY/repository/commits",
@@ -38,8 +58,13 @@ export const API_ENDPOINTS = {
   }
 };
 
-export const topPages = ['Help:Lingua Libre', 'Commons:Lingua_Libre', "Commons talk:Lingua Libre", "Lingua Libre"];
-export const topCategories = ['Category:Lingua Libre'];
+export const topPagesBySource = {
+  commons:   [ "Help:Lingua Libre", "Commons:Lingua_Libre", "Commons talk:Lingua Libre" ],
+  meta:      [ "Lingua Libre" ],
+  wikipedia: [ "Lingua Libre", "Projet:Langues de France", "Projet:Lingua Libre", "Projet:Oc-a-thon" ],
+  wikidata:  [ "Q60024037" ],
+};
+export const topCategories = ['Category:Lingua Libre']; // commons and meta
 export const topGitRepos =[
   // 2024-26 version : Poslovitch, Pushkar, hugolpz. 
   {
@@ -184,15 +209,36 @@ export const CHART_COLORS = [
 const specificColors = {
   '0': '#ffc107',     // Yellow
   '2': '#17a2b8',     // Cyan
-  '4': '#007bff',     // Blue
+  '4': '#3366CC',     // Blue
   '6': '#28a745',     // Green
   '10': '#e83e8c',    // Pink
   '12': '#fd7e14',    // Orange
   '14': '#6f42c1',    // Purple
+  '102': '#59a8fc',   // Blue
   '1198': '#6c757d',  // Gray
-  '-1': '#f03e3e',    // Red
-  '-2': '#4057c0',    // Dark blue
-  'unknown': '#adb5bd'
+  '6913': '#006699', // WMF blue
+  '3393': '#3399CC', // WMF blue-lite
+  '-1': '#e24329',    // From logo: dark-orange #e24329, orange #fc6d26, light-orange: #fca326
+  '-2': '#892793',    // From logo: mid-purple #892793, dark-purple #492779
+  'unknown': '#C0C0C0'
+};
+
+export const getNamespaceInfo = (ns, sourceKey) => {
+  const mapping = namespaceMapping[ns];
+  const sourceName = API_ENDPOINTS[sourceKey]?.name || sourceKey;
+  
+  let label = mapping?.name || `Namespace ${ns}`;
+  let color = mapping?.color || getSharedColor(ns);
+
+  // Source-aware overrides for common namespaces
+  if (ns === '0' || ns === 0) {
+    if (sourceKey === 'wikidata') label = 'Item';
+    else label = `Main (${sourceName})`;
+  } else if (ns === '102') {
+    label = `Project (${sourceName})`;
+  }
+
+  return { name: label, color };
 };
 
 export const getSharedColor = (key, index = null) => {
@@ -233,12 +279,17 @@ export const namespaceMapping = {
   '13': { name: 'Help talk:Lingua Libre', color: getSharedColor('13') },
   '14': { name: 'Category', color: getSharedColor('14') },
   // '15': { name: 'Category talk' },
+  '102': { name: 'Project (Wikipedia)', color: getSharedColor('102') },
   // '106': { name: 'Institution' },
   '200': { name: 'Grants (Meta)', color: getSharedColor('200') },
   '1198': { name: 'Translations', color: getSharedColor('1198') },
+  // Phabricators
   '6913': { name: 'Phabricator (lingua-libre)', color: getSharedColor('6913') },
   '3393': { name: 'Phabricator (lingua-libre-legacy)', color: getSharedColor('3393') },
+  // Gitlab
   '-1': { name: 'Gitlab Commits', color: getSharedColor('-1') },
+  // Github
   '-2': { name: 'Github Commits', color: getSharedColor('-2') },
+  // Others
   'unknown': { name: 'Others', color: getSharedColor('unknown') }
 };

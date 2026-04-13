@@ -39,11 +39,18 @@
           :data="filteredEdits" 
           :title="`Authorship (${activeSource})`"
           groupKey="author"
-          subGroupKey="ns"
+          subGroupKey="source_ns"
           countLabel="edits"
           linkBaseUrl="https://commons.wikimedia.org/wiki/User:"
-          :subGroupMapping="namespaceMapping"
+          :subGroupMapping="getDynamicNsMapping"
           @filter-item="(u) => { username = u; updateUrl() }" 
+        />
+        <TopChart 
+          :data="filteredEdits" 
+          counting="author" 
+          :title="`Author (${activeSource})`" 
+          mode="piechart"
+          :limit="12"
         />
 
         <TopList
@@ -51,9 +58,9 @@
           :data="filteredEdits.map(edit => {  return {  ...edit, timestamp: edit.timestamp.slice(0,7) }; })"
           :title="`Monthly contributions by namespace (${activeSource})`"
           groupKey="timestamp"
-          subGroupKey="ns"
+          subGroupKey="source_ns"
           countLabel="edits"
-          :subGroupMapping="namespaceMapping"
+          :subGroupMapping="getDynamicNsMapping"
           sortBy="key"
           sortDirection="desc"
         />
@@ -66,13 +73,6 @@
           :dateBrush="true"
         />
       </div>
-      <TopChart 
-        :data="filteredEdits" 
-        counting="author" 
-        :title="`Author (${activeSource})`" 
-        mode="piechart"
-        :limit="12"
-      />
       <EditHistoryTable 
         :edits="filteredEdits" 
         :endpoints="API_ENDPOINTS"
@@ -91,7 +91,7 @@ import TopList from './TopList.vue';
 import EditHistoryTable from './EditHistoryTable.vue';
 import TopChart from './TopChart.vue';
 import Linegraph from './Linegraph.vue';
-import { API_ENDPOINTS, namespaceMapping } from './projectSatellitePlatforms.js';
+import { API_ENDPOINTS, namespaceMapping, getNamespaceInfo } from './projectSatellitePlatforms.js';
 import { projectsActivityData } from './projectActivityData.js';
 
 const route = useRoute();
@@ -143,8 +143,18 @@ const filteredEdits = computed(() => {
   if (title.value) {
     edits = edits.filter((e) => e.title === title.value);
   }
-  return edits;
+
+  // Enrich with source-aware namespace key
+  return edits.map(e => ({
+    ...e,
+    source_ns: `${e.source}:${e.ns}`
+  }));
 });
+
+const getDynamicNsMapping = (key) => {
+  const [sourceKey, ns] = key.split(':');
+  return getNamespaceInfo(ns, sourceKey);
+};
 
 const updateUrl = () => {
   const query = {};

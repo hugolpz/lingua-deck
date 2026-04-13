@@ -117,10 +117,16 @@ const maxCount = computed(() => {
 });
 
 const getSubGroupName = (key) => {
+  if (typeof props.subGroupMapping === 'function') {
+    return props.subGroupMapping(key)?.name || key;
+  }
   return props.subGroupMapping[key]?.name || `${props.subGroupKey} ${key}`;
 };
 
 const getSubGroupColor = (key) => {
+  if (typeof props.subGroupMapping === 'function') {
+    return props.subGroupMapping(key)?.color || getSharedColor(key);
+  }
   return props.subGroupMapping[key]?.color || getSharedColor(key);
 };
 
