@@ -44,6 +44,10 @@ const props = defineProps({
     type: String,
     default: 'Top Items'
   },
+  pageSize: {
+    type: Number,
+    default: 20
+  },
   groupKey: {
     type: String,
     default: 'author', // The field to group by (e.g., author)
@@ -77,7 +81,6 @@ const props = defineProps({
 defineEmits(['filter-item']);
 
 const currentPage = ref(1);
-const pageSize = 12;
 
 const allItemsSorted = computed(() => {
   const items = {};
@@ -103,11 +106,11 @@ const allItemsSorted = computed(() => {
   });
 });
 
-const totalPages = computed(() => Math.ceil(allItemsSorted.value.length / pageSize));
+const totalPages = computed(() => Math.ceil(allItemsSorted.value.length / props.pageSize));
 
 const paginatedItems = computed(() => {
-  const start = (currentPage.value - 1) * pageSize;
-  const end = start + pageSize;
+  const start = (currentPage.value - 1) * props.pageSize;
+  const end = start + props.pageSize;
   return Object.fromEntries(allItemsSorted.value.slice(start, end));
 });
 
