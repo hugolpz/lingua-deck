@@ -53,17 +53,28 @@ export function projectsActivityData() {
   /* HELPERS ********************************************* */
   /* ***************************************************** */
 
-  const userRenameGits = (sourceKey,username) => {
+  const multipleUsernamesMerger = (sourceKey,username) => {
     const renameMap = {
-      'hugolpz': 'Yug',            // as per userpage
-      'Adityasuthar20': 'adityasuthar20',   // as per userpage
+      // Gitlab
+      'adityasuthar20':'Adityasuthar20',   // as per userpage
       'pushkar': 'Pushkar707',    // as per userpage
-      'Pushkar': 'Pushkar707',    // as per userpage
       'pushkar707': 'Pushkar707', // as per userpage
-      'Poslovitch':'Florian Cuny', // as per userpage
-      'Lyokoi':'Lyokoï'
+      'poslovitch' : 'Poslovitch', // as per public userpages @poslovitch
+      // github
+      'hugolpz': 'Yug',            // as per userpage
+      'pamputt':'Pamputt',
+      'Lyokoi':'Lyokoï',
+      // CedricTarbouriech
+      // wikis
+      'lingualibre>JnpoJuwan': 'JnpoJuwan',
+      'lingualibre>XANA000':'XANA000',
+      'Hugo en résidence':'Yug',
+      'Xenophôn':'Rémy Gerbet WMFr',
+      // Phabricator
+      'Pushkar7077':'Pushkar707',
+      'Aditya suthar02':'Adityasuthar20'
     }
-    return renameMap[username] || username;
+    return renameMap[username] || renameMap[username.toLowerCase()] || username;
   }
   const mediawikiTitleRevisionsAppendsToProjectEdits = (data, sourceKey) => {
     if (!data || !data.query || !data.query.pages) return;
@@ -79,6 +90,7 @@ export function projectsActivityData() {
       const prevSize = nextRev ? nextRev.size : 0;
       const diff = rev.size - prevSize;
       const dateStr = rev.timestamp.split('T')[0];
+      const author = rev.user;
 
       projectEdits.value.push({
         revid: rev.revid,
@@ -86,7 +98,7 @@ export function projectsActivityData() {
         title: title,
         ns: ns,
         source: sourceKey,
-        author: rev.user,
+        author: multipleUsernamesMerger(sourceKey,author),
         timestamp: dateStr,
         diff: diff,
         url: `${API_ENDPOINTS[sourceKey].link}index.php?oldid=${rev.parentid}&diff=${rev.revid}`,
@@ -100,7 +112,7 @@ export function projectsActivityData() {
 
     for (let i = 0; i < data.length; i++) {
       const commit = data[i];
-      const author = userRenameGits(sourceKey,commit.author_name);
+      const author = commit.author_name;
       const dateStr = commit.created_at.split('T')[0];
       const repoName = commit.web_url.split('/')[6];
       const comment = commit.message.split('\n')[0];
@@ -111,7 +123,7 @@ export function projectsActivityData() {
         comment: comment,
         ns: "-1",
         source: sourceKey,
-        author: author,
+        author: multipleUsernamesMerger(sourceKey,author),
         timestamp: dateStr,
         diff: commit.id.slice(0,8).toString(),
         url: commit.web_url,
@@ -147,7 +159,7 @@ export function projectsActivityData() {
         comment: comment,
         ns: '-2',
         source: sourceKey,
-        author: author,
+        author: multipleUsernamesMerger(sourceKey,author),
         timestamp: dateStr,
         diff: sha.slice(0, 8).toString(),
         url: url,
@@ -171,7 +183,7 @@ export function projectsActivityData() {
         name: project.name,
         ns: project.id,
         source: sourceKey,
-        author: author,
+        author: multipleUsernamesMerger(sourceKey,author),
         timestamp: dateStr,
         diff: `T${task.id||log.taskPHID}`,
         url: `https://phabricator.wikimedia.org/T${task.id}${log.id?'#'+log.id:''}`,
