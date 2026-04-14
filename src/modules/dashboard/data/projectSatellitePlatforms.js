@@ -60,11 +60,11 @@ export const API_ENDPOINTS = {
 
 export const topPagesBySource = {
   commons:   [ "Help:Lingua Libre", "Commons:Lingua_Libre", "Commons talk:Lingua Libre" ],
-  meta:      [ "Lingua Libre" ],
+  meta:      [ "Lingua Libre", "WikiTutur","Wikimedia Côte d'Ivoire/Groupe de Travail/Lingua Libre" ],
   wikipedia: [ "Lingua Libre", "Projet:Langues de France", "Projet:Lingua Libre", "Projet:Oc-a-thon" ],
   wikidata:  [ "Q60024037" ],
 };
-export const topCategories = ['Category:Lingua Libre']; // commons and meta
+export const topCategories = ['Category:Lingua Libre', 'Category:WikiTutur']; // commons and meta
 export const topGitRepos =[
   // 2024-26 version : Poslovitch, Pushkar, hugolpz. 
   {
