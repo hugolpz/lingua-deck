@@ -90,7 +90,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import KpiMetricCards from './KpiMetricCards.vue';
 import TopList from './TopList.vue';
-import EditHistoryTable from './EditHistoryTable.vue';
+import EditHistoryTable from './RecentChangesTable.vue';
 import TopChart from './TopChart.vue';
 import Linegraph from './Linegraph.vue';
 import { API_ENDPOINTS, namespaceMapping, getNamespaceInfo } from './projectSatellitePlatforms.js';
@@ -174,7 +174,7 @@ onMounted(async () => {
 
 <style scoped>
 .wiki-data-fetcher {
-  padding: 1rem;
+  padding: 0;
 }
 .system-status {
   display: flex;
@@ -193,9 +193,9 @@ onMounted(async () => {
 
 .toggle-group {
   display: flex;
+  flex-wrap: wrap;
   background-color: #f1f3f5;
   border-radius: 6px;
-  overflow: hidden;
   border: 1px solid #ddd;
 }
 .toggle-group button {
@@ -293,5 +293,12 @@ onMounted(async () => {
 }
 .charts-area {
   margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .status-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

@@ -27,10 +27,7 @@ const route = useRoute();
 
 <style scoped>
 .dashboard-wiki {
-  max-width: 1200px;
-  min-width: 800px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 0.5rem 0;
 }
 .breadcrumbs {
   margin-bottom: 1rem;
