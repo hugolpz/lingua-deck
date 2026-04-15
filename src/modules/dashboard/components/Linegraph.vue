@@ -23,7 +23,7 @@
         
         <!-- Areas -->
         <polygon
-          v-for="(series, i) in lineData"
+          v-for="series in lineData"
           :key="'area-'+series.group"
           :points="series.areaPoints"
           :fill="series.color"
@@ -33,7 +33,7 @@
 
         <!-- Lines -->
         <polyline
-          v-for="(series, i) in lineData"
+          v-for="series in lineData"
           :key="series.group"
           :points="series.points"
           fill="none"
@@ -55,15 +55,16 @@
         />
 
         <!-- Scatter points on hover -->
-        <circle
-          v-if="hoverIndex !== null"
-          v-for="series in lineData"
-          :key="'pt-'+series.group"
-          :cx="series.data[hoverIndex].x"
-          :cy="series.data[hoverIndex].y"
-          r="4"
-          :fill="series.color"
-        />
+        <g v-if="hoverIndex !== null">
+          <circle
+            v-for="series in lineData"
+            :key="'pt-'+series.group"
+            :cx="series.data[hoverIndex].x"
+            :cy="series.data[hoverIndex].y"
+            r="4"
+            :fill="series.color"
+          />
+        </g>
       </svg>
 
       <!-- Labels Layer out of SVG for better styling -->
@@ -119,7 +120,7 @@ const props = defineProps({
   },
   dateStart: {
     type: String,
-    default: '2015-0-01'
+    default: '2015-01-01'
   },
   dateEnd: {
     type: String,
@@ -177,7 +178,7 @@ const generateDateRange = (startStr, endStr, grouping) => {
     } else if (grouping === 'quarter') {
       const q = Math.floor(current.getUTCMonth() / 3) + 1;
       key = `${y}-Q${q}`;
-      label = `Q${q} ${y}`;
+      label = `${y}Q${q}`;
       current.setUTCMonth(current.getUTCMonth() + 3);
     } else if (grouping === 'month') {
       key = `${y}-${pad(m)}`;

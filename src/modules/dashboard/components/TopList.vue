@@ -65,7 +65,7 @@ const props = defineProps({
     default: '' // e.g., 'https://commons.wikimedia.org/wiki/User:'
   },
   subGroupMapping: {
-    type: Object,
+    type: [Object, Function],
     default: () => ({}) // Optional mapping for subGroup labels/colors
   },
   sortBy: {
