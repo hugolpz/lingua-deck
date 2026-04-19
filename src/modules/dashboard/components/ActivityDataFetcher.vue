@@ -21,8 +21,8 @@
           <button :class="{ active: hideTranslations }" @click="hideTranslations = !hideTranslations">Hide translations</button>
         </div>
       </div>
-      <div class="info-callout" v-if="!showLists">
-        <strong>Note:</strong> Lists are not included to avoid API limits, as most of our 6000 lists are bot-created.
+      <div class="info-callout">
+        <strong>Disclaimer:</strong> This dashboard is a work in progress. List, discussions, userpages, social web, Translatewiki, Toolhub, Toolforge, WMcloud and others are not included, their data being either marginal, mixed, or out-of-reach. Nicolas Vion's 2005-2015 contributions and IRL events supports are not included.
       </div>
       
       <div v-if="anyApiLimitReached && missingPagesCount > 0" class="info-callout error">
