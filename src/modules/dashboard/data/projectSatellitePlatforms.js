@@ -191,7 +191,13 @@ export const topGitRepos =[
     "link": "https://github.com/hugolpz/NamesOfTheLand/",
     "source": "github",
     "name": "names-of-the-land"
-  }, 
+  },
+  {
+    "repos": "nethahussain/lingualibre-ml-wikt-bot",
+    "link": "https://github.com/nethahussain/lingualibre-ml-wikt-bot,
+    "source": "github",
+    "name": "lingualibre-ml-wikt-bot"
+  },
   /* somehow buggy
   {
     "repos": "lingua-libre/LingualibreDownloadToolJS",
