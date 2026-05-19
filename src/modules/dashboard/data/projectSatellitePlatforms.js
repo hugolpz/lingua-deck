@@ -194,7 +194,7 @@ export const topGitRepos =[
   },
   {
     "repos": "nethahussain/lingualibre-ml-wikt-bot",
-    "link": "https://github.com/nethahussain/lingualibre-ml-wikt-bot,
+    "link": "https://github.com/nethahussain/lingualibre-ml-wikt-bot",
     "source": "github",
     "name": "lingualibre-ml-wikt-bot"
   },
