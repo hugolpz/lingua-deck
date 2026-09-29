@@ -21,6 +21,7 @@
           <button :class="{ active: hideTranslations }" @click="hideTranslations = !hideTranslations">Hide translations</button>
         </div>
       </div>
+      
       <div class="info-callout">
         <strong>Disclaimer:</strong> This dashboard is a work in progress. List, discussions, userpages, social web, Translatewiki, Toolhub, Toolforge, WMcloud and others are not included, their data being either marginal, mixed, or out-of-reach. Nicolas Vion's 2005-2015 contributions and IRL events supports are not included.
       </div>
@@ -32,7 +33,10 @@
 
     <!-- Dashboard Content -->
     <div v-if="filteredEdits.length > 0" class="dashboard-content">
+      <DateRange :data="projectEdits" start="2015Q1" @filter="handleDateFilter" />
+
       <KpiMetricCards :edits="filteredEdits" :activeSource="activeSource" />
+      
       <div class="charts-area">
         <TopList 
           id="TopContriborsList" 
@@ -82,6 +86,11 @@
         @filter-page="(p) => { title = p; updateUrl() }"
       />
     </div>
+    
+    <div class="gitlab-section" style="margin-top:2rem">
+      <h3>Repository analysis</h3>
+      <GitlabLinesCards :config="gitlabConfig" />
+    </div>
   </div>
 </template>
 
@@ -93,8 +102,11 @@ import TopList from './TopList.vue';
 import EditHistoryTable from './RecentChangesTable.vue';
 import TopChart from './TopChart.vue';
 import Linegraph from './Linegraph.vue';
-import { API_ENDPOINTS, namespaceMapping, getNamespaceInfo } from './projectSatellitePlatforms.js';
-import { projectsActivityData } from './projectActivityData.js';
+import DateRange from './DateRange.vue';
+import { API_ENDPOINTS, namespaceMapping, getNamespaceInfo } from '@/modules/dashboard/data/projectSatellitePlatforms.js';
+import { projectsActivityData } from '@/modules/dashboard/data/projectActivityData.js';
+import GitlabLinesCards from '@/modules/dashboard/components/GitlabLinesCards.vue';
+import contributions from '@/modules/dashboard/data/gitlabContributions.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -103,7 +115,7 @@ const username = ref(route.query.username || '');
 const title = ref(route.query.title || '');
 const showLists = ref(!route.query.list === 'false');
 const hideBots = ref(true);
-const hideTranslations = ref(false);
+const hideTranslations = ref(true);
 const activeSource = ref('all');
 
 const {
@@ -116,8 +128,17 @@ const {
   getEdits 
 } = projectsActivityData();
 
+const dateFilteredEdits = ref([]);
+const handleDateFilter = (filtered) => {
+  dateFilteredEdits.value = filtered;
+};
+
 const filteredEdits = computed(() => {
-  let edits = projectEdits.value;
+  let edits = dateFilteredEdits.value;
+  
+  if (edits.length === 0 && projectEdits.value.length > 0) {
+    edits = projectEdits.value;
+  }
   
   if (activeSource.value !== 'all') {
     edits = edits.filter((e) => e.source === activeSource.value);
@@ -169,6 +190,15 @@ const updateUrl = () => {
 onMounted(async () => {
   await getWikipages(showLists.value);
   await getEdits(title.value);
+});
+
+const gitlabConfig = computed(() => {
+  const first = contributions && contributions.length ? contributions[0] : null;
+  if (!first) return { repoUrl: '', patterns: [] };
+  return {
+    repoUrl: first.repository_url || first.repositoryUrl || '',
+    patterns: (first.file_paths || first.filePaths || []).map((p) => p.path || p)
+  };
 });
 </script>
 

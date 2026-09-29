@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { getSharedColor } from './projectSatellitePlatforms.js';
+import { getSharedColor } from '../data/projectSatellitePlatforms.js';
 
 const props = defineProps({
   data: {

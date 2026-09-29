@@ -20,7 +20,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-import ActivityDataFetcher from '../components/dashboards/ActivityDataFetcher.vue';
+import ActivityDataFetcher from '@/modules/dashboard/components/ActivityDataFetcher.vue';
 
 const route = useRoute();
 </script>
