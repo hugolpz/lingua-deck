@@ -18,7 +18,7 @@
         <div id="types-filters" class="toggle-group">
           <button :class="{ active: hideBots }" @click="hideBots = true">Humans only</button>
           <button :class="{ active: !hideBots }" @click="hideBots = false">Include bots</button>
-          <button :class="{ active: hideTranslations }" @click="hideTranslations = !hideTranslations">Hide translations</button>
+          <button :class="{ active: !hideTranslations }" @click="hideTranslations = !hideTranslations">Hide translations</button>
         </div>
       </div>
       
