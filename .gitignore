@@ -1,0 +1,28 @@
+# Logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+.env
+rspec.xml
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.sw?
+
+# Migration leftovers
+lingua-plus-old/
+lingua-plus-leftovers/
+
+# Projects to learn from
+toolhub-evolved/
+
+src/modules/transparency/data/*.pdf
+src/modules/logs/data/upload_errors_cleaned.json
+src/modules/logs/data/upload_errors.log
