@@ -1,28 +1,28 @@
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div class="flex items-center gap-4 bg-gray-100 p-4 rounded">
-      <span class="font-semibold text-gray-700">Dominant Column:</span>
+    <div class="flex items-center gap-4 bg-surface-muted p-4 rounded">
+      <span class="font-semibold text-base">Dominant Column:</span>
       <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" value="failure-message" v-model="dominantColumn" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-        <span class="text-sm font-medium text-gray-900">Failure Message</span>
+        <input type="radio" value="failure-message" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
+        <span class="text-sm font-medium text-base">Failure Message</span>
       </label>
       <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" value="iso_639" v-model="dominantColumn" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-        <span class="text-sm font-medium text-gray-900">ISO</span>
+        <input type="radio" value="iso_639" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
+        <span class="text-sm font-medium text-base">ISO</span>
       </label>
       <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" value="code" v-model="dominantColumn" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-        <span class="text-sm font-medium text-gray-900">Code</span>
+        <input type="radio" value="code" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
+        <span class="text-sm font-medium text-base">Code</span>
       </label>
       <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" value="info" v-model="dominantColumn" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-        <span class="text-sm font-medium text-gray-900">Info</span>
+        <input type="radio" value="info" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
+        <span class="text-sm font-medium text-base">Info</span>
       </label>
     </div>
 
-    <div class="overflow-x-auto border border-gray-200 rounded">
-      <table class="w-full text-sm text-left text-gray-700">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
+    <div class="overflow-x-auto border border-line rounded">
+      <table class="w-full text-sm text-left text-base">
+        <thead class="text-xs text-base uppercase bg-surface-muted border-b border-line">
           <!-- Filter Row -->
           <tr>
             <th v-for="col in columns" :key="col.field" class="px-6 py-2">
@@ -30,19 +30,19 @@
                 type="text"
                 v-model="filters[col.field]"
                 :placeholder="'Filter ' + col.label"
-                class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 font-normal"
+                class="w-full px-2 py-1 border border-line rounded focus:outline-none focus:ring-1 focus:ring-progressive font-normal"
               />
             </th>
           </tr>
           <!-- Header Row -->
           <tr>
-            <th v-for="col in columns" :key="'h-' + col.field" class="px-6 py-3 cursor-pointer select-none hover:bg-gray-100" @click="sortBy(col.field)">
+            <th v-for="col in columns" :key="'h-' + col.field" class="px-6 py-3 cursor-pointer select-none hover:bg-surface-muted" @click="sortBy(col.field)">
               <div class="flex items-center justify-between">
                 {{ col.label }}
                 <span v-if="sortField === col.field">
                   {{ sortAsc ? '▲' : '▼' }}
                 </span>
-                <span v-else class="text-gray-300">
+                <span v-else class="text-muted">
                   ▲
                 </span>
               </div>
@@ -50,11 +50,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, index) in paginatedData" :key="index" class="bg-white border-b hover:bg-gray-50">
+          <tr v-for="(row, index) in paginatedData" :key="index" class="bg-surface border-b hover:bg-surface-muted">
             <td v-for="col in columns" :key="'d-' + col.field" 
               class="px-6 py-4" 
               :class="[
-                dominantColumn === col.field ? 'bg-blue-50 font-medium' : '',
+                dominantColumn === col.field ? 'bg-progressive-subtle font-medium' : '',
                 col.field === 'recording' ? '!px-2 w-24' : '',
                 col.field === 'iso_639' ? '!px-2 max-w-[7ch] truncate' : '',
                 col.field === 'filename' ? 'max-w-[300px]' : '',
@@ -65,7 +65,7 @@
               <a v-if="col.field === 'iso_639' && isIsoCode(getValue(row, col.field))"
                  :href="`https://en.wikipedia.org/wiki/ISO_639:${getValue(row, col.field)}`"
                  target="_blank"
-                 class="text-blue-600 hover:underline"
+                 class="text-progressive hover:underline"
                  @click.stop
               >
                 {{ getValue(row, col.field) }}
@@ -76,7 +76,7 @@
             </td>
           </tr>
           <tr v-if="paginatedData.length === 0">
-            <td :colspan="columns.length" class="px-6 py-4 text-center text-gray-500">
+            <td :colspan="columns.length" class="px-6 py-4 text-center text-secondary">
               No matching logs found.
             </td>
           </tr>
@@ -85,7 +85,7 @@
     </div>
 
     <!-- Footer Count & Pagination -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 p-4 bg-gray-50 rounded border border-gray-200 text-sm font-medium text-gray-700">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 p-4 bg-surface-muted rounded border border-line text-sm font-medium text-base">
       <p>
         <span v-if="filteredData.length > 0">
           Showing {{ ((currentPage - 1) * limit) + 1 }} to {{ Math.min(currentPage * limit, filteredData.length) }} of {{ filteredData.length }} filtered items
@@ -97,7 +97,7 @@
         <button 
           @click="goToPage(currentPage - 1)" 
           :disabled="currentPage === 1"
-          class="px-3 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-3 py-1 border rounded bg-surface hover:bg-surface-muted disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Previous
         </button>
@@ -105,7 +105,7 @@
         <button 
           @click="goToPage(currentPage + 1)" 
           :disabled="currentPage === totalPages"
-          class="px-3 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-3 py-1 border rounded bg-surface hover:bg-surface-muted disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next
         </button>
@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   logs: {
@@ -125,12 +125,14 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:dominant'])
+// Emits the rows left after the column filters, so siblings (KPI cards) can follow them
+const emit = defineEmits(['filter'])
+
+// v-model:dominant, the column the bar chart breaks down
+const dominantColumn = defineModel('dominant', { type: String, default: 'failure-message' })
 
 const limit = 500
 const currentPage = ref(1)
-
-const dominantColumn = ref('failure-message')
 
 const columns = [
   { field: 'date', label: 'Date' },
@@ -218,13 +220,8 @@ const sortBy = (field) => {
   }
 }
 
-import { watch } from 'vue'
-
-watch(filteredData, () => {
+watch(filteredData, (rows) => {
   currentPage.value = 1
-})
-
-watch(dominantColumn, (newVal) => {
-  emit('update:dominant', newVal)
-})
+  emit('filter', rows)
+}, { immediate: true })
 </script>
