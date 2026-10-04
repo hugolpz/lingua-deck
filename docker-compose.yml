@@ -1,0 +1,11 @@
+services:
+  client:
+    build: .
+    ports:
+      - 8080:8080
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - .:/app
+      - /app/node_modules # Prevents node_modules from being overwritten
