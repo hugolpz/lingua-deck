@@ -51,7 +51,8 @@ const props = defineProps({
 
 const dateLabel = computed(() => {
   const { date, kind } = props.release
+  // ISO dates parse as UTC midnight: format in UTC so the month/day never shifts with the viewer's timezone
   const options = kind === 'month' ? { month: 'long', year: 'numeric' } : { dateStyle: 'medium' }
-  return new Intl.DateTimeFormat('en', options).format(new Date(date))
+  return new Intl.DateTimeFormat('en', { ...options, timeZone: 'UTC' }).format(new Date(date))
 })
 </script>
