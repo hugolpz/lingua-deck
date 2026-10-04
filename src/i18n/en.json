@@ -1,0 +1,18 @@
+{
+  "global-notice-experimental": "<strong>Note:</strong> This feature is experimental, more work is needed.",
+  "dictionary-header": "Rapid dictionaries",
+  "dictionary-subheader": "Write, record, demonstrate and share your bilingual dictionary within a few hours.",
+  "gallery-heading-languages": "Languages",
+  "gallery-search-placeholder": "Search by language name",
+  "gallery-section-threshold": "Languages with over {threshold} recordings",
+  "gallery-section-description-activated": "Over 1000 languages have vocabulary lists ready to record: at Step 4, search <code>\"List/&lbrace;ISO3&rbrace;/Unilex\"</code>, then <a href='/app'>log in and start recording</a>.",
+  "gallery-section-description-empty": "No language matching this search and conditions, please try another search or <a href='/app'>record a few words</a>.",
+  "gallery-card-speakers-worldwide": "{count} speakers worldwide",
+  "gallery-card-speakers-unknown": "Unknown number of speakers worldwide",
+  "gallery-card-speakers": "Speakers",
+  "gallery-card-gender-split": "Contributors gender split",
+  "gallery-card-words-ratio": "Unique words vs recordings",
+  "gallery-card-recordings-split": "Recordings gender split",
+  "gallery-card-contribute": "Contribute",
+  "gallery-card-download": "Download"
+}
