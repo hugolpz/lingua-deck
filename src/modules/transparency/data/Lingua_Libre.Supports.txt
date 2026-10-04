@@ -1,0 +1,943 @@
+<languages/>
+<translate>
+<!--T:1-->
+'''Lingua Libre/Supports''' gathers all projects where Wikimédia France or other actors provided human supports to the Lingua Libre project. It aims to give a quick view of each initiative's human resources, objectives, end results and possible associated reporting or documents. The most original and relecant volunteer initiatives may also be documented below. For even smaller events, please visit [[<tvar name=1>:c:Commons:Lingua Libre/Events</tvar>|Lingualibre Events page]] as a first entry point or contact the community.
+</translate>
+
+== Shtooka ==
+{{Lingua Libre/Support infobox
+| id = 2004-nv
+| title = <translate><!--T:105--> [[:fr:Shtooka|Shtooka recorder]]</translate>
+| sponsor1 = <translate><!--T:106--> Nicolas Vion</translate>
+| sponsor1-logo = [[File:Shtooka recorder.jpg||200px|alt=]]
+| webpage =
+| start = {{dateT|2004|}}
+| ended = {{dateT|2016|}}
+| contact = Nicolas Vion <translate><!--T:178--> (developer)</translate>, {{u|Yug}}
+| stack = C/C++
+}}
+Since 2004(?), full stack developer and French student of Ukrainian language Nicolas Vion developed a rapid vocabulary recording system to provide audio to his personal learning resources.
+
+At a time audio recording of words was tedious and dirty : the speakers mostly turning to [[:en:Audacity|Audacity]], clicking on "Record" then "Stop" to define the start and end of the recording, resulting is irregular recordings which should then be renamed according to the word recorded.
+
+Shtooka offered a hundred times faster and quite cleaner [[:en:computer assisted|computer assisted]] way to record 1000s of words from a list provided by its user. The system included a form to define the language recorded, speaker name, gender, list name and other metadata common to all the words recorded. Sound level analysis identified audio level threshold to discriminate between irrelevant silences and when words were actually pronounced. Users could specify time margins keep at the start and end of the recorded words. The software produced regularly framed audios files, with one file by recorded items, human-friendly filenames and embedded metadata.
+
+While very productive the program was a Desktop C/C++ software which was tedious to install and most likely required an advanced user to install it.
+
+By the mid 2010s Shtooka was a niche software to download, install and use, mostly by language teachers and technophiles. An online service, SWAC Collection, allowed users to publish and share back to the online community about 300,000 recordings.
+
+In 2013, Wikimedian contributor and Chinese teaching, [[:en:vocabulary acquisition|vocabulary acquisition]] and e-learning PhD candidate noticed Shtooka open licence resources, meeting and befriending Nicolas. Yug enthusiastically used the new versions of the tools, providing feedbacks, bug reports, recording Chinese vocabulary in INALCO's recording studio for an adaptive learning web app [https://hugolpz.github.io/Cat-is-smart/html/hsk1.html CatIsSmart]. Yug also promoted the tool to [[:fr:INALCO|INALCO]] academics, Grenoble university, [[Wikimedia France]] and Wikimedians, looking for collaborations, funding toward Shtooka recorder or hire and the development of a more practical online version of the rapid recording tool. In 2015, Yug introduced Nicolas Vion to Rémy Gerbet.
+
+{{Clear}}
+
+== 2016 DGLFLF / Strasbourg ==
+{{indent |1=<translate><!--T:115--> ''French Wikipedia's [[<tvar name=1>:fr:Projet:Langues de France</tvar>|Project “Langues de France”]] & [[<tvar name=2>:fr:Projet:Lingua Libre</tvar>|Project “Lingua Libre”]].''</translate>}}
+
+{{Lingua Libre/Support infobox
+| id = 2016-wmfr
+| title = <translate><!--T:107--> Lingua Libre PHP</translate>
+| sponsor1 = [[Wikimédia France]]
+| sponsor2 = [[:fr:Shtooka|Shtooka recorder]]
+| sponsor1-logo = [[File:Lingua Libre recording studio.png||200px|alt=]]
+| webpage = Github ; Lingualibre.fr
+| start = {{dateT|2016|}}
+| ended = {{dateT|2016|}}
+| contact = Nicolas Vion (developer)
+| hierarchy = {{list |noand=1 |{{u|Rémy Gerbet WMFr}}, {{u|Adélaïde Calais WMFr}} }}
+| facilitator= {{u|Lyokoï}}
+}}
+<translate>
+
+<!--T:116 -->
+With secured funding from Strasbourg University and DGLFLF (?)<tvar name="comment"><!-- to veryfy --></tvar>, Nicolas Vion was hired to create an online, collaborative version of Shtooka recorder. The Wikimedia-backed project was eventually branded « Lingua Libre ».
+</translate>
+
+<gallery mode="packed">
+File:Enregistrement de mots en langue basque avec Lingua Libre (1).jpg|
+File:Séance d'enregistrement de mots en allemand Lingua Libre.jpg|
+File:Session d'enregistrement Lingua Libre Ocathon.jpg|
+File:Session d'enregistrement Novembre 2016.jpg
+</gallery>
+
+{{Clear}}
+
+
+=== Rémy 2015 ===
+{{Draft}}
+
+<!--
+Nicolas Vion
+Yug
+Jean-Louis Barreau
+Rémy Gerbet WMFr
+-->
+
+DGLFLF supported Wikimedia France for past years already. In 2014, Rémy is hired into a Service civique, working among other things on :
+
+* Listing regional offices or actors promoting local languages
+* 24 Aout 2014 : Wikimedia France and Jean-Louis Barreau from APLLOD (Association pour la Promotion des Langues via la Lexicographie et l'Open Data) open a partnership. A mockup for a recording tool is submitted.
+* 2015 : « Une enquête sur les pratique linguistes et numériques »
+* 2015-07-30 : the first DGLFLF patnership provides Wikimedia France with 15,000€ for both a seminar on French languages and a mobile apps promoting those languages. On September 23th, WMFR adds 10,000€ to lead this effort.
+
+* 23 janv. 2016 : « Congrès des Langues de France ». Discussions occurs on which kind of application to build. Yug bring Nicolas Vion, with the plan for a online word recorder based on Shtooka. Soon after, Rémy is hired by WMFr. DGLFLF funds are then forwarded toward Nicolas Vion and into transposing his desktop Shtooka Recorder into a web version, which became LinguaLibre.fr. On March 21st 2016, Nicolas Vion is hired by Wikimedia France and soon starts working. The first formal contributions go on April 20th, via https://lingualibre.fr, for a dedicated workshop Strasbourg with OLCA (Office pour la Langue et Culture Alsacienne). In May 2016, as the web apps proves trustworthy, Rémy creates [[:fr:Project:Lingua Libre]]. In September 2016, Rémy creates [[:fr:Projet:Langues de France]] focused on the related workshop and content created or to be created.
+
+Soon after, the following community worked using LinguaLibre.fr to record audios :
+
+* Alsacien-Francique : [[:c:Category:Lingua Libre pronunciation-gsw|378 recordings]]
+* Breton : [[:c:Category:Lingua Libre pronunciation-bre|~3,000 recordings]]
+* Basque : [[:c:Category:Lingua Libre pronunciation-eus|~20,000 recordings]]
+* Occitan : [[:c:Category:Lingua Libre pronunciation-oci|~25,000 recordings]]
+
+On July 3rd, 2017, WMFR and partners lead a end-of-project ceremony at the Maison de l'Alsace, Paris.
+
+<gallery>
+Shtooka recorder.jpg|Former design by N. Vion, existing on Shtooka Recorder.
+File:Capture Lingua Libre 2.png|Separate proposed design by J.L. Barreau, APLLOD.
+File:Lingua Libre recording studio.png|Final design.
+</gallery>
+
+== [[User:Erwan WMFr|Erwan WMFr]] ==
+<translate>
+
+<!--T:2 -->
+2016 service civique on Francophonie with part-time on Lingualibre.
+</translate>
+
+== Occitan languages projects ==
+:''See [[:fr:Projet:Oc-a-thon]] (TBC).''
+
+== 2018 Wikimedia Foundation Grant ==
+{{indent |1=''[[Grants:Project/0x010C/LinguaLibre]]''}}
+{{Lingua Libre/Support infobox
+| id = 2018-wmf
+| title = Lingua Libre 0x010C's recoding
+| sponsor1 = [[Wikimedia Foundation]]
+| sponsor1-logo =  [[File:Wikimedia Foundation logo - vertical.svg|120px]]
+| image = <!-- screenshot here -->
+| caption =
+| webpage = [[Grants:Project/0x010C/LinguaLibre]]
+| start = {{dateT|2017-07||}} – Application writing<br>{{dateT|2017-09||}} – Grant approved<br>{{dateT|2018-06|}} – Beta test
+| ended = {{dateT|2018-07|}} – Final Report
+| hierarchy = WMF
+| facilitator = {{u|0x010C}}
+| main = {{u|0x010C}}
+| contact = {{u|Yug}}
+| budget = 30,600€
+}}
+
+Designed and submitted by French wikimedian software engineer [[User:0x010C]], this 8 months work rebuilt Lingua Libre with :
+
+* a [[Mediawiki]], for documentation, lists storage and community space
+* a [[Wikibase]], for data storage and open access services
+* an « Record Wizard » app, to load list, guide recording, write metadata to the wikibase (records, speakers), audio data to Wikimedia Commons, and account data to the local mediawiki via User:{username}/RecordWizard.json pages.
+
+Wikimedia France and Nicolas Vion's 2016 Lingua Libre being a stand alone web app at Lingua Libre.fr, it totally lacked integration with the wikimedian ecosystem. While based on Nicolas Vion's earlier Lingua Libre and Shtooka in PHP and JS codes, the 3 blocks cited above required complete rewriting by 0x010C. This new version pioneered usage of Wikibase, while providing native wikimedian integration with a decisive "Publish to Commons" feature. Community list management was also greatly eased thank to mediawiki.
+
+<gallery>
+File:LinguaLibre-Recorder-Chinese characters underline.png|Proposed design by [[User:0x010C]]
+File:Créer un locuteur sur Lingua Libre.jpg |Step 2 : Speakers > Create a new speaker by name
+File:Choisir une liste à enregistrer sur Lingua Libre.jpg|Step 3 : List > Pick a list of words by name
+File:Bloc de plusieurs mots à enristrer sur Lingua Libre.jpg|Step 3 : List > Manage a list of words
+File:Enregistrement_de_mots_sur_Lingua_Libre.jpg|Step 4 : Recording a list of words
+</gallery>
+
+== [[User:Eavq|Eavq]]/[[User:Eavqwiki|Eavqwiki]] ==
+{{Lingua Libre/Support infobox
+| id = 2019-wmfr
+| title = <translate><!--T:3--> Lingua Libre Service Civique 2022.</translate><br>Eavq/Eavqwiki
+| sponsor1 = [[Wikimédia France]]
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px]]
+| image = [[File:Lingualibre-logo.svg|80px|alt={{labelT|Q60024037}}]]
+| caption =
+| webpage = [https://www.wikimedia.fr/valoriser-les-langues-minoritaires-avec-lingua-libre-le-temoignage-demma-vadillo/ <translate><!--T:5--> Blog post by WMFr, 2021</translate>]
+| start = {{dateT|2019}}
+| ended = 2019(?)
+| hierarchy = {{u|Adélaïde Calais WMFr}}
+| contact = {{u|Eavq}}
+}}
+<translate>
+
+<!--T:6 -->
+2019 service civique on Lingualibre ([<tvar name=1>https://www.wikimedia.fr/valoriser-les-langues-minoritaires-avec-lingua-libre-le-temoignage-demma-vadillo/</tvar> Interview])
+</translate>
+
+* <translate><!--T:7--> Contact with French regional languages groups</translate>
+* <translate><!--T:8--> Contact with Lo Congrès (Occitan)</translate>
+* <translate><!--T:9--> Recommandation for future actions : expand contribution tools, valorisation tools for language consumers (sonotheque), UI redesign</translate>
+* <translate><!--T:10--> Coordination with <tvar name="user">[[User:0x010C|0x010C]]</tvar> for 2019 RecordWizard's UI redesign</translate>
+* <translate><!--T:11--> Relations with INALCO, initiating [[<tvar name=1>Special:MyLanguage/ContribuLing</tvar>|ContribuLing]]</translate>
+* <translate><!--T:12--> Relations with Plateforme Atlas</translate>
+{{Clear}}
+<translate>
+== 2021 Wikivalley freelance == <!--T:13-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2021-wmfr
+| title = <translate><!--T:128--> Prestation WikiValley 2021.</translate>
+| sponsor1 = [[Wikimédia France]]
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image = [[File:Lingualibre-logo.svg|80px|alt={{labelT|Q60024037}}]]
+| caption =
+| webpage = [https://lingualibre.org/wiki/ <translate><!--T:130--> Documentation (lien à retrouver)</translate>]
+| start = {{dateT|}}
+| ended =
+| hierarchy = {{u|Adélaïde Calais WMFr}}
+| facilitator = {{u|VIGNERON}} (liaison)
+| main = Seb35 (code) 
+| contact = {{u|VIGNERON}}
+| budget = 35,000€:
+* 25,000€ : code
+* 10,000€ : liaison
+}}{{Stub}}
+Initially an upgrade from Mediawiki 1.32 to 1.35, the OVH datacenter fire required its extansion into a recovery and reinstall mission. External compentences where called over (WikiValley). Senior wikimedian [[User:VIGNERON]] served a community liaison, documentation writer and more.
+
+* Budget: 35k€ (source: [[Wikimédia France/Finances/Dépense/2020-2021]])
+* Project report: {somewhere on LinguaLibre.org}
+{{clear}}
+<translate>
+
+== 2021 Campus Digital == <!--T:14-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2021-tdc
+| title = <translate><!--T:109--> VueJS recordings checker</translate>
+| sponsor1 = Toulouse Digital Campus
+| sponsor1-logo = [[File:VueJS recordings checker.gif||200px|alt=]]
+| image =
+| caption =
+| webpage = [https://github.com/TL-digitalcampus-g3/interface-lingua-libre/ Github]
+| start = {{dateT|2021|12}}
+| ended = {{dateT|2021|12}}
+| mentor = {{list |noand=1 |{{u|Adélaïde Calais WMFr}}}}
+| contact = {{u|Yug}} (reviewed the code)
+}}
+{{indent|1=<translate><!--T:15--> See [[<tvar name=1>:c:Commons:Lingua Libre/Apps#VueJS_records_checker</tvar>|VueJS Record Checker app]]</translate>}}
+<translate>
+<!--T:16-->
+On December 2021, Digital Campus lead a one week hackathon around lingua libre. Their instruction was to offer a practical interface allowing to listen to existing recordings and to put a tag on them. To facilitate the exercise, they will not link it to lingua libre, just create a file in which the reviewed recordings and their tags are stored.
+
+<!--T:111 -->
+The proof of concept UI, coded in 4 days, has not been pushed further.
+</translate>
+{{Clear}}
+<translate>
+== Lingua Librist in Residence - 2IF == <!--T:17-->
+</translate>
+{{indent|1=<translate><!--T:18--> ''See [[<tvar name=1>:fr:wikt:Projet:Lingualibriste_en_résidence</tvar>|French Wiktionary page]] et [<tvar name=2>https://www.wikimedia.fr/entretien-avec-wikilucas-lingua-libriste-en-residence/</tvar> the interview with WikiLucas, Lingua Libriste in residence].''</translate>}}
+
+{{Lingua Libre/Support infobox
+| id = 2019-2if
+| title = <translate><!--T:19--> Lingua Librist in Residence for DDF - 2IF</translate>
+| sponsor1 = <translate><!--T:20--> Institut International pour la Francophonie (2IF)</translate>
+| sponsor2 = [[Wikimédia France]]
+| sponsor1-logo = [[File:DDF Logo (cropped).svg|200px|alt=DDF]]
+| webpage = [https://www.wikimedia.fr/entretien-avec-wikilucas-lingua-libriste-en-residence/ <translate><!--T:21--> Blog post by WMFr</translate>]
+| start = {{dateT|2019|05}}
+| ended = {{dateT|2021|09}}
+| contact = {{u|WikiLucas00}}
+| mentor = {{list |noand=1 |{{u|Sebleouf}}|{{u|Noé}} }}
+}}
+<translate>
+
+<!--T:22 -->
+4 months internship at Institut International pour la Francophonie (Lyon, France), as a Lingua Librist in Residence for the Dictionnaire des Francophones project.
+</translate>
+
+* <translate><!--T:23--> The main objective was to integrate Lingua Libre audio recordings into the Dictionnaire des francophones, and to improve Lingua Libre for future recordings.</translate>
+* <translate><!--T:24--> Participation in community and technical discussions, proposition for changes on the website, and organization of [<tvar name=URL>https://2if.universite-lyon.fr/un-programmathon-a-l-universite--235918.kjsp</tvar> a two-day hackathon for Lingua Libre developers].</translate>
+* <translate><!--T:25--> Classification of DDF entries associated with regions into approximately 250 different Lingua Libre lists.</translate>
+* <translate><!--T:26--> Presentation of Lingua Libre at two international events during the summer: ContribuLing and Wikimania.</translate>
+<translate>
+== MSc. Computer Science class of Toulouse == <!--T:27-->
+</translate>
+[[File:Lingua Libre audio analysis via Asteroid.pdf|thumb|<translate><!--T:28--> Lingua Libre audio analysis via Asteroid</translate>|{{dirstart}}]]
+{{indent|1=<translate><!--T:29--> ''See also [[<tvar name="1">:c:Commons:Lingua Libre/Events/Patrol assistance tool prototyping project</tvar>|Patrol assistance tool prototyping project]].''</translate>}}
+{{Clear}}
+<translate>
+== 2020 Cantonese project == <!--T:121-->
+</translate>
+:<includeonly>''To be completed by <code><nowiki>[[User:Yug]]</nowiki></code>.''</includeonly>
+
+{{Lingua Libre/Support infobox
+| id = 2020-yug
+| title = 2020 Catonese project
+| sponsor1 = [[User:Yug]]
+| sponsor1-logo = Luilui6666
+| image = [[File:LL-Q9186_(yue)-Luilui6666-千方百计.wav|thumb|center|千方百计/No stone left unturn in Cantonese]]<br>[[File:LL-Q9192 (cmn)-Luilui6666-巧克力.wav|thumb|center|巧克力/Chocolate in Chinese.]]<br>
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2020-05||}} – first recordings
+| ended = {{dateT|2020-07|}} – most recordings done
+| hierarchy =
+| mentor = {{u|Yug}} (project lead)
+| contact = {{u|Yug}}
+| main = {{u|Luilui6666}}
+| budget = 300€
+}}
+
+:''<translate><!--T:131--> See production on [[<tvar name="1">:c:Category:Lingua Libre pronunciation-other (Q9186)</tvar>|-other (Q9186)]] and/or [[<tvar name="2">:c:Category:Lingua Libre pronunciation-yue</tvar>|-yue]].</translate>''
+<translate>
+
+<!--T:132 -->
+The 2020 Cantonese project was a test-project lead by Yug and Hongkongese sound engineer Luilui6666, which aimed to test paid-contributions to audio document a target language via Lingua Libre tool.
+
+<!--T:133 -->
+A budget of 300€ for 10 hours (30€/h) was agreed upon. Few word list (HSK) and visio training on Lingua Libre recording studio were provided to the recordist. The recordist provided professional material and known how. Autopatrol userrights had to be requested. User:Yug sponsored this test with private funding.
+
+<!--T:134 -->
+The recordist worked occasionally from home, via short recording sessions, progressing steadily. This setting provided an appreciated complementary and free-planning income to Luilui6666.
+
+<!--T:135 -->
+The project got slowed down by a speeding-up recordings bug on longer sentences, which Luilui6666 reported and, with Yug's guidance, inspected and identified more precisely but through time consuming exchanges (~3h).
+
+<!--T:136 -->
+Nevertheless, about 6,000 recordings (see [[<tvar name="1">:c:Category:Lingua Libre pronunciation-other (Q9186)</tvar>|-other (Q9186)]] and/or [[<tvar name="2">:c:Category:Lingua Libre pronunciation-yue</tvar>|-yue]]) were produced by this enthusiast and pro-active paid-contributor.
+
+<!--T:137 -->
+With a highly productive 6,000+ recordings completed within 3 months for a modest 300€, covering known core Sino-Cantonese vocabulary, together with satisfied parties, the project was considered highly successful and validating paid-contributions on Lingua Libre as an extremely productive avenue.
+
+<!--T:138 -->
+A smaller 2022 Chinese project was also carried out.
+</translate>
+{{clear}}
+<translate>
+
+== Mélody == <!--T:30-->
+</translate>
+
+{{indent|1=<translate><!--T:31--> ''See [[<tvar name="1">Special:MyLanguage/Lingua Libre/Supports/Melody</tvar>|Mélody’s final report]] & [[<tvar name=2>:c:Commons:Lingua Libre/Interested communities</tvar>|LinguaLibre Interested communities]].''</translate>}}
+{{Lingua Libre/Support infobox
+| id = 2022-wmfr
+| title = <translate><!--T:32--> Lingua Libre Service Civique 2022</translate>
+| sponsor1 = [[Wikimédia France]].
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px]]
+| image = [[File:Lingualibre-logo.svg|80px|alt={{labelT|Q60024037}}]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2022|09}}
+| ended = {{dateT|2023|03|17}} <translate><!--T:34--> (6 months)</translate>
+| contact = Melody
+| hierarchy = {{u|Adélaïde Calais WMFr}}<br>{{u|Rémy Gerbet WMFr}}
+| facilitator = {{u|Yug}}
+| main = {{u|Mélody Xu YANG WMFr}}
+}}
+<translate>
+
+<!--T:35 -->
+The '''2022-2023 Service Civique on Lingualibre''' is a 6 months mission within Wikimedia France, Paris, aimed to advance Lingualibre's outreach and partnerships.
+
+<!--T:36 -->
+A first phase would create supporting resources, testing and demonstrating communication avenues within the French ecosystem with the following axis:</translate>
+
+* {{Done|}} <translate><!--T:37--> Identify high-potential institutional partnerships for ''Langues de France''</translate>
+* {{Done|}} <translate><!--T:38--> Design an outreach campaign, materials, with Wikimedia France's co-workers ; iterate with Lingualibre's community</translate>
+* {{Done|}} <translate><!--T:39--> Launch this campaign</translate>
+* {{Done|}} <translate><!--T:40--> Final report</translate>
+
+<translate>
+<!--T:41-->
+These experiences will be leveraged to expand outreach to other communities demonstrating some activity and potential for growth.
+</translate>
+<!--
+
+Dresser une carte des communautés linguistiques "moins diffusées et moins enseignées" susceptibles d'être intéressés par Lingua Libre.
+Établir un plan de communication et de sensibilisation à Lingua Libre avec la chargée de mission diversité/francophonie et les bénévoles.
+Entrer en contact avec les acteurs que vous aurez identifiés, pour les initier à la contribution ou leur proposer une formation faite par nos bénévoles.
+
+-->
+<translate>
+=== Gallery of productions === <!--T:42-->
+</translate>
+<gallery>
+File:Lingua Libre flyer-en.pdf|<translate><!--T:43--> Lingua Libre flyer (English)</translate>
+File:Lingua Libre flyer-fr.pdf|<translate><!--T:44--> Lingua Libre flyer (French)</translate>
+File:Lingua Libre flyer-zh.pdf|<translate><!--T:45--> Lingua Libre flyer (Chinese)</translate>
+File:Lingua Libre flyer-nl.pdf|<translate><!--T:46--> Lingua Libre flyer (Dutch)</translate>
+File:Lingua Libre SignIt flyer-fr.pdf|<translate><!--T:80--> Lingua Libre flyer (French v.0.1)</translate>
+</gallery>
+
+* <translate><!--T:47--> [[<tvar name=1>:c:Commons:Lingua Libre/Mailing</tvar>|LinguaLibre:Mailing]] - base for an outreach campaign, to continue</translate>
+* [https://www.canva.com/design/DAFbSwPFei0/9xnDQ2gJRp6OAsBs764o_Q/view?utm_content=DAFbSwPFei0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1 <translate><!--T:48--> Flyer SignIt</translate>]
+<translate>
+== 2023 SignIt freelance == <!--T:49-->
+</translate>
+{{indent|1=<translate><!--T:50--> ''See [[<tvar name="1">Lingua Libre/SignIt/2023/Phase 1</tvar>|SignIt phase 1]].''</translate>}}
+<translate>
+<!--T:51-->
+This Freelance was funded on budget from the French Ministry of Higher Education and Research's Wikimédian in résidence in Toulouse University. <tvar name="user">[[User:Hugo en résidence|Hugo en résidence]]</tvar> proposed a lean, agile, small scale freelance to former developper <tvar name="user2">[[User:0x010C|0x010C]]</tvar> to restore the video recording chain, successfully.
+</translate>
+* {{Done|}} [[:phab:T312554|<translate><!--T:52--> <tvar name="id">T312554</tvar>: Sign language video recordings appear as audio on Commons.</translate>]]
+* {{Done|}} [[:phab:T316097|<translate><!--T:53--> <tvar name="id">T316097</tvar>: Firefox > Sign language video recording stuck on first word forever.</translate>]]
+* {{Done|}} [[phab:T316104|<translate><!--T:54--> <tvar name="id">T316104</tvar>: RecordWizard always default to ''audio'' recording even if user's default language is signed.</translate>]]
+<translate>
+== 2023 Wikirésidence == <!--T:55-->
+</translate>
+{{indent|1=<translate><!--T:56--> ''See [[<tvar name=1>Special:MyLanguage/Lingua Libre/SignIt/2023/Phase 1</tvar>|SignIt phase 1]] and [[<tvar name=2>Special:MyLanguage/Lingua Libre/SignIt/2023/Phase 2</tvar>|phase 2]], [[<tvar name="3">User:Yug/2024</tvar>|Yug/2024]].''</translate>}}
+
+{{Lingua Libre/Support infobox
+| id = 2023-urfistOc
+| title = <translate><!--T:57--> Wikimedien en résidence 2023-2024.</translate>
+| sponsor1 = <translate><!--T:58--> [[<tvar name="1">{{lwp|from=fr|Ministère de l'enseignement supérieur et de la recherche}}</tvar>|MESR]]</translate>
+| sponsor2 = [[Wikimédia France]]
+| sponsor3 = [[{{wq-|Q3550893}}|URFIST]]
+| sponsor1-logo = [[File:URFIST Occitanie-2023.svg|200px|alt={{labelT|Q115917249}}]]
+| image = <!-- [[File:LinguaLibre SignIt-all.png|300px]] -->
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2023|02|13}}
+| ended = {{dateT|2024|02|12}}
+| hierarchy = Amélie Barrio, {{u|Mathieu Denel WMFr}},<br>{{u|Rémy Gerbet WMFr}}<br>
+| main = {{u|Hugo en résidence}}
+| contact = {{u|Yug}}
+}}
+
+<translate>
+<!--T:59-->
+The Wikiresidence at Université de Toulouse / URFIST Occitanie allowed [[User:Hugo en résidence]] to lead several pushes on Lingualibre, with a dual volunteer and official stance. A focus was put on [[<tvar name=1>Special:MyLanguage/Lingua Libre/SignIt</tvar>|SignIt]], communication and formal collaborations (Occitan Whistle). In 2024, about 1.5 human-month were dedicated to leading the Lingua Libre GSoC24 described further below. 
+</translate>
+
+{| class="wikitable"
+! <translate><!--T:60--> Date</translate> || <translate><!--T:61--> Event</translate> || <translate><!--T:62--> City</translate> || <translate><!--T:63--> Link</translate>
+|-
+| 2023.05.28, 10:00–18:00 || Forom des langues 2023 || Toulouse || – Démonstration IRL (stand)<br>https://commons.wikimedia.org/wiki/File:Forom_des_langues,_Toulouse,_2023-02.jpg
+|-
+| 2023.05.28, 14:00–16:00 || Toulouse Hack || Toulouse || – Information à un public cible<br>https://video.audiovisuel-participatif.org/w/c7631886-111c-4899-8c89-420797440c68
+|-
+| 2023.07.29, 09:30–10:00 || COSCUP 2023 || Taipei || https://commons.wikimedia.org/wiki/File:Lingua_Libre_SignIt_presentation-2023-COSCUP_Taibei.pdf
+|-
+| 2023.08.18, 17:40-17:45 || Wikimania 2023 || Singapore || https://commons.wikimedia.org/wiki/File:Lingua_Libre_SignIt_presentation-2023-Wikimania.pdf
+|-
+| 2023.11.19, 10:30–11:00 || Capitole du Libre || Toulouse || https://cfp.capitoledulibre.org/cdl-2023/talk/3ZQZTR/
+|-
+| 2023.11.20, 14:00–15:00 || CRL UT2J || Toulouse || [[commons:File:Lingua_Libre_URFIST-poster-fr.pdf|https://commons.wikimedia.org/wiki/File:Lingua_Libre_URFI]]
+[[commons:File:Lingua_Libre_URFIST-poster-fr.pdf|ST-poster-fr.pdf]]
+|}
+
+=== Whistled Occitan ===
+[[:fr:Occitan_Gascon|Occitan Gascon]] is a French minority language with correct documentation and modest institutional support. In the frontline of this effort is Lo Congrès ([https://locongres.org/ https://locongres.org] ), most notable with its multiple Occitan dictionaries, [[commons:Category:Lingua_Libre_pronunciation-oci|25 000 Occitan recordings]] among which [[commons:Category:Lingua_Libre_pronunciation-gsc|4908 in Gascon]]. [[User:Hugo en résidence|Hugo en résidence]], [[User:DMontagne en résidence|DMontagne en résidence]] and [[c:User:Univòc64|Univòc64]] lead since 2023 a follow up and complementary audio documentation effort on '''[[:fr:langage sifflé d'Aas|Aas whistled language]]'''. Other efforts include recording local villages names to reestablish and remind local names within their traditional territories, public communications at events and online.
+
+* Lingua Libre pronunciations for Occitan whistle on Wikimedia Commons ([[commons:Category:Lingua Libre pronunciation-other_(Q117707514)|Category:Lingua Libre pronunciation-other_(Q117707514)]])
+* [[:fr:Langage_sifflé_d'Aas|Langage sifflé d'Aas]] on the French Wikipédia.
+* Hugo Pierre Lopez (2024), URFIST Occitanie, WikiCafé : [https://www.canal-u.tv/chaines/callisto/wiki-cafe-avec-hugo-lopez-soutenir-les-langues-rares-convergence-de-lingua-libre Wiki café avec Hugo Lopez - ''Soutenir les langues rares : convergence de Lingua Libre, Wikimedia Commons, Wikidata et OSM pour l'exposition « Shiular lo gascon »''.] ([https://docs.google.com/presentation/d/1TOVyqybd0nr51UkqyqVsZUJjdQBHXul5NUKHxu4iCSs/edit?usp=drive_link présentation]) https://doi.org/10.60527/c6gq-a508.
+* Hugo Pierre Lopez, Delphine Montagne. ''« Adiu ! Quand l'union des communs fait la force du patrimoine immatériel »''. State of the Map France 2024, OpenStreetMap France, Jun 2024, Lyon, France. ⟨[https://hal.science/hal-04628915 hal-04628915]⟩
+* L'exposition ''« [https://www.anglet.fr/sorties/agendas/detail-dun-agenda/actualites/siffler-le-gascon-histoire-dune-renaissance/ Siffler le gascon, histoire d’une renaissance] »'', Anglet, du 2024-04-30 au 2024-09-21, a inclue [https://hugolpz.github.io/NamesOfTheLand/ notre carte intéractive open source] ([https://hugolpz.github.io/NamesOfTheLand/about.html crédits], [[commons:Category:2024_Whistling_Gascon_exhibit|photos]]).
+* Occitan sifflé (2024.11.03, Québec)
+* Hugo Pierre Lopez ''« Occitan siffé »''. [[WikiConvention francophone/2024]], OpenStreetMap France, Nov 2024, Québec, Canada.
+
+<translate>
+=== Other supports === <!--T:64-->
+</translate>
+<gallery>
+File:Lingua Libre SignIt flyer-fr.pdf|<translate><!--T:65--> Lingua Libre flyer (French)</translate>
+</gallery>
+
+== Poslovitch (1) ==
+{{draft|This sections could be detailed.}}
+{{Lingua Libre/Support infobox
+| id = 2023-wmfr-feasability
+| title = <translate><!--T:66--> Lingua Libre Internship 2023</translate>
+| sponsor1 = [[Wikimédia France]]
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px]]
+| image = [[File:Lingualibre-logo.svg|80px|alt={{labelT|Q60024037}}]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2023|04|17}}
+| ended = {{dateT|2023|08}} <translate><!--T:68--> (4 months)</translate>
+| hierarchy = {{u|Adélaïde Calais WMFr}}, {{u|Michael Barbereau WMFr}}, {{u|Rémy Gerbet WMFr}}
+| main = {{u|Poslovitch}}
+}}
+<translate>
+
+<!--T:69 -->
+The '''2023 Computer Science Intership on Lingualibre''' is a 4 months internship within Wikimedia France, Paris. One sub-mission aimed to audit the feasibility of migrating Lingualibre's wikibase and its 800,000 items to the now available Wikimedia Commons wikibase.
+</translate>
+
+<!--
+Origins: who, why
+Funding: who, how much
+Coordination: who
+Achievement: language diversity, depth (number of recordings)
+Learning pattern:
+-->
+
+{{Clear}}
+
+== Poslovitch (2) ==
+{{draft|Please explain further the strategic view and work done.}}
+
+{{Lingua Libre/Support infobox
+| id = 2023-wmfr-prototype
+| title = <translate><!--T:112--> Lingua Libre Internship 2023</translate>
+| sponsor1 = [[Wikimédia France]]
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px]]
+| image = [[File:Lingualibre-v3-core-2023.gif|200px|alt={{labelT|Q60024037}}]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2023|09|}}
+| ended = {{dateT|2024|04}} <translate><!--T:114--> (4 months)</translate>
+| hierarchy = {{u|Adélaïde Calais WMFr}}, {{u|Michael Barbereau WMFr}}, {{u|Rémy Gerbet WMFr}}
+| main = {{u|Poslovitch}}
+}}
+<translate>
+
+<!--T:75 -->
+The '''Lingua Libre v3 proof of concept''' aimed to demonstrate Lingualibre on a minimal Python Django and JS (VueJS, Vite, NodeJS) stacks.</translate><translate><!--T:119-->
+Healthy VueJS structure, unit tests, and best practice UML documentation were layed, as well as a leaner back end using MariaDB, successfully demonstrating the project's feasibility. An [[:en:Ansible|Ansible]] deployment system was also developed. '''Recommendations:''' More work needed to migrate other features and behaviors from the legacy code-base to this leaner stack.
+</translate>
+
+* <translate><!--T:78--> [<tvar name="1">https://dev.lingualibre.org</tvar> Live prototype]</translate>
+* <translate><!--T:76--> [[<tvar name="1">gitlab:repos/wikimedia-france/lingua-libre/lingua-libre</tvar>|Repository]]</translate>
+* [[phabricator:project/view/6913/|{{int string|Phabricator}}]]
+* [https://projets.wikimedia.fr/projects <translate><!--T:79--> Wikimédia France Open Projects</translate>]
+
+<!--
+Origins: who, why
+Funding: who, how much
+Coordination: who
+Achievement: language diversity, depth (number of recordings)
+Learning pattern:
+-->
+
+{{Clear}}
+
+<translate>
+== Google Summer of Code 2024 == <!--T:81 -->
+</translate>
+<translate>
+<!--T:82 -->
+These 2 projects designs and applications were initiated by <tvar name="user1">[[User:Yug|Yug]]</tvar>, with <tvar name="user2">[[User:Poslovitch]]</tvar> and Ishan Saini as technical co-mentors. Project application workload was about 4~6 workdays over a month mostly to understand the scope, how to proceed, where, and to write down the project description. Applicants reviews (~8 pers.), communication, issues assignments, assessment took about 6 workdays over 3 weeks. The coding period required 1.5 workdays a week from Yug and 2~4h/week for technical mentors. Kabir worked earlier in May & June, while Pushkar worked as encouraged in June, July & August 2024. Interns are funded by Google, Yug was mostly mentoring within the scope of his Open Science job funded by MESR France and URFIST Occitanie ; Ishan and Poslovitch were mentoring as volunteers, explaining the different workloads taken.
+</translate>
+<translate>
+=== Lingua Libre Django migration === <!--T:83-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2024-gsoc-django
+| title = Lingua Libre GSoC24
+| sponsor1 = [[:en:Google Summer of Code|Google Summer of Code]]
+| sponsor2 = [[:fr:URFIST|URFIST Occitanie]]
+| sponsor1-logo = [[File:URFIST Occitanie-2023.svg|120px|alt={{labelT|Q115917249}}]]
+| image = [[File:Lingua_Libre_UI-2024-Step1.webp|300px]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2024-02||}} – application<br>{{dateT|2024-06||}} – coding
+| ended = {{dateT|2024-09|}} – closure
+| budget = 6,000€
+| hierarchy = {{u|Yug}}
+| mentor = {{u|Yug}} (project lead), {{u|Poslovitch}} (tech lead)
+| main = {{u|Pushkar707}}
+| contact = {{u|Yug}}
+}}
+{{indent |1=<translate><!--T:117--> ''[[<tvar name=1>mw:Special:MyLanguage/Google_Summer_of_Code/2024#9._Lingua_Libre_Django_migration</tvar>|Proposal]] • [[<tvar name="2">mw:Special:MyLanguage/Google_Summer_of_Code/Past_projects#Lingua_Libre_Django_migration</tvar>|Sum up]] • [[<tvar name="3">Special:MyLanguage/Lingua Libre/GSoC24</tvar>|Report]] • [<tvar name="4">https://phabricator.wikimedia.org/maniphest/query/IRo_lCOGlEQr/</tvar> Phabricator].''</translate>}}
+
+<translate>
+<!--T:85-->
+In the field of Language diversity, Wikimedia Foundation and Wikimedia France have supported <tvar name="domain">[https://LinguaLibre.org LinguaLibre.org]</tvar>, a single page VueJS application to rapidly record vocabularies of the world. Over 240 languages and 1.2 millions words have been audio recorded into Wikimedia sites through this open project. Current back end (wikibase, PHP, blazegraph) while interesting have shown limitations, mostly limited query speed, no API, stack opacity and duplication of data. A revamp [<tvar name=1>https://dev.lingualibre.org</tvar> have been engaged] but requires further full stack work to be migrated into a maintainable code base, upgraded into an elegant service and pushed into production for willful native speakers.
+</translate>
+* <translate><!--T:87--> '''Tech stack''': VueJS, Django (Python), NodeJS</translate>
+* <translate><!--T:88--> '''Size''': 350 hours</translate>
+* <translate><!--T:89--> '''Difficulty''': Intermediate</translate>
+* <translate><!--T:ment--> '''Mentor(s)''':</translate> [[User:Yug|Yug]], [[User:Poslovitch|Poslovitch]]
+* <translate><!--T:90--> '''Intern:'''</translate> Pushkar Bansal [[phab:T361440|T361440]]  
+* <translate><!--T:phab--> '''Phabricator task''':</translate> [[phab:T359797|T359797]]
+* <translate><!--T:91--> '''Relevant links:''' [[<tvar name=1>gitlab:repos/wikimedia-france/lingua-libre/lingua-libre</tvar>|Repository]] ([<tvar name=2>https://dev.lingualibre.org</tvar> demo]) ''•'' [[<tvar name=3>phab:project/view/6913/</tvar>|Phabricator dashboard]] ''•'' [[<tvar name="5">phab:maniphest/query/IRo_lCOGlEQr/</tvar>|Phabricator:Pushkar]] ''•'' [[<tvar name=4>Special:MyLanguage/Lingua_Libre</tvar>|Lingua Libre]]</translate>
+{{Clear}}
+<translate>
+=== Lingua Libre SignIt === <!--T:92-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2024-gsoc-signit
+| title =Lingua Libre SignIt GSoC24
+| sponsor1 = [[:en:Google Summer of Code|Google Summer of Code]]
+| sponsor2 = [[:fr:URFIST|URFIST Occitanie]]
+| sponsor1-logo = [[File:URFIST Occitanie-2023.svg|120px|alt={{labelT|Q115917249}}]]
+| image = [[File:LinguaLibre SignIt-all.png|300px|<translate><!--T:93--> Screenshot.</translate>]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2024-02||}} – application<br>{{dateT|2024-06||}} – coding
+| ended = {{dateT|2024-09|}} – closure
+| budget = 4000€
+| hierarchy = {{u|Yug}}
+| mentor = {{u|Yug}} (project lead), {{u|Ishan Saini}} (co-tech lead)
+| contact = {{u|Yug}}
+| main = {{u|GonFreeaks}}
+}}
+:''[[:mw:Google_Summer_of_Code/2024#8._Lingua_Libre_SignIt|Proposal]] • [[:mw:Google_Summer_of_Code/Past_projects#Lingua_Libre_SignIt|Sum up]] • [[Lingua Libre/SignIt/2024/Phase 1|Report]] • [https://github.com/lingua-libre/SignIt/issues?q=assignee%3Akabir-afk+closed%3A%3C2024-08-31+ Github logs].''
+<translate>
+<!--T:94-->
+Lingua Libre's mission has been extended to [[:en:Sign Languages|Sign Languages]] in 2019. Both a click-and-translate Firefox extension and a video recording studio have been developed. Both system UI exist in 35+ languages allowing the global documentation and learning of various sign languages. As Manisfest v2.0 extensions are being phased out, the project is under threat. A full revamp into manifest v3.0 and a modern extension structure would allow the project to be compatible with all web navigators. This project must navigate updated in browser web extension security constrains and new web extension API.
+</translate>
+* <translate><!--T:95--> '''Tech stack''': JS, NodeJS, potentially modern frameworks (Vue, React, Svelte)</translate>
+* <translate><!--T:96--> '''Size''': 175 hours</translate>
+* <translate><!--T:97--> '''Difficulty''': Intermediate</translate>
+* {{Tunit|ment|'''Mentor(s)''':}} [[User:Yug|Yug]], Ishan Saini
+* <translate><!--T:98--> '''Intern:'''</translate> Kabir Singh [[phab:T361550|T361550]]
+* {{Tunit|phab|'''Phabricator task''':}} [[phab:T359799|T359799]]
+* <translate><!--T:99--> '''Relevant links:''' [<tvar name=1>https://github.com/lingua-libre/Signit</tvar> Repository] ''•'' [<tvar name=2>https://github.com/lingua-libre/Signit/Issues</tvar> Issues] ''•'' [https://github.com/lingua-libre/SignIt/issues?q=assignee%3Akabir-afk Kabir's logs] ''•'' [[<tvar name=3>Lingua_Libre/SignIt</tvar>|Lingua Libre SignIt]] ''•'' [<tvar name=4>https://addons.mozilla.org/fr/firefox/addon/lingua-libre-signit/Lingua</tvar> Firefox extension]</translate>
+
+<gallery style="text-align:center; clear:both">
+File:Lingua Libre pronunciation-fsl and bug T312554-fixed-extension.png
+File:LL-Q33302 (fsl)-Hugo en résidence-bibliothèque.webm|<span lang="fr">« bibliothèque »</span>
+File:LL-Q33302 (fsl)-Taliba31-merci.webm|<span lang="fr">« merci »</span>
+File:LL-Q33302 (fsl)-Yug-MRV, couloir-cam 720px-light no spots + sunny.webm|<span lang="fr">« crabe »</span>
+</gallery>
+<translate>
+== Indonesian languages recording project == <!--T:100-->
+</translate>
+:''See also [[WikiKata]], Malaysia.''
+{{Lingua Libre/Support infobox
+| id = 2023-wmf-wikitutur
+| title = <translate><!--T:101--> Indonesian languages recording projects</translate>
+| sponsor1 = [[Wikimedia Indonesia]]
+| sponsor1-logo = [[File:Wikimedia Indonesia.svg|120px|alt={{labelT|Q60024037}}]]
+| image = [[File:Logo Wikitutur Panjang.png|160px]]
+| caption =
+| webpage = [https://id.wiktionary.org/wiki/Wikikamus:ProyekWiki_WikiTutur WikiTutur on Wikikamus]
+| start = {{dateT|2023||}}
+| ended = {{dateT|On going|}}
+| hierarchy =
+| facilitator= {{u|Ardzun}}
+| contact =  <translate><!--T:118--> <tvar name="user1">{{u|Ardzun}}</tvar> (lead), <tvar name="user2">{{u|Yug}}</tvar> (support)</translate>
+| main = Unknown
+| budget = 5,000$ / year
+}}
+<translate>
+<!--T:103-->
+'''[[WikiTutur]]''' is a language preservation program by recording vocabulary pronunciation through the use of the [[:en:Wiktionary|Wiktionary]] and [[:en:Lingua Libre|Lingua Libre]]. This project was previously run in Indonesia by volunteers from the Jakarta Wikimedia Community in 2023–2024 in collaboration with other local Wikimedia communities in Indonesia.
+
+<!--T:120 -->
+About [[:c:Category:WikiTutur|30+ Indonesian languages have been audio recorded]], making it the most active Lingua Libre group as of early 2024. Project referent is <tvar name="user1">[[User:Ardzun|Ardzun]]</tvar>. Occasional second level support, guidances and languages creation is provided by <tvar name="user2">[[User:Yug|Yug]]</tvar>, mostly on Discord and Lingualibre.org.
+</translate>
+
+<!--
+Origins: who, why
+Funding: who, how much
+Coordination: who
+Achievement: language diversity, depth (number of recordings)
+Learning pattern:
+-->
+<gallery widths=300 heights=220>
+File:ESEAP KK24 presentation - WikiTutur.pptx.pdf|<translate><!--T:104--> Indonesian languages project.</translate>
+</gallery>
+{{clear}}
+<translate>
+== Youth voices of Roussillon == <!--T:122-->
+</translate>
+{{draft}}
+{{Lingua Libre/Support infobox
+| id = 2023-canet
+| title = <translate><!--T:123--> Youth voices of Roussilon</translate>
+| sponsor1 = <translate><!--T:124--> Médiathèque of Canet-en-Roussillon</translate>
+| sponsor1-logo = [[File:Blason_ville_fr_Canet-en-Roussillon_(Pyrénées-Orientales).svg|120px|alt={{labelT|}}]]
+| image = [[File:Blason_ville_fr_Canet-en-Roussillon_(Pyrénées-Orientales).svg|32px]]
+| caption =
+| webpage = [[:fr:User:BiblioCanet66|User:BiblioCanet66]]
+| start = {{dateT|2023||}}
+| ended = {{dateT|On going|}}
+| hierarchy = {{u|Culex}}
+| facilitator=
+| main = Culex
+| contact =  <translate><!--T:125--> <tvar name="user1">{{u|Culex}}</tvar> (lead)</translate>
+}}
+<translate>
+<!--T:126-->
+'''Youth voice of Roussillon''' is an educational project using [[:en:Wiktionary|Wiktionary]] and [[:en:Lingua Libre|Lingua Libre]] as contributive tools for local youth. Lead by the public mediathèque of Canet-en-Roussillon in a positive and encouraging atmosphere, it aims to valorize the students, allow them to discuss words, record them, document them on notorious digital commons. The project is lead by public library of Canet-en-Roussillon, via its director, who is also a Wikipedia administrator.
+
+<!--T:127 -->
+Wikimedian administrator [[User:Culex]] initiated the project in 2023 thank to his professional position and good relations with local schools. Leveraging its initial deep knowledge of Wikimedian projets, this local project was essentially lead by Culex without the usual secondary support.
+</translate>
+
+<!--
+Origins: who, why
+Funding: who, how much
+Coordination: who
+Achievement: language diversity, depth (number of recordings)
+Learning pattern:
+-->
+<gallery widths=300 heights=220>
+File:Séance sur des projets pédagogiques avec des enfants autour de Lingua Libre 01.jpg
+</gallery>
+{{clear}}
+<translate>
+== Pushkar Winter '24-25 == <!--T:146-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2024-wmfr-pushkar
+| title = Lingua Libre Django Freelance 1
+| sponsor1 = [[Wikimedia France]]
+| sponsor1-logo = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image = [[File:Lingua_Libre_UI-2024-Step1.webp|300px]]
+| caption =
+| webpage = Lingua Libre/Supports
+| start = {{dateT|2024-10||}} – discussion<br>{{dateT|2025-01||}} – coding
+| ended = <!-- {{dateT|2024-01|}} – closure -->
+| hierarchy   = {{u|Xavier Cailleau WMFr}}
+| facilitator = {{u|Yug}}
+| main        = {{u|Pushkar7077}}
+| contact     = {{u|Yug}}
+| budget      = ~2,000€ (to verify)
+}}
+{{indent |1=<translate><!--T:147--> ''[[<tvar name=1>phab:T380121</tvar>|Proposal]] • [[<tvar name="3">Lingua_Libre/Supports#Pushkar Winter '24-25</tvar>|Report]] • [<tvar name="4">https://phabricator.wikimedia.org/maniphest/query/TSFaYxrfbQVM/#R/</tvar> Phabricator].''</translate>}}
+<translate>
+<!--T:148-->
+Google Summer of Code 24's Django developer '''Pushkar''' is freelanced by Wikimedia France to code a week-long code-quality sprint. Immediate objectives were to
+</translate>
+# <translate><!--T:149--> demonstrate the feasibility of an extra-European Union freelance</translate>
+# <translate><!--T:150--> activate internationalization (i18n)</translate>
+# <translate><!--T:151--> split the code into a branding website (lingualibre.org) and the recording app (Lingua Libre App) repositories</translate>
+# <translate><!--T:152--> add other minor features.</translate>
+<translate>
+<!--T:153-->
+Middle term objective was to progress further toward deploying Lingua Libre Django in 2025. Long term objective was to ease the distribution of coding workload between Wikimedian volunteers and freelancers, while also diversifying freelancing options. It fully integrates into the general objective of Lingua Libre Django which primarily aims to simplify the stack and lower the technical barrier for technical maintenance.
+
+<!--T:157 -->
+Active but non-funded coding support was provided by Yug and Aditya, see consolidation below.
+</translate>
+{{clear}}
+<translate>
+=== Tasks list === <!--T:158-->
+</translate>
+
+[[File:Lingua Libre-Milestone 2025Q1-coding.png|center|thumb|800x800px|{{Done|}} [[phab:T380121#UQ0 22|T380121]] : Lingua Libre development milestones, 2015Q1 coding by [[User:Pushkar7077]].]]
+[[File:Lingua Libre-Milestone 2025Q1-consolidation.png|center|thumb|800x800px|{{Done|}} [[phab:T384903#UQ0 22|T384903]] : Lingua Libre development milestones, 2015Q1 coding consolidation by [[User:Yug]] and Aditya.]]
+
+<translate>
+== Pushkar Summer '25 == <!--T:159-->
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2025-wmfr-pushkar
+| title = Lingua Libre Django Freelance 2
+| sponsor1 = [[Wikimedia France]]
+| sponsor1-logo   = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image   = [[File:Lingua_Libre_UI-2024-Step1.webp|300px]]
+| webpage = Lingua Libre/Supports
+| start   = {{dateT|2025-02||}} – discussion<br>{{dateT|2025-06||}} – coding
+| ended   = {{dateT|2024-06|}} – closure
+| hierarchy = {{u|Xavier Cailleau WMFr}}
+| facilitator = {{u|Yug}}
+| freelance = {{u|Pushkar7077}}
+| contact = {{u|Yug}}
+| budget = ~2,000€ (to verify)
+}}
+:
+{{indent |1=<translate><!--T:160--> ''[[<tvar name=1>Phab:T385385</tvar>|Proposal]] • [[<tvar name="3">Lingua_Libre/Supports#Pushkar Summer '25</tvar>|Report]] • [[<tvar name="4">Phab:T385385</tvar> | Phabricator]].''</translate>}}
+
+<translate>
+<!--T:161-->
+'''Pushkar''' is freelanced a 2nd time by Wikimedia France to code a week-long 8 workdays sprint. We continued to consolidate the app for late 2025 deployment. Immediate objectives were to:
+</translate>
+# <translate><!--T:162--> switch to Oauth 2.0, an upgraded login system</translate>
+# <translate><!--T:163--> properly write metadata into SDC</translate>
+# <translate><!--T:164--> add other minor features.</translate>
+
+<translate>
+<!--T:165-->
+Active but non-funded coding support was provided by Yug and Aditya, see consolidation below. Focus being on fixing UI glitches, consolidate i18n. Yug's mediawiki knowledge helped to add mediawiki API calls, gave SDC guidance and provided wikimedia-based data files.
+
+=== Tasks list === <!--T:177-->
+</translate>
+[[File:Lingua Libre-Milestone 2025Q2-coding.png|center|thumb|800x800px|{{Done|}} [[phab:T385385#UQ0 22|T385385]] : Lingua Libre development milestones, 2015Q2 coding by [[User:Pushkar7077]].]]
+[[File:Lingua Libre-Milestone 2025Q2-consolidation.png|center|thumb|800x800px|{{Done|}} [[phab:T398352#UQ0 22|T398352]] : Lingua Libre development milestones, 2015Q2 coding consolidation by [[User:Yug]] and Aditya.]]
+
+<translate>
+== Yug '25 coordination == <!--T:166--> 
+</translate>
+{{Lingua Libre/Support infobox
+| id = 2025-wmfr-coordination
+| title = Lingua Libre Django Coordination
+| sponsor1 = [[Wikimedia France]]
+| sponsor1-logo   = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image   = [[File:Lingua Libre UI-2024-Step1.webp|300px]]
+| webpage = Lingua Libre/Supports
+| start   = {{dateT|2025-02||}} – discussion<br />{{dateT|2025-09||}} – coding
+| ended   = <!-- {{dateT|2024-10|}} – closure -->
+| hierarchy = {{u|Xavier Cailleau WMFr}}
+| facilitator = {{u|Yug}}
+| main = {{u|Yug}}
+| contact = {{u|Yug}}
+| budget = 4200€
+}}
+:
+{{indent |1=<translate><!--T:167--> ''[[<tvar name=1>phab:T399374#UQ0 22</tvar>|Proposal]] • [[<tvar name="3">Lingua Libre/Supports#Yug '25 coordination</tvar>|Report]] • [[<tvar name="4">phab:T399374#UQ0 22</tvar>|Phabricator]].''</translate>}}
+
+<translate>
+<!--T:168-->
+''Mid-project summary.''
+
+<!--T:169 -->
+Due to needs for a knowledgeable and versatile coordinator and the workload involved, WMFR freelanced Yug to accompany the coding cycles, manage translatewiki and other Wikimedia-specific processes. Growing pressure by funding actors (DGLFLF and WMFR's board) asking for live product caused an acceleration toward production level. Top objective is to deploy to production. Immediate objectives were to :
+</translate>
+# <translate><!--T:170--> project management with budgeting, task description, management of 0x010C & Pushkar707 freelances, tests, occasional communication, reporting.</translate>
+# <translate><!--T:171--> upgrade MVP features to production-level, handling the complexity of real usages, app-wide reactive i18n with wikidata-powered labels, upload resilience, unique filenames, accessible keyboard navigation, etc.</translate>
+# <translate><!--T:172--> set up translatewiki crowd sourced translations</translate>
+# <translate><!--T:173--> assist deployments of app and homepage site</translate>
+# <translate><!--T:174--> add other minor features.</translate>
+
+<translate>
+<!--T:175-->
+Active coding support was provided by Aditya, freelanced by Yug.
+</translate>
+<translate>
+=== Tasks list (coding side) === <!--T:176-->
+</translate>
+
+[[File:Lingua Libre-Milestone 2025Q3-consolidation.png|center|thumb|800x800px|[[phab:T399374#UQ0 22|T399374]] : Lingua Libre development milestones, 2015Q3 coding consolidation by [[User:Yug]] and Aditya.]]
+
+<translate>
+== 2025 Wikipages migration ==
+</translate>
+
+{{Lingua Libre/Support infobox
+| id = 2025-wmfr-wikipages
+| title = Lingua Libre Django Coordination
+| sponsor1 = [[Wikimedia France]]
+| sponsor1-logo   = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image   = [[File:Lingua_Libre_inventory_tool.png|300px]]
+| webpage = Lingua Libre/Supports
+| start   = {{dateT|2025-02||}} – discussion<br />{{dateT|2025-12||}} – coding
+| ended   = {{dateT|2026-01|}} – completed
+| hierarchy = {{u|Xavier Cailleau WMFr}}
+| facilitator = {{u|Yug}}
+| main = {{u|Yug}}
+| contact = {{u|Yug}}
+| budget = 1800€ (16 workdays)
+}}
+:{{indent |1=<translate>''[[<tvar name=1>phab:T384441#UQ0 22</tvar>|Proposal]] • [[<tvar name="3">Lingua Libre/Supports#2025 Wikipages migration</tvar>|Report]] • [https://github.com/hugolpz/Lingualibre-inventory-tool/ Lingua Libre Inventory Tool].''</translate>}}
+
+<translate>
+After 8 years of activity on [https://LinguaLibre.org/wiki/ https://LinguaLibre.org/wiki/], the decision was taken to migrate wikipages content to Commons.wikimedia.org. To do so, we created the [https://hugolpz.github.io/Lingualibre-inventory-tool/ LinguaLibre Inventory Tool] tracking all wikipages that required migration. Knowledgeable review helped to select pages and to build templates and categories to better structure Lingua Libre's resources. Wikipages' XML were exported, processed, then imported with their logs. Numerous lists and categories were create via [[:c:User:Dragons Bot|bot]] with systematic multi-parameters categorizations. While the whole effort create a better integrated resource and '''now supports a record of ~2,342 linguistic communities''', Lingua Libre's ~170 [[:c:Help:Lingua Libre|Help:Lingua Libre]] wikipages still requires human-lead review and update. We encourage the community to explore and contribute with enthusiasm.
+</translate>
+
+=== Migration ===
+The MediaWiki migration user rights and tools come with certain limitations. Because the content is complex, we adapted our process as best as possible. Overall, the migration proceeded as follows:
+
+* Approximately ~5,000 wiki pages have been migrated (about ~170 pages and ~5,000 micro-translations).
+* About 1,600 lists generated by contributors were migrated.
+* About 1,900 <code>List:{iso}/Unilex\*</code> lists were ''regenerated'' for Commons [[:c:User:Dragons Bot|via bot]] for better tagging.
+* About 2,400 <code>List:{iso}/Swadesh\*</code> lists were imported from Panlex, via the same tool
+* Structuring templates & about 2,500 categories were ''regenerated'' for Commons via bot rather than migrated.
+
+=== Adaptations ===
+New templates and categories have been coded to better integrate Wikimedia Commons' overall ecosystems. A bot was used to actively update all ~6.000 lists covering 2,342 languages with <nowiki>{{</nowiki>[[c:Template:Lingua Libre list|Lingua Libre list]]<nowiki>}}</nowiki>. This precisely categorizes our assets by language, content type, quality assessment, multilinguality.
+
+=== Exclusions ===
+
+* '''The following pages were excluded:'''
+** '''Talk pages:''' Aside from 5–10 pages, most only contained the <code><nowiki>{{Welcome}}</nowiki></code> template; migrating these would require user consent.
+** '''User pages:''' These were excluded for the same reason, and to avoid conflicts with existing Commons User pages.
+** '''MediaWiki & Module namespaces:''' Script imports are forbidden by Commons/Wikimedia rules, and the CSS was not relevant to the Commons environment.
+** '''Lingua Libre:Chat_room:''' The XML archive is too large, causing the import tool to fail.
+** '''Help:SPARQL:''' This content required the MediaWiki <code>Query</code> extension, which is not available on Commons. The content is also less relevant there and has been kept on LinguaLibre.org for now.
+** '''Files:''' These were already duplicates of files existing on Commons.
+* '''Other local cleanups:''' Dozens of wiki pages, templates, and categories were no longer relevant post-migration and were therefore deleted on LinguaLibre.org or excluded from the migration.
+
+=== NEW ===
+
+* [[:c:Commons:Lingua Libre]] – New home page
+* [[:c:Commons:Lingua Libre/List]] – New list page
+* [[:c:Help:Lingua Libre]] – New help and documentation page
+* [[:c:Category:Lingua Libre lists by language]] – 2342 languages communities supported
+
+<translate>
+
+== Wikimedia Hackathon 2025 == <!--T:139-->
+</translate>
+:''See also [[Lingua Libre/Hackathon 2025#Lingua Libre Hackathon request]].''
+<translate>
+
+<!--T:140 -->
+[[<tvar name="1">User:Yug</tvar>|Yug]] mentored the 3 young developers who are now the lead developers on [[<tvar name="3">:meta:Lingua Libre</tvar>|Lingua Libre]] and <tvar name="2">[[Lingua Libre/SignIt]]</tvar> to apply as first-timers to the WM Hackathon 2025's scholarship. Applying team is as follow :
+</translate>
+
+* <translate><!--T:141--> Pushkar : focus on Lingua Libre Django deployment, polishing, and announcement. Note: the heaviest project, so we also explore a possible WMFR's support around 2025 Q1.</translate>
+* <translate><!--T:142--> GonFreeaks : focus on Lingua Libre SignIt deployment (?) and announcement. Also sign languages extension via scrapping, with Yug.</translate>
+* <translate><!--T:144--> Yug : support to the group, will help were needed. Team up with Kabir for signed video scrapping.</translate>
+<translate>
+<!--T:145-->
+Result in early 2025.
+</translate>
+<translate>
+== 50K Malayalam Words:A Lingua Libre Audio Corpus Project ==
+</translate>
+:''See [[Community Resources and Partnerships/India Rapid Project/50K Malayalam Words:A Lingua Libre Audio Corpus Project|50K Malayalam Words:A Lingua Libre Audio Corpus Project]], [[Community Resources and Partnerships/India Rapid Project/50K Malayalam Words:A Lingua Libre Audio Corpus Project/Final Report|Final Report]], [[:c:Category:Lingua Libre pronunciations-mal]], and [[:ml:wikt:വിക്കിനിഘണ്ടു:പഞ്ചായത്ത്_(സാങ്കേതികം)#LinguaLibre_ഉച്ചാരണങ്ങൾ_ചേർക്കുന്നതിനുള്ള_ബോട്ട്_ഓടിക്കുവാനുള്ള_അഭ്യർത്ഥന|Wiktionary discussion]].''
+{{Lingua Libre/Support infobox
+| id = 2025-wmf-irg
+| title = <translate>50K Malayalam Words</translate>
+| sponsor1 = <translate>[[Community Resources and Partnerships/India Rapid Project|India Rapid Project grants]]</translate>
+| sponsor1-logo = <!-- [[File:Wikimedia Indonesia.svg|120px|alt={{labelT|Q60024037}}]] -->
+| image = <!-- [[File:Logo Wikitutur Panjang.png|160px]] -->
+| caption =
+| webpage =
+| start = {{dateT|2025.09||}}
+| ended = {{dateT|2026.02||}}
+| hierarchy =
+| facilitator=
+| contact = {{u|BhagyaMohan}}<br>{{u|Netha Hussain}} (bot)
+| budget = 1626.35 US$
+}}
+<translate>
+<!--T:103-->
+The '''50K Malayalam Words''' is a pilote [[:en:Lingua Libre|Lingua Libre]] project aiming for systematic audio recording of Malayalam words and phrases using the Lingua Libre recording tool, with the goal of contributing 50,000 high-quality audio files to Wikimedia Commons.
+
+The project targeted and worked toward contributing 50,000 audio recordings of Malayalam words to Wikimedia Commons and Lingua Libre, directly addressing the underrepresentation of Malayalam in open digital audio datasets. These recordings are now freely accessible and reusable for applications such as speech recognition, language learning tools, screen readers, and NLP model training
+
+'''Core workload'''
+# Creating focus lists covering commonly used words, government/official terms, academic vocabulary, and everyday expressions
+# Recording Malayalam word pronunciations using the Lingua Libre platform
+# Uploading and categorizing all audio files on Wikimedia Commons under a Creative Commons license for free public reuse
+# Coding a [https://github.com/nethahussain/lingualibre-ml-wikt-bot lingualibre-ml-wikt-bot] ([[User:Netha Hussain]]) to spread the files to the local language's wiktionary
+
+The project successfully recorded 50,022 words ( [[:c:Category:Lingua Libre pronunciations-mal]]), providing an open license, high quality audio dataset for Malayalam.
+
+;Lessons learnt
+This pilote project was focused on learning by experience and made solid feedbacks, namely :
+
+* Feasibility of High-Volume Solo Audio Contribution : Managing 50,000 recordings solo is logistically demanding and risks burnout -> advise: Implement a structured daily schedule (300–400 words) and disciplined time-blocking.
+* Tools and Workflows for Efficient Contribution : Manual post-upload work is inefficient for bulk projects -> advise: Use Lingua Libre for automated Commons pipeline and prepare themed word lists in advance.
+* Impact of Individual-Led Projects on Open Knowledge Platforms : Under-representation of Indian languages in NLP and accessibility tools -> advise: Link recordings to Wiktionary and monitor reuse statistics to build cases for future funding.
+* Limits and Sustainability of Independent Work : High-volume solo work over 6 months leads to fatigue and lacks peer review -> advise: Secure financial grants to dedicate time and build in structured rest periods with milestone check-ins.
+* Platform Downtime : Mid-session crash cause data loss and require time-consuming re-recording -> advise: Record in smaller batch sizes to minimize the number of files at risk during technical interruptions.
+* Lingua Libre supports : Platform maintainers may be unaware of how downtime impacts high-volume workflows -> advise: Share workflow adaptations and outage reports via community discussion channels to improve platform reliability.
+
+</translate>
+<!--
+Origins: who, why
+Funding: who, how much
+Coordination: who
+Achievement: language diversity, depth (number of recordings)
+Learning pattern:
+-->
+<gallery widths=300 heights=220>
+</gallery>
+{{clear}}
+<translate>
+== See also == <!--T:70-->
+</translate>
+<translate>
+==== Resources ==== <!--T:71-->
+</translate>
+
+* <translate><!--T:72--> Lingualibre's [[<tvar name=1>Lingualibre:Template:Helps/text</tvar>|<nowiki>{{Helps}}</nowiki>]] (the purple rows)</translate>
+* [[Wikimédia France/Finances/Dépense]]
+<translate>
+==== List of Lingualibre temporary supports from Wikimedia France ==== <!--T:73-->
+</translate>
+* Nicolas Lopez de Silanes – 2020 service civique
+* Pierre M. – 2023 dispatch on Lingua Libre
+<translate>
+=== Material grants === <!--T:154-->
+</translate>
+* [[Grants:IEG/Pronunciation Recording (Finish incomplete GSoC project)]]
+* [https://ca.wikimedia.org/wiki/Grants/Requests/2020/Kits_Lingua_Libre <translate><!--T:155--> Wikimedia Canada Grants 2020:Kits Lingua Libre</translate>]
+<translate>
+<!--T:156-->
+To integrate later
+* <tvar name="1">https://www.wikimedia.fr/lassociation/emploi-wikimedia-france/nos-appels-doffres/appel-doffres-developpement-et-amelioration-de-loutil-web-lingua-libre-2022/</tvar>
+
+== References == <!--T:74-->
+</translate>
+<references />
+{{Lingualibre}}
+{{Wikimedia Language Diversity/Projects}}
+
+[[Category:Lingua Libre{{#translation:}}|Supports]]
+[[Category:Wikimedia Language Diversity Hub{{#translation:}}]]

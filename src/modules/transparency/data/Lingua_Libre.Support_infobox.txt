@@ -1,0 +1,144 @@
+Mediawiki template code :
+```
+<noinclude><languages/>
+</noinclude>{{Infobox
+|name= Lingua_Libre/Supports_infobox
+|title = <span id="{{{id|no-short-id}}}">{{{title|}}}</span>
+|above = {{{sponsorlogo|}}}
+|subheader = {{list |noand=1 | {{{sponsor1|}}}|{{{sponsor2|}}} }}
+|subheader2 ={{{subheader2|}}}
+|image = {{{image|}}}
+|caption = {{{caption|}}}
+|headerstyle = background:#DDF
+|labelstyle = text-align:start
+
+<!-- PROJECT INFO -->
+|header1 = <translate><!--T:1--> Information</translate>
+|label2 = <translate><!--T:2--> Webpage</translate>
+|data2 = {{{webpage|}}}
+|label3 = <translate><!--T:3--> Start</translate>
+|data3 = {{{start|}}}
+|label4 = <translate><!--T:4--> Ended</translate>
+|data4 = {{{ended|}}}
+|label5 = <translate> Sponsors</translate>
+|data5 = {{list |noand=1 | {{{sponsor1|}}}|{{{sponsor2|}}}|{{{sponsor3|}}}|{{{sponsor4|}}} }}
+|label6 = <translate><!--T:11--> Budget</translate>
+|data6 = {{{budget|}}}
+|label7 = <translate> Request</translate>
+|data7 = {{{request|}}}
+
+<!-- TEAM INFO -->
+|header10 = <translate><!--T:10--> Roles</translate>
+|label11 = <translate><!--T:6--> Hierarchy</translate>
+|data11 = {{{hierarchy|}}}
+|label12 = <translate><!--T:9--> Mentor</translate>
+|data12 = {{{mentor|}}}
+|label13 = <translate><!--T:8--> Facilitator</translate>
+|data13 = {{{facilitator|}}}
+|label14 = <translate> Main</translate>
+|data14 = {{{main|}}}
+|label15 = <translate><!--T:7--> Contact</translate>
+|data15 = {{{contact|}}}
+}}<noinclude>
+{{documentation|content=
+<templatedata>
+{
+	"params": {
+		"id": {
+            "description": "Short id for sharing infobox & section",
+			"type": "string"
+        },
+		"title": {
+			"description": "project's name",
+			"type": "string"
+        },
+		"sponsor1": {
+            "description": "Sponsor name",
+			"type": "string"
+        },
+		"sponsor2": {
+            "description": "Sponsor 2 name",
+			"type": "string"
+        },
+		"sponsor3": {
+            "description": "Sponsor 3 name",
+			"type": "string"
+        },
+		"sponsor4": {
+            "description": "Sponsor 4 name",
+			"type": "string"
+        },
+		"sponsorlogo": {
+            "description": "Sponsor logo image",
+			"type": "string"
+        },
+		"subheader2": {
+            "description": "",
+			"type": "string"
+        },
+		"image": {
+            "description": "Photo or screenshot of the project",
+			"type": "string"
+        },
+		"webpage": {
+			"description": "project's home page or webpage with most information",
+			"type": "url"
+		},
+		"start": {
+			"description": "YYYY-MM-DD starting date",
+			"type": "date"
+		},
+		"ended": {
+			"description": "YYYY-MM-DD ending date",
+			"type": "date"
+		},
+		"budget": {
+			"description": "Total monetary budget of this project. Unit: $, €, local money, months, days or hours.",
+			"type": "string"
+		},
+		"hierarchy": {
+			"description": "staffs monitoring the project, its reports and reception, generally with no implication in daily operation",
+			"type": "string"},
+		"facilitator": {
+			"description": "person initiating the proposal, making it happen, possibly assisting daily operation and wikimedia-specific issues",
+			"type": "string"
+		},
+		"mentor": {
+			"description": "person guiding and mentoring a junior contributor or intern",
+			"type": "string"
+		},
+		"main": {
+			"description": "person doing day-to-day work",
+			"type": "string"
+		},
+		"contact": {
+			"description": "currently available person with most information",
+			"type": "string"
+		}
+	},
+	"description": "Adds infobox human support in Lingua Libre/Supports.",
+	"format": "{{_\n| _______ = _\n}}"
+}
+</templatedata>
+}}
+</noinclude>
+```
+
+Usage example :
+```
+{{Lingua Libre/Support infobox
+| id = 2025-wmfr-wikipages
+| title = Lingua Libre Django Coordination
+| sponsor1 = [[Wikimedia France]]
+| sponsor1-logo   = [[File:Wikimedia France logo.svg|120px|alt={{labelT|Q8423370}}]]
+| image   = [[File:Lingua_Libre_inventory_tool.png|300px]]
+| webpage = Lingua Libre/Supports
+| start   = {{dateT|2025-02||}} – discussion<br />{{dateT|2025-12||}} – coding
+| ended   = {{dateT|2026-01|}} – completed
+| hierarchy = {{u|Xavier Cailleau WMFr}}
+| facilitator = {{u|Yug}}
+| main = {{u|Yug}}
+| contact = {{u|Yug}}
+| budget = 1800€ (16 workdays)
+}}
+```
