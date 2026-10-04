@@ -81,8 +81,8 @@ export const footerGroups = [
     items: [
       { title: 'About Lingua Libre', to: `${META}Lingua_Libre` },
       { title: 'About Lingua Deck', to: 'https://github.com/hugolpz/lingua-plus' },
-      // Not built yet: flip `enabled` when the pages exist
-      { title: 'Changelog', to: '/changelog', enabled: false },
+      // Digest is not built yet: flip `enabled` when the page exists
+      { title: 'Changelog', to: '/changelog' },
       { title: 'Digest', to: '/digest', enabled: false },
       {
         title: 'About author',

@@ -86,6 +86,11 @@ const routes = [
     component: () => import('../modules/logs/ErrorView.vue'),
   },
   { path: '/dashboard/errors', redirect: '/logs' },
+  {
+    path: '/changelog',
+    name: 'changelog',
+    component: () => import('../modules/changelog/ChangelogView.vue'),
+  },
 ]
 
 const router = createRouter({
