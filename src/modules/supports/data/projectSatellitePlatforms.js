@@ -1,3 +1,4 @@
+import { getSharedColor } from '@/js/colors';
 import commonsLogo from '@/assets/Commons-logo.svg';
 import metaLogo from '@/assets/Wikimedia_Community_Logo.svg';
 import wikipediaLogo from '@/assets/Wikipedia-logo-v2.svg';
@@ -50,7 +51,6 @@ export const API_ENDPOINTS = {
     name: "Github"
   },
   phabricator: {
-    token: "api-4xolyuqwec2tbo3o5ntq37h4j43k",
     api: "https://phabricator.wikimedia.org/api/",
     link: "https://phabricator.wikimedia.org/tag/lingua-libre/",
     logo: phabricatorLogo,
@@ -207,11 +207,6 @@ export const topGitRepos =[
   }, */
 ];
 
-export const CHART_COLORS = [
-  '#ffc107', '#17a2b8', '#007bff', '#28a745', '#e83e8c', 
-  '#fd7e14', '#6f42c1', '#f03e3e', '#4057c0', '#20c997'
-];
-
 const specificColors = {
   '0': '#ffc107',     // Yellow
   '2': '#17a2b8',     // Cyan
@@ -234,7 +229,7 @@ export const getNamespaceInfo = (ns, sourceKey) => {
   const sourceName = API_ENDPOINTS[sourceKey]?.name || sourceKey;
   
   let label = mapping?.name || `Namespace ${ns}`;
-  let color = mapping?.color || getSharedColor(ns);
+  let color = mapping?.color || getSupportsColor(ns);
 
   // Source-aware overrides for common namespaces
   if (ns === '0' || ns === 0) {
@@ -247,55 +242,38 @@ export const getNamespaceInfo = (ns, sourceKey) => {
   return { name: label, color };
 };
 
-export const getSharedColor = (key, index = null) => {
-  if (specificColors[key]) return specificColors[key];
-  
-  if (index !== null && index >= 0) {
-    return CHART_COLORS[index % CHART_COLORS.length];
-  }
-
-  const intKey = parseInt(key, 10);
-  if (!isNaN(intKey) && String(intKey) === String(key)) {
-    const hue = (intKey * 137.508) % 360;
-    return `hsl(${hue}, 60%, 50%)`;
-  }
-
-  let hash = 0;
-  for (let i = 0; i < String(key).length; i++) {
-    hash = String(key).charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return `hsl(${Math.abs(hash) % 360}, 60%, 50%)`;
-};
+// Namespace and project colors, falling back to the shared palette
+export const getSupportsColor = (key, index = null) => getSharedColor(key, index, specificColors);
 
 export const namespaceMapping = {
-  '0': { name: 'Main (Meta)', color: getSharedColor('0') },
+  '0': { name: 'Main (Meta)', color: getSupportsColor('0') },
   // '1': { name: 'Talk' },
-  // '2': { name: 'User', color: getSharedColor('2') },
+  // '2': { name: 'User', color: getSupportsColor('2') },
   // '3': { name: 'User talk' },
-  '4': { name: 'Commons:Lingua Libre', color: getSharedColor('4') },
+  '4': { name: 'Commons:Lingua Libre', color: getSupportsColor('4') },
   // 'Commons:Lingua Libre/List/',
-  '5': { name: 'Commons talk:Lingua Libre', color: getSharedColor('5') },
-  '6': { name: 'File', color: getSharedColor('6') },
+  '5': { name: 'Commons talk:Lingua Libre', color: getSupportsColor('5') },
+  '6': { name: 'File', color: getSupportsColor('6') },
   // '7': { name: 'File talk' },
   // '8': { name: 'MediaWiki' },
   // '9': { name: 'MediaWiki talk' },
-  '10': { name: 'Template', color: getSharedColor('10') },
-  '11': { name: 'Template talk', color: getSharedColor('11') },
-  '12': { name: 'Help:Lingua Libre', color: getSharedColor('12') },
-  '13': { name: 'Help talk:Lingua Libre', color: getSharedColor('13') },
-  '14': { name: 'Category', color: getSharedColor('14') },
+  '10': { name: 'Template', color: getSupportsColor('10') },
+  '11': { name: 'Template talk', color: getSupportsColor('11') },
+  '12': { name: 'Help:Lingua Libre', color: getSupportsColor('12') },
+  '13': { name: 'Help talk:Lingua Libre', color: getSupportsColor('13') },
+  '14': { name: 'Category', color: getSupportsColor('14') },
   // '15': { name: 'Category talk' },
-  '102': { name: 'Project (Wikipedia)', color: getSharedColor('102') },
+  '102': { name: 'Project (Wikipedia)', color: getSupportsColor('102') },
   // '106': { name: 'Institution' },
-  '200': { name: 'Grants (Meta)', color: getSharedColor('200') },
-  '1198': { name: 'Translations', color: getSharedColor('1198') },
+  '200': { name: 'Grants (Meta)', color: getSupportsColor('200') },
+  '1198': { name: 'Translations', color: getSupportsColor('1198') },
   // Phabricators
-  '6913': { name: 'Phabricator (lingua-libre)', color: getSharedColor('6913') },
-  '3393': { name: 'Phabricator (lingua-libre-legacy)', color: getSharedColor('3393') },
+  '6913': { name: 'Phabricator (lingua-libre)', color: getSupportsColor('6913') },
+  '3393': { name: 'Phabricator (lingua-libre-legacy)', color: getSupportsColor('3393') },
   // Gitlab
-  '-1': { name: 'Gitlab Commits', color: getSharedColor('-1') },
+  '-1': { name: 'Gitlab Commits', color: getSupportsColor('-1') },
   // Github
-  '-2': { name: 'Github Commits', color: getSharedColor('-2') },
+  '-2': { name: 'Github Commits', color: getSupportsColor('-2') },
   // Others
-  'unknown': { name: 'Others', color: getSharedColor('unknown') }
+  'unknown': { name: 'Others', color: getSupportsColor('unknown') }
 };
