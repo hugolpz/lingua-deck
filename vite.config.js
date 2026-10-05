@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   const PHABRICATOR_API_TOKEN = env.PHABRICATOR_API_TOKEN
 
   return {
-    // GitHub Pages serves from /<repo>/ ; set VITE_BASE=/lingua-plus/ in CI
+    // GitHub Pages serves from /<repo>/ ; set VITE_BASE=/lingua-deck/ in CI
     base: env.VITE_BASE || '/',
     plugins: [vue()],
     resolve: {

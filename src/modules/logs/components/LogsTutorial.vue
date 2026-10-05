@@ -9,7 +9,7 @@
 
     <h3 class="mt-3 text-sm font-bold text-progressive">1. Fetch the log</h3>
     <pre class="overflow-x-auto rounded bg-surface-muted p-3 text-sm"><code>git clone &lt;Lingua-Plus-repo&gt;    # clone repository
-cd lingua-plus/src/modules/logs/data/
+cd lingua-deck/src/modules/logs/data/
 ## Fetch raw data, replace `yug` by your lingualibre.wmcloud.org username
 ssh -J yug@bastion.wmcloud.org yug@prod.lingualibre.eqiad1.wikimedia.cloud "cat /srv/lingua-libre/media/logs/upload_errors.log" &gt; ./upload_errors.log</code></pre>
     <h3 class="mt-3 text-sm font-bold text-progressive">2. Upload it</h3>

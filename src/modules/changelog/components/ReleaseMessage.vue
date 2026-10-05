@@ -41,7 +41,7 @@
 <script setup>
 import { computed } from 'vue'
 
-const REPO = 'https://github.com/hugolpz/lingua-plus'
+const REPO = 'https://github.com/hugolpz/lingua-deck'
 
 const props = defineProps({
   /** { id, kind: 'month' | 'day', date: 'YYYY-MM' | 'YYYY-MM-DD', title, reconstructed?, users[], technical[], commits?[], days?[] } */

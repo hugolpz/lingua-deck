@@ -17,7 +17,7 @@
     </nav>
     <div class="border-t border-line px-4 py-3 text-center text-xs text-secondary md:px-6">
       Lingua Deck ·
-      <a href="https://github.com/hugolpz/lingua-plus" target="_blank" rel="noopener">source code</a>
+      <a href="https://github.com/hugolpz/lingua-deck" target="_blank" rel="noopener">source code</a>
     </div>
   </footer>
 </template>
