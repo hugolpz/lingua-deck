@@ -14,6 +14,7 @@ export const releases = [
       'Loading and "too large" messages are clearer, and this changelog is new.',
       'The upload errors page now works on a fresh install: a guide explains how to fetch the log, and you can upload it in the page. The latest log date is shown, with a warning when it is over 7 days old, and the cleaned data can be downloaded as JSON.',
       'The Supports page loads its Phabricator tasks again.',
+      'The top bar now shows the new mascot as logo, and dictionary page links work on GitHub Pages.',
     ],
     technical: [
       'Project scaffold committed: Vite, Vue 3, Tailwind on design tokens (light and dark), Docker, GitHub Pages and Cypress.',
@@ -25,9 +26,21 @@ export const releases = [
       'One shared IndexedDB helper (src/js/cacheDb.js) replaces the per-module copies; it never throws and times out when the database is blocked.',
       'Phabricator calls go through the Vite proxy, which adds the token server-side and strips browser headers that Wikimedia rejected with a 403.',
       'Added the /weekly-release project skill to commit the week and update this changelog.',
+      'Repository renamed to hugolpz/lingua-deck: git remote, package name, GitHub links and the GitHub Pages base path (/lingua-deck/) updated. The theme storage key keeps its old name to preserve saved choices.',
     ],
-    commits: ['d0f8811', '9dcc34e', '180c576', '709930b', 'd9b7e23', '7a48d48', 'b44dde3', '5dd09e8', 'ad2d9c1', '3d70d3a', '41fda7a', 'a7a3c1d', '7a103db', '0b67410', 'de15b02', '5a029c4', '1a419e3'],
+    commits: ['75d9e2d', 'c2d70e4', 'bc43753', 'c415ac4', 'd0f8811', '9dcc34e', '180c576', '709930b', 'd9b7e23', '7a48d48', 'b44dde3', '5dd09e8', 'ad2d9c1', '3d70d3a', '41fda7a', 'a7a3c1d', '7a103db', '0b67410', 'de15b02', '5a029c4', '1a419e3'],
     days: [
+      {
+        id: '2026-10-06',
+        kind: 'day',
+        date: '2026-10-06',
+        title: 'Mascot logo and repository rename',
+        users: ['New mascot logo in the top bar.', 'Dictionary page links work on GitHub Pages.'],
+        technical: [
+          'Repository renamed to lingua-deck: remote, package name, links, Pages base path.',
+          'Mascot drafts (src/assets/ongoing) gitignored.',
+        ],
+      },
       {
         id: '2026-10-05',
         kind: 'day',
