@@ -199,7 +199,7 @@ var shortenPageTitle = function(title) {
 };
 var pageHref = function(title) {
     const stripped = title.replace(/^Commons:Lingua[_ ]Libre\//, '');
-    return '/dictionary/' + stripped;
+    return './dictionary/' + stripped;
 };
 
 /***************************************************************** */
