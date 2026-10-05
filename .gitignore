@@ -30,3 +30,4 @@ src/modules/plan-*
 src/modules/transparency/data/*.pdf
 src/modules/logs/data/upload_errors_cleaned.json
 src/modules/logs/data/upload_errors.log
+src/assets/ongoing/
