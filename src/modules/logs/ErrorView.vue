@@ -4,12 +4,20 @@
 
     <header class="dashboard-header">
       <p class="subtitle">Upload errors reported by the Lingua Libre recorder, by failure type, language and period.</p>
+      <p v-if="latestDate" class="latest" :class="{ stale: isStale }" :title="isStale ? `Older than ${STALE_DAYS} days: fetch a fresh log (see the guide)` : 'Date of the most recent logged error'">
+        Logs to: {{ latestDate }}<span v-if="isStale"> ⚠ outdated</span>
+      </p>
     </header>
 
     <div v-if="loading" class="alert alert-info">Loading upload errors…</div>
     <div v-else-if="error" class="alert alert-error">{{ error }}</div>
 
     <template v-else>
+      <LogsTutorial class="mb-4" :open="!logsData.length" @loaded="logsData = $event" @cleared="logsData = []" />
+      <p v-if="!logsData.length" class="alert alert-info">No upload errors loaded yet. Follow the guide above.</p>
+    </template>
+
+    <template v-if="!loading && !error && logsData.length">
       <DateRange :data="logsData" @filter="handleDateFilter" />
 
       <ErrorsKpiMetricCards :logs="tableFilteredLogs ?? filteredLogs" />
@@ -34,6 +42,8 @@ import DateRange from '@/components/DateRange.vue'
 import ErrorsKpiMetricCards from './components/ErrorsKpiMetricCards.vue'
 import ErrorsUploadsTable from './components/ErrorsUploadsTable.vue'
 import BarChart from './components/BarChart.vue'
+import LogsTutorial from './components/LogsTutorial.vue'
+import { loadCleanedLogs } from './data/logsStore.js'
 
 const crumbs = [{ label: 'App logs', to: '/logs' }]
 
@@ -52,16 +62,21 @@ const filteredLogs = computed(() => dateFilteredLogs.value ?? logsData.value)
 // Rows left after the table's column filters (null until the table has mounted): feeds the KPI cards
 const tableFilteredLogs = ref(null)
 
-// Loaded on demand: the cleaned log is several MB and stays out of the app bundle
+// Stored upload first, else the optional developer copy (loaded on demand: several MB, kept out of the app bundle)
 onMounted(async () => {
   try {
-    logsData.value = (await import('./data/upload_errors_cleaned.json')).default
+    logsData.value = await loadCleanedLogs()
   } catch (e) {
     error.value = `Could not load the upload errors: ${e.message}`
   } finally {
     loading.value = false
   }
 })
+
+// `timestamp` is YYYY-MM-DD, so the lexicographic max is the latest day
+const STALE_DAYS = 7
+const latestDate = computed(() => logsData.value.reduce((max, row) => (row.timestamp > max ? row.timestamp : max), ''))
+const isStale = computed(() => latestDate.value && (Date.now() - new Date(latestDate.value).getTime()) / 86400000 > STALE_DAYS)
 
 const COLUMN_TITLES = {
   'failure-message': 'Failure Msg',
@@ -72,9 +87,9 @@ const COLUMN_TITLES = {
 const dominantColumnTitle = computed(() => COLUMN_TITLES[dominantColumn.value] ?? 'Stats')
 
 const chartData = computed(() => {
-  const counts = {}
+  const counts = {};
 
-  filteredLogs.value.forEach((row) => {
+  (tableFilteredLogs.value ?? filteredLogs.value).forEach((row) => {
     let value = ''
     if (dominantColumn.value === 'code') {
       value = row.details?.code || ''
@@ -102,5 +117,14 @@ const chartData = computed(() => {
   color: var(--color-text-secondary);
   font-size: 1.1rem;
   margin: 0;
+}
+.latest {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+.latest.stale {
+  color: var(--color-destructive, #d33);
+  font-weight: 600;
 }
 </style>

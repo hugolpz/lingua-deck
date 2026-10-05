@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div class="flex items-center gap-4 bg-surface-muted p-4 rounded">
+    <div class="flex items-center gap-4 bg-surface-muted">
       <span class="font-semibold text-base">Dominant Column:</span>
       <label class="flex items-center gap-2 cursor-pointer">
         <input type="radio" value="failure-message" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
@@ -18,6 +18,17 @@
         <input type="radio" value="info" v-model="dominantColumn" class="w-4 h-4 text-progressive border-line focus:ring-progressive" />
         <span class="text-sm font-medium text-base">Info</span>
       </label>
+      <button
+        type="button"
+        class="ml-auto flex items-center gap-1 rounded border border-line bg-surface px-3 py-1 text-sm hover:bg-surface-muted"
+        title="Download the cleaned logs as JSON"
+        @click="downloadJson"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5zm-1.5-2L14 8.5l-3 3V1H9v10.5l-3-3L4.5 10 10 15.5z" />
+        </svg>
+        JSON
+      </button>
     </div>
 
     <div class="overflow-x-auto border border-line rounded">
@@ -130,6 +141,15 @@ const emit = defineEmits(['filter'])
 
 // v-model:dominant, the column the bar chart breaks down
 const dominantColumn = defineModel('dominant', { type: String, default: 'failure-message' })
+
+const downloadJson = () => {
+  const blob = new Blob([JSON.stringify(props.logs, null, 2)], { type: 'application/json' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = 'upload_errors_cleaned.json'
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
 
 const limit = 500
 const currentPage = ref(1)

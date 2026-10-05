@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[600px] w-[150px] bg-surface-muted border border-line rounded p-2 flex flex-col">
+  <div id="logs-breakdown" class="h-[600px] w-[150px] bg-surface-muted border border-line rounded p-2 flex flex-col">
     <h3 class="text-xs font-bold text-base mb-2 truncate text-center" :title="title">
       {{ title }} Breakdown
     </h3>
