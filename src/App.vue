@@ -2,14 +2,15 @@
   <div class="flex min-h-screen flex-col">
     <header class="sticky top-0 z-10 border-b border-line bg-surface">
       <nav class="mx-auto flex max-w-screen-xl flex-wrap items-center gap-x-1 gap-y-1 px-4 py-2 md:px-6">
-        <router-link to="/" class="mr-auto text-lg font-bold text-base hover:no-underline">
+        <router-link to="/" class="mr-auto flex items-center gap-2 text-lg font-bold text-base hover:no-underline">
+          <img :src="logo" alt="" class="h-8 w-8" />
           Lingua Deck
         </router-link>
         <router-link
           v-for="link in links"
           :key="link.to"
           :to="link.to"
-          class="px-2 py-1 text-sm font-semibold text-secondary hover:text-base hover:no-underline md:px-3"
+          class="border-b-2 border-transparent px-2 py-1 text-sm font-semibold text-secondary hover:bg-surface-muted hover:text-[color:var(--color-text)] hover:border-progressive hover:no-underline md:px-3"
           active-class="!text-progressive"
         >
           {{ link.title }}
@@ -30,6 +31,7 @@
 import { ref } from 'vue'
 import AppIcon from '@/components/AppIcon.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import logo from '@/assets/mascot-rightward.svg'
 import { applyTheme, currentTheme } from '@/plugins/theme'
 import { links } from '@/router/links'
 
