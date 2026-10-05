@@ -12,6 +12,8 @@ export const releases = [
       'The upload errors page (App logs) has a date range slider and summary cards that follow the slider and the table filters. Errors since July are readable again.',
       'A footer links to Lingua Libre resources, tools and analysis pages, with live counts of the lists on Commons.',
       'Loading and "too large" messages are clearer, and this changelog is new.',
+      'The upload errors page now works on a fresh install: a guide explains how to fetch the log, and you can upload it in the page. The latest log date is shown, with a warning when it is over 7 days old, and the cleaned data can be downloaded as JSON.',
+      'The Supports page loads its Phabricator tasks again.',
     ],
     technical: [
       'Project scaffold committed: Vite, Vue 3, Tailwind on design tokens (light and dark), Docker, GitHub Pages and Cypress.',
@@ -19,8 +21,12 @@ export const releases = [
       'Log cleaner: handles the Browser/OS/User-Agent trailer, falls back to a Python-literal parser, fixes the iso_639 precedence bug, adds --help and --download (merges the server log into the local one). The raw log and cleaned JSON are no longer tracked: fetch them with --download before building /logs.',
       'Routes added: /languages, /recordists, /transparency/lingualibre, /transparency/wmfr, /changelog. /logs replaces /dashboard/errors, which redirects.',
       'History committed as conventional commits.',
+      'Log parsing moved to a browser-safe logs-parser.js (the CLI keeps ssh and file access); uploaded logs are stored in IndexedDB, replacing the previous upload.',
+      'One shared IndexedDB helper (src/js/cacheDb.js) replaces the per-module copies; it never throws and times out when the database is blocked.',
+      'Phabricator calls go through the Vite proxy, which adds the token server-side and strips browser headers that Wikimedia rejected with a 403.',
+      'Added the /weekly-release project skill to commit the week and update this changelog.',
     ],
-    commits: ['d9b7e23', '7a48d48', 'b44dde3', '5dd09e8', 'ad2d9c1', '3d70d3a', '41fda7a', 'a7a3c1d', '7a103db', '0b67410', 'de15b02', '5a029c4', '1a419e3'],
+    commits: ['d0f8811', '9dcc34e', '180c576', '709930b', 'd9b7e23', '7a48d48', 'b44dde3', '5dd09e8', 'ad2d9c1', '3d70d3a', '41fda7a', 'a7a3c1d', '7a103db', '0b67410', 'de15b02', '5a029c4', '1a419e3'],
     days: [
       {
         id: '2026-10-05',
@@ -28,8 +34,15 @@ export const releases = [
         date: '2026-10-05',
         title: 'Upload errors, history and changelog',
         reconstructed: true,
-        users: ['Upload errors page reworked: date range slider, summary cards, recent errors readable.'],
-        technical: ['Log cleaner hardened, --download added, data files untracked.', 'Project history committed; changelog module added.'],
+        users: [
+          'Upload errors page reworked: date range slider, summary cards, recent errors readable.',
+          'Upload errors page: in-page log upload and guide, latest log date, JSON download. Supports tasks from Phabricator load again.',
+        ],
+        technical: [
+          'Log cleaner hardened, --download added, data files untracked.',
+          'Project history committed; changelog module added.',
+          'Browser-safe log parser, shared IndexedDB helper, Phabricator proxy without browser headers, weekly-release skill.',
+        ],
       },
       {
         id: '2026-10-04',
