@@ -1,12 +1,6 @@
 import { ref, toRaw, computed } from 'vue';
 import { API_ENDPOINTS, topPagesBySource, topCategories, topGitRepos } from './projectSatellitePlatforms.js';
-import { openDB } from 'idb';
-
-const dbPromise = openDB('lingualibre-dashboard', 1, {
-  upgrade(db) {
-    db.createObjectStore('cache');
-  },
-});
+import { cacheGet, cachePut, cacheDelete } from '@/js/cacheDb.js';
 
 export const phabricators = [
   {
@@ -370,19 +364,22 @@ export function projectsActivityData() {
 /* --- PHABRICATOR LOGIC ******************************* */
 /* ***************************************************** */
 
-  const projectApiUrl = (id) => `/phabricator-api/project.search?constraints[ids][0]=${id}`;
+  // Proxied by Vite (see vite.config.js), which injects the API token server-side and avoids CORS.
+  const phabBase = '/phabricator-api';
+
+  const projectApiUrl = (id) => `${phabBase}/project.search?constraints[ids][0]=${id}`;
   const projectTasksListApiUrl = (phid, after = null) => {
-    let url = `/phabricator-api/maniphest.search?constraints[projects][0]=${phid}`;
+    let url = `${phabBase}/maniphest.search?constraints[projects][0]=${phid}`;
     if (after) url += `&after=${after}`;
     return url;
   };
   const usersApiUrl = (phids) => {
-    let url = `/phabricator-api/user.search?`;
+    let url = `${phabBase}/user.search?`;
     phids.forEach((phid, index) => { url += `constraints[phids][${index}]=${phid}&`; });
     return url.slice(0, -1);
   };
   const logsApiUrl = (phid, after = null) => {
-    let url = `/phabricator-api/transaction.search?objectIdentifier=${phid}`;
+    let url = `${phabBase}/transaction.search?objectIdentifier=${phid}`;
     if (after) url += `&after=${after}`;
     return url;
   };
@@ -498,8 +495,7 @@ export function projectsActivityData() {
 
     if (titleValue) {
       const pageStorageKey = `projectEditsOnPage`;
-      const db = await dbPromise;
-      let storedPageEdits = (await db.get('cache', pageStorageKey)) || {};
+      let storedPageEdits = (await cacheGet(pageStorageKey)) || {};
       
       if (storedPageEdits[titleValue] && storedPageEdits[titleValue].length > 0) {
         const mostRecentEditDate = storedPageEdits[titleValue][0].timestamp;
@@ -518,20 +514,14 @@ export function projectsActivityData() {
       
       projectEdits.value.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
       
-      try {
-        storedPageEdits[titleValue] = toRaw(projectEdits.value);
-        const db = await dbPromise;
-        await db.put('cache', storedPageEdits, pageStorageKey);
-      } catch (e) {
-        console.warn('Could not save to IndexedDB, it might be too large.', e);
-      }
+      storedPageEdits[titleValue] = toRaw(projectEdits.value);
+      await cachePut(pageStorageKey, storedPageEdits);
       
       status.value = `Data for ${titleValue} loaded via API.`;
       return;
     }
 
-    const db = await dbPromise;
-    const persistentProjectEdits = await db.get('cache', 'projectEdits');
+    const persistentProjectEdits = await cacheGet('projectEdits');
     let cacheValid = false;
 
     if (persistentProjectEdits?.length > 0) {
@@ -539,17 +529,17 @@ export function projectsActivityData() {
         const mostRecentEditDate = persistentProjectEdits[0].timestamp;
         if (!mostRecentEditDate.startsWith(currentMonth)) {
           console.log("Stale cache detected, clearing IndexedDB.projectEdits");
-          await db.delete('cache', 'projectEdits');
+          await cacheDelete('projectEdits');
         } else {
           projectEdits.value = persistentProjectEdits;
           cacheValid = true;
         }
       } catch (e) {
         console.error('Error verifying cache:', e);
-        await db.delete('cache', 'projectEdits');
+        await cacheDelete('projectEdits');
       }
     } else {
-      await db.delete('cache', 'projectEdits');
+      await cacheDelete('projectEdits');
     }
 
     let workingList = projectWikipages;
@@ -622,12 +612,7 @@ export function projectsActivityData() {
 
 
     projectEdits.value.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    try {
-      const db = await dbPromise;
-      await db.put('cache', toRaw(projectEdits.value), 'projectEdits');
-    } catch (e) {
-      console.warn('Could not save to IndexedDB, it might be too large.', e);
-    }
+    await cachePut('projectEdits', toRaw(projectEdits.value));
 
     const anyApiLimitReached = Object.values(apiLimitReached.value).some((v) => v);
     if (anyApiLimitReached) {

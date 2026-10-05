@@ -1,4 +1,4 @@
-import { openDB } from 'idb'
+import { cacheGet, cachePut } from '@/js/cacheDb.js'
 
 // WIKIMEDIA COMMONS
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php',
@@ -177,7 +177,6 @@ async function fetchUsersData(categories = DEFAULT_CATEGORIES) {
 }
 // SINGLE CATEGORY
 const MAX_CATEGORY_FILES = 50000
-const CACHE_DB = 'lingualibre-dashboard'
 
 const commonsGet = async (params) => {
   const url = `${COMMONS_API}?${new URLSearchParams({ format: 'json', formatversion: '2', origin: '*', ...params })}`
@@ -243,24 +242,10 @@ function pageToEdit(page) {
  */
 async function cached(key, produce) {
   const month = new Date().toISOString().slice(0, 7)
-  let db = null
-  try {
-    db = await Promise.race([
-      openDB(CACHE_DB, 1, { upgrade: (d) => d.createObjectStore('cache') }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('IndexedDB open timed out')), 3000)),
-    ])
-    const hit = await db.get('cache', key)
-    if (hit?.month === month) return hit.value
-  } catch (e) {
-    console.warn('Category cache unavailable, fetching directly', e)
-    db = null
-  }
+  const hit = await cacheGet(key)
+  if (hit?.month === month) return hit.value
   const value = await produce()
-  try {
-    await db?.put('cache', { month, value }, key)
-  } catch (e) {
-    console.warn('Could not cache category edits', e)
-  }
+  await cachePut(key, { month, value })
   return value
 }
 
